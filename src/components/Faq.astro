@@ -1,0 +1,142 @@
+---
+const faqs = [
+  {
+    q: "What is LeverHub?",
+    a: "LeverHub is a personal money, markets and trading academy. It is different from a standard trading academy because it starts with you — your situation, your goals and your work-life balance — before moving into financial markets and trading.",
+  },
+  {
+    q: "Do I need trading experience to join?",
+    a: "None. LeverHub is designed to be the starting point. You begin by understanding your own situation, then learn how money and markets work. Trading comes when you are ready for it.",
+  },
+  {
+    q: "What is the Life & Money Snapshot?",
+    a: "It is a short diagnostic inside your Personal Hub that gives you a clear picture of where you stand today across money, time, lifestyle and market readiness. It generates your LeverHub Balance Score and helps your Progress Coach personalise your learning path.",
+  },
+  {
+    q: "What is the Progress Coach?",
+    a: "A real person who works with you one-on-one to complete your Snapshot, define your goals and keep your journey moving in the right direction.",
+  },
+  {
+    q: "Do I have to connect a broker account?",
+    a: "No. You can use LeverHub as a standalone academy. But if you connect a broker account, your academy subscription is included for the duration of your connected access package — because that is LeverHub working as it was designed.",
+  },
+  {
+    q: "Is LeverHub a broker?",
+    a: "No. LeverHub is the academy, the dashboard, the journal and the progress platform. The broker is separate. LeverHub helps you choose one, connect it and use your market activity as part of your learning path.",
+  },
+];
+---
+
+<section class="section faq" id="faq">
+  <div class="container inner">
+    <div class="section-head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions, answered honestly</h2>
+    </div>
+
+    <div class="list reveal">
+      {
+        faqs.map((item) => (
+          <details class="item">
+            <summary>
+              <span>{item.q}</span>
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    d="M12 5v14M5 12h14"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <p class="fine disclosure reveal">
+      LeverHub is not a broker and does not hold funds or execute trades. Broker accounts
+      are opened directly with independent third parties. Trading involves risk, including
+      the loss of capital.
+    </p>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--white);
+    border-block: 1px solid var(--mist);
+  }
+
+  .inner {
+    max-width: 860px;
+  }
+
+  .disclosure {
+    margin-top: 1.75rem;
+  }
+
+  .list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .item {
+    border: 1px solid var(--mist);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .item[open] {
+    border-color: var(--teal);
+    background: var(--white);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.4rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--navy);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--teal-wash);
+    color: var(--teal-deep);
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .item[open] .icon {
+    transform: rotate(45deg);
+    background: var(--teal);
+    color: var(--white);
+  }
+
+  .item p {
+    padding: 0 1.4rem 1.4rem;
+    color: rgba(12, 26, 48, 0.75);
+    max-width: 68ch;
+  }
+</style>

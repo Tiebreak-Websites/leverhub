@@ -1,0 +1,189 @@
+---
+import Logo from "./Logo.astro";
+
+const nav = [
+  { href: "#different", label: "Why LeverHub" },
+  { href: "#path", label: "The Path" },
+  { href: "#hub", label: "Personal Hub" },
+  { href: "#academy", label: "Academy" },
+  { href: "#access", label: "Access" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<header class="site-header" id="site-header">
+  <div class="container bar">
+    <a href="#top" class="brand" aria-label="LeverHub — home">
+      <Logo variant="reversed" />
+    </a>
+
+    <nav class="links" aria-label="Main navigation">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <a href="#hub" class="btn btn-teal cta">Enter LeverHub <span class="arrow" aria-hidden="true">&rarr;</span></a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 50;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .site-header.scrolled,
+  .site-header.menu-open {
+    background: var(--navy-deep);
+    box-shadow: 0 8px 24px -12px rgba(6, 16, 34, 0.6);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-block: 1rem;
+  }
+
+  .brand {
+    flex: none;
+  }
+
+  .links {
+    display: flex;
+    gap: 1.75rem;
+    margin-inline: auto;
+  }
+
+  .links a {
+    font-family: var(--font-sub);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    transition: color 0.2s ease;
+  }
+
+  .links a:hover {
+    color: var(--white);
+  }
+
+  .cta {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.92rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem 1.5rem 1.5rem;
+    /* keep the CTA reachable on short landscape viewports */
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+  }
+
+  .mobile-menu a:not(.btn) {
+    font-family: var(--font-sub);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-menu .btn {
+    margin-top: 1rem;
+  }
+
+  /* Collapse at 1020px — below that the full bar's min-content (~905px)
+     no longer fits and nav links start wrapping. */
+  @media (max-width: 1020px) {
+    .links,
+    .cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+      margin-left: auto;
+    }
+
+    .menu-open .mobile-menu {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("menu-toggle");
+
+  const onScroll = () => {
+    header?.classList.toggle("scrolled", window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  toggle?.addEventListener("click", () => {
+    const open = header?.classList.toggle("menu-open") ?? false;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+
+  const closeMenu = () => {
+    header?.classList.remove("menu-open");
+    toggle?.setAttribute("aria-expanded", "false");
+    toggle?.setAttribute("aria-label", "Open menu");
+  };
+
+  // Close the mobile menu after choosing a destination
+  header?.querySelectorAll(".mobile-menu a").forEach((a) => a.addEventListener("click", closeMenu));
+
+  // Close on Escape and return focus to the toggle
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && header?.classList.contains("menu-open")) {
+      closeMenu();
+      toggle?.focus();
+    }
+  });
+</script>

@@ -1,0 +1,205 @@
+---
+import Logo from "./Logo.astro";
+
+const year = new Date().getFullYear();
+
+const explore = [
+  { href: "#different", label: "Why LeverHub" },
+  { href: "#path", label: "The Path" },
+  { href: "#hub", label: "Personal Hub" },
+  { href: "#academy", label: "Academy" },
+  { href: "#access", label: "Access" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<footer class="footer on-navy">
+  <div class="container cta-panel reveal">
+    <div class="cta-copy">
+      <p class="eyebrow light">Most academies start with a chart. We start with you.</p>
+      <h2>Your financial path<br />starts with <em>you.</em></h2>
+    </div>
+    <div class="cta-actions">
+      <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <p class="microcopy">
+        <span class="play-dot" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="10" height="10"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
+        </span>
+        Start the academy. Not a trade.
+      </p>
+    </div>
+  </div>
+
+  <div class="container top">
+    <div class="brand-col">
+      <Logo variant="reversed" />
+      <p class="descriptor">
+        It starts with you &mdash; not the charts. A personal money, markets and trading
+        academy.
+      </p>
+      <p class="fine langs">EN &middot; PL, SWE &amp; IT coming soon</p>
+    </div>
+
+    <nav class="col" aria-label="Footer navigation">
+      <p class="col-title">Explore</p>
+      {explore.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <div class="col">
+      <p class="col-title">Legal</p>
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Risk Disclosure</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+
+  <div class="container disclosure">
+    <p class="fine">
+      Risk disclosure. LeverHub is an educational platform &mdash; the academy, dashboard,
+      journal and progress coach. LeverHub is not a broker, does not hold client funds,
+      does not execute trades and does not provide financial, investment, legal or tax
+      advice. All content is educational and is not a personal recommendation to buy or
+      sell any financial instrument. Trading financial markets involves significant risk,
+      including the possible loss of all invested capital. Nothing on this website is a
+      promise or guarantee of profit, income or results. Broker accounts are opened
+      directly with independent third-party brokers.
+    </p>
+    <p class="fine copyright">&copy; {year} LeverHub. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-deep);
+    color: var(--white);
+    padding-block: clamp(3.5rem, 6vw, 5rem) 2.5rem;
+  }
+
+  .cta-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(2rem, 4vw, 3rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-radius: var(--radius);
+    background: linear-gradient(120deg, var(--navy) 0%, #12305f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: min(var(--container), calc(100% - 3rem));
+  }
+
+  .cta-copy {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  /* Teal Wash instead of teal: the panel ground is Lever Navy, where small teal text fails AA */
+  .cta-copy .eyebrow {
+    color: var(--teal-wash);
+  }
+
+  .cta-copy h2 em {
+    font-style: normal;
+    color: var(--teal);
+  }
+
+  .cta-actions {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+
+  .microcopy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .play-dot {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--white);
+  }
+
+  .top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .brand-col {
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+    justify-items: start;
+  }
+
+  .descriptor {
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 34ch;
+  }
+
+  .langs {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  .col {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+  }
+
+  .col-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.4rem;
+  }
+
+  .col a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  .col a:hover {
+    color: var(--white);
+  }
+
+  .disclosure {
+    padding-top: 2rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .disclosure .fine {
+    max-width: 900px;
+  }
+
+  .copyright {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  @media (max-width: 720px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

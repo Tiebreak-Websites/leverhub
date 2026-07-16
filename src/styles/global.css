@@ -1,0 +1,331 @@
+/* ============================================================
+   LeverHub — design tokens & base styles
+   Source: LeverHub Brand Book v2.0 (Internovus Creative, Jun 2026)
+   "Navy holds. Teal moves." — 64 navy / 26 neutral / 10 teal
+   ============================================================ */
+
+:root {
+  /* Color — brandbook §07 */
+  --navy: #173c77;        /* Lever Navy — primary, structure */
+  --navy-deep: #0e2750;   /* Deep Navy — depth */
+  --teal: #2fae9b;        /* Pivot Teal — the single accent */
+  --teal-deep: #208c7c;   /* Teal Deep — hovers & large teal accents */
+  --teal-ink: #1b7568;    /* darker teal for SMALL text — #208c7c is only 4.11:1 on white, below AA; flag to brand owners */
+  --teal-wash: #e2f3f0;   /* Teal Wash — tints & soft fills */
+  --mist: #ebebeb;        /* Mist — neutral */
+  --paper: #f6f7f9;       /* Paper — page background */
+  --ink: #0c1a30;         /* Ink — body copy */
+  --white: #ffffff;
+
+  /* Typography — brandbook §08 */
+  --font-display: "Tilt Warp", "Poppins", sans-serif; /* H1–H3 only, single 400 weight */
+  --font-sub: "Poppins", sans-serif;                  /* subheads, deck text, buttons */
+  --font-body: "Inter", sans-serif;                   /* body, UI, long copy */
+  --font-mono: "Space Mono", monospace;               /* labels, data, fine print */
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --container: 1180px;
+  --shadow-card: 0 1px 2px rgba(12, 26, 48, 0.04), 0 12px 32px -16px rgba(12, 26, 48, 0.14);
+  --shadow-lift: 0 2px 4px rgba(12, 26, 48, 0.06), 0 24px 48px -20px rgba(12, 26, 48, 0.22);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* Headlines — Tilt Warp has a single weight: never faux-bold */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--navy);
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6.2vw, 4.25rem);
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(1.85rem, 3.6vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--teal-ink);
+  text-decoration: none;
+}
+
+/* Skip link — visually hidden until focused, sits above the fixed header */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.8rem 1.25rem;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--font-sub);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- layout ---------- */
+
+.container {
+  width: min(var(--container), calc(100% - 3rem));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+}
+
+/* ---------- mono eyebrow labels (brandbook section headers) ---------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--teal-ink);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: var(--teal);
+  flex: none;
+}
+
+.on-navy .eyebrow,
+.eyebrow.light {
+  color: var(--teal);
+}
+
+/* Section heading block */
+.section-head {
+  max-width: 720px;
+  display: grid;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section-head .lede {
+  font-family: var(--font-sub);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(12, 26, 48, 0.75);
+}
+
+.on-navy h1,
+.on-navy h2,
+.on-navy h3 {
+  color: var(--white);
+}
+
+.on-navy .section-head .lede {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sub);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 1.05rem 1.75rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn .arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.btn-teal {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.btn-teal:hover {
+  background: var(--teal-deep);
+}
+
+.btn-navy {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.btn-navy:hover {
+  background: var(--navy-deep);
+}
+
+.btn-ghost {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--white);
+}
+
+.btn-ghost:hover {
+  border-color: var(--white);
+}
+
+.btn-outline {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.btn-outline:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ---------- keyword pills (brandbook path tags) ---------- */
+
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--mist);
+  border-radius: 999px;
+  color: rgba(12, 26, 48, 0.75);
+  background: var(--white);
+  white-space: nowrap;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+/* ---------- fine print ---------- */
+
+.fine {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+  color: rgba(12, 26, 48, 0.6);
+}
+
+.on-navy .fine {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* ---------- scroll reveal ----------
+   Hidden state only applies when JS has tagged <html class="js">,
+   so content is never lost without JavaScript. */
+
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+html.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .btn,
+  .btn .arrow {
+    transition: none;
+  }
+}
+
+/* Long CTA labels must wrap on small phones instead of overflowing */
+@media (max-width: 480px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+}

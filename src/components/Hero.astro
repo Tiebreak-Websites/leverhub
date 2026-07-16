@@ -1,0 +1,231 @@
+---
+// Hero — cinematic image treatment per client visual reference.
+// Image lives at /images/hero.jpg (AI-generated placeholder, swappable).
+const positioning = [
+  {
+    strong: "More practical.",
+    rest: "vs. a finance course",
+    icon: `<circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10.2c.5-.8 1.4-1.2 2.5-1.2 1.5 0 2.5.8 2.5 2s-1 1.7-2.5 2c-1.5.3-2.5.8-2.5 2s1 2 2.5 2c1.1 0 2-.4 2.5-1.2"/>`,
+  },
+  {
+    strong: "More personal.",
+    rest: "vs. a trading academy",
+    icon: `<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19.5c1-3.2 3.4-4.8 6.5-4.8s5.5 1.6 6.5 4.8"/>`,
+  },
+  {
+    strong: "More aspirational.",
+    rest: "vs. a budgeting app",
+    icon: `<path d="M13.5 3.5 6.5 13h4.5l-.5 7.5L17.5 11H13l.5-7.5Z"/>`,
+  },
+  {
+    strong: "More structured.",
+    rest: "vs. random fin-content",
+    icon: `<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 12.5h6M9 16h3.5"/>`,
+  },
+];
+---
+
+<section class="hero on-navy" id="top">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="container inner">
+    <div class="intro">
+      <p class="eyebrow light reveal">Personal money &middot; Markets &middot; Trading academy</p>
+
+      <h1 class="reveal">It starts with <em>you</em>,<br />not the charts.</h1>
+
+      <p class="tagline reveal">Your financial transformation begins from within.</p>
+
+      <p class="descriptor reveal">
+        A personal finance, markets and trading academy that helps you understand your
+        situation, learn how money and markets move, take control and build a better
+        work-life balance.
+      </p>
+
+      <div class="actions reveal">
+        <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <p class="microcopy reveal">
+        <span class="play-dot" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="10" height="10"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
+        </span>
+        Start your journey. Not your trades.
+      </p>
+    </div>
+
+    <ul class="positioning reveal" aria-label="What makes LeverHub different at a glance">
+      {
+        positioning.map((item) => (
+          <li>
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
+            </span>
+            <span class="text">
+              <strong>{item.strong}</strong>
+              <span>{item.rest}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--navy-deep);
+    color: var(--white);
+    padding-top: clamp(7.5rem, 12vw, 10rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/hero.jpg");
+    background-size: cover;
+    background-position: 62% center;
+  }
+
+  .veil {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(14, 39, 80, 0.94) 0%, rgba(14, 39, 80, 0.72) 34%, rgba(14, 39, 80, 0.28) 62%, rgba(14, 39, 80, 0.55) 100%),
+      linear-gradient(180deg, rgba(14, 39, 80, 0.55) 0%, rgba(14, 39, 80, 0) 30%, rgba(14, 39, 80, 0.65) 100%);
+  }
+
+  .inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .intro {
+    display: grid;
+    gap: 1.35rem;
+    justify-items: start;
+    max-width: 560px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--teal);
+  }
+
+  .tagline {
+    font-family: var(--font-sub);
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .descriptor {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 1.02rem;
+    max-width: 46ch;
+  }
+
+  .actions {
+    margin-top: 0.35rem;
+  }
+
+  .microcopy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .play-dot {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--white);
+  }
+
+  .positioning {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+    align-content: center;
+  }
+
+  .positioning li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-sm);
+    background: rgba(14, 39, 80, 0.55);
+    backdrop-filter: blur(6px);
+  }
+
+  .icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(47, 174, 155, 0.5);
+    color: var(--teal);
+  }
+
+  .icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .text {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .positioning strong {
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--white);
+  }
+
+  .positioning .text > span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 900px) {
+    .inner {
+      grid-template-columns: 1fr;
+    }
+
+    .bg {
+      background-position: 70% center;
+    }
+
+    .positioning {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .positioning {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

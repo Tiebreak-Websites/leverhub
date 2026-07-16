@@ -1,46 +1,72 @@
-# Astro Starter Kit: Basics
+# LeverHub — Marketing Website
+
+The public marketing site for **LeverHub**, a personal money, markets and trading academy.
+Built with [Astro](https://astro.build). Design follows the **LeverHub Brand Book v2.0**
+("It starts with you — not the charts").
+
+## Running locally
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+astro dev --background   # dev server at http://localhost:4321
+astro dev status         # check it
+astro dev logs           # tail logs
+astro dev stop           # stop it
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`npm run build` produces the production site in `./dist/`.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── styles/global.css        # brand design tokens (colors, type, buttons, pills)
+├── layouts/Layout.astro     # head, fonts (Tilt Warp / Poppins / Inter / Space Mono), reveal script
+├── pages/index.astro        # homepage assembly
+└── components/              # one section per component, in page order:
+    Header, Hero, VideoIntro, Differences, Path, PersonalHub,
+    Academy, Practice, Access, Testimonials, Faq, CtaBand, Footer
+    + Logo.astro             # logo lockup (mark + wordmark)
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Pending assets
 
-## 🧞 Commands
+- **Intro video** — `src/components/VideoIntro.astro` currently renders a designed
+  placeholder. When the final cut is delivered, drop it at
+  `public/media/leverhub-intro.mp4` and follow the swap instructions in the
+  component's comment.
+- **Legal pages** — footer links (Terms, Privacy, Risk Disclosure, Cookies) are
+  placeholders pending final legal copy.
 
-All commands are run from the root of the project, from a terminal:
+The official logo lockup is integrated in `src/components/Logo.astro` (navy and
+reversed white variants) with raw files at `public/images/leverhub-logo.svg` and
+`public/images/leverhub-logo-white.svg`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Staging deployment
 
-## 👀 Want to learn more?
+Deployed to Cloudflare Pages (`npx wrangler pages deploy dist --project-name leverhub`).
+The deployment is gated by HTTP Basic Auth via `functions/_middleware.js`
+(user `parola` / password `parola`) — remove that file to go public.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Brand quick reference
+
+| Token | Value | Use |
+| :-- | :-- | :-- |
+| Lever Navy | `#173C77` | primary / structure |
+| Deep Navy | `#0E2750` | depth, dark panels |
+| Pivot Teal | `#2FAE9B` | single accent — buttons, icons, fills only |
+| Teal Deep | `#208C7C` | teal-colored text & hovers (AA) |
+| Teal Wash | `#E2F3F0` | soft fills |
+| Paper | `#F6F7F9` | page background |
+| Ink | `#0C1A30` | body copy |
+
+Type: **Tilt Warp** (H1–H3 only, never bold) · **Poppins** (subheads, buttons) ·
+**Inter** (body) · **Space Mono** (labels, fine print).
+
+Compliance: LeverHub is never the broker; no profit promises; risk disclosure must
+accompany every broker/trading mention. See the brand book §09 before editing copy.
+
+## Localization
+
+English only for now. PL, SWE and IT will be added later (deliberately not scaffolded
+in advance).

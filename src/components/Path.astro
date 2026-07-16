@@ -1,0 +1,181 @@
+---
+// The LeverHub Path — horizontal five-step layout per client visual reference.
+const steps = [
+  {
+    title: "Where you are",
+    body: "Money, time, stress, habits, balance. Before you learn anything, you see yourself clearly.",
+    icon: `<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19.5c1-3.2 3.4-4.8 6.5-4.8s5.5 1.6 6.5 4.8"/>`,
+  },
+  {
+    title: "Your money situation",
+    body: "Inflation. Interest rates. Central banks. How the economy affects your everyday life — explained without jargon.",
+    icon: `<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.1 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.1-3.6-8.5S9.6 5.8 12 3.5Z"/>`,
+  },
+  {
+    title: "How markets work",
+    body: "News, data, sentiment, price movement. You start reading the world around you differently.",
+    icon: `<path d="M7 8v8M7 6v2M7 16v2M12 5v6M12 3v2M12 11v2M17 10v8M17 8v2M17 18v2"/><rect x="5.5" y="9" width="3" height="5" rx="0.8"/><rect x="10.5" y="6" width="3" height="4" rx="0.8"/><rect x="15.5" y="11" width="3" height="5" rx="0.8"/>`,
+  },
+  {
+    title: "Take action",
+    body: "Academy content, broker review, connected dashboard, trading journal. Learning becomes doing.",
+    icon: `<path d="M13.5 3.5 6.5 13h4.5l-.5 7.5L17.5 11H13l.5-7.5Z"/>`,
+  },
+  {
+    title: "Work-life balance",
+    body: "Not just financially. More control, more confidence, more structure. That is the real goal.",
+    icon: `<path d="M12 4v16M6 20h12M12 6.5 6.5 8M12 6.5 17.5 8M6.5 8 4 13a2.6 2.6 0 0 0 5 0L6.5 8ZM17.5 8 15 13a2.6 2.6 0 0 0 5 0L17.5 8Z"/>`,
+  },
+];
+---
+
+<section class="section path" id="path">
+  <div class="container">
+    <div class="head reveal">
+      <p class="eyebrow centered">The LeverHub Path</p>
+      <h2>Five steps. <em>One direction.</em> Your pace.</h2>
+      <p class="lede">The Path is personal before it is technical &mdash; and it ends with life, not with a trade.</p>
+    </div>
+
+    <ol class="steps">
+      {
+        steps.map((step, i) => (
+          <li class="step reveal">
+            <span class="node" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={step.icon} />
+            </span>
+            <span class="num">Step 0{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="fine disclosure reveal">
+      LeverHub is not a broker &mdash; broker accounts are opened directly with independent
+      third parties. Trading involves risk, including the loss of capital.
+    </p>
+  </div>
+</section>
+
+<style>
+  .path {
+    background: var(--white);
+    border-block: 1px solid var(--mist);
+  }
+
+  .head {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .head h2 em {
+    font-style: normal;
+    color: var(--teal-deep);
+  }
+
+  .head .lede {
+    font-family: var(--font-sub);
+    font-weight: 500;
+    color: rgba(12, 26, 48, 0.75);
+    font-size: 1.05rem;
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+
+  .step {
+    display: grid;
+    gap: 0.55rem;
+    justify-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  /* dotted connector between nodes */
+  .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 33px;
+    left: calc(50% + 44px);
+    width: calc(100% + 1.5rem - 88px);
+    border-top: 2px dotted #bcd9d2;
+  }
+
+  .node {
+    display: grid;
+    place-items: center;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    border: 1.5px solid var(--teal);
+    color: var(--teal-deep);
+    background: var(--white);
+    box-shadow: 0 0 0 6px rgba(47, 174, 155, 0.08);
+    margin-bottom: 0.5rem;
+  }
+
+  .node svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+  }
+
+  .disclosure {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.12rem;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: rgba(12, 26, 48, 0.75);
+    max-width: 24ch;
+  }
+
+  @media (max-width: 960px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+      max-width: 620px;
+      margin-inline: auto;
+    }
+
+    .step::after {
+      display: none;
+    }
+
+    .step:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

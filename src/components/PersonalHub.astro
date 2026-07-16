@@ -1,0 +1,175 @@
+---
+// Personal Hub — intro rail + five icon cards per client visual reference.
+const cards = [
+  {
+    tag: "Snapshot",
+    title: "Life & Money Snapshot",
+    body: "Answer a few honest questions about your income, spending, time, stress and habits. LeverHub turns your answers into a clear picture of where you stand today — and where you can go.",
+    icon: `<rect x="4" y="6.5" width="16" height="13" rx="2.5"/><path d="M9 6.5 10.2 4h3.6L15 6.5"/><circle cx="12" cy="12.8" r="3.2"/>`,
+  },
+  {
+    tag: "Score",
+    title: "LeverHub Balance Score",
+    body: "Your personal score across five areas: Money Control, Time Balance, Market Understanding, Growth Readiness and Trading Readiness. It changes as you do.",
+    icon: `<path d="M5 15.5a7 7 0 1 1 14 0"/><path d="M12 15.5 15.5 10"/><path d="M4.5 19h15"/>`,
+  },
+  {
+    tag: "Goals",
+    title: "Personal Goals",
+    body: "A car. A home. An emergency fund. A better routine. Define what you actually want — and connect it to your learning path.",
+    icon: `<path d="M6 21V4"/><path d="M6 5h11.5l-2.6 3.5L17.5 12H6"/>`,
+  },
+  {
+    tag: "Coach",
+    title: "Progress Coach",
+    body: "A real person who helps you complete your Snapshot, define your goals, personalise your learning path and keep you moving forward.",
+    icon: `<circle cx="9.5" cy="9" r="3.2"/><path d="M3.8 19.5c.9-2.9 3-4.4 5.7-4.4 2.7 0 4.8 1.5 5.7 4.4"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.2M17.5 15.3c1.6.6 2.7 1.9 3.2 4.2"/>`,
+  },
+  {
+    tag: "Dashboard",
+    title: "All in One Dashboard",
+    body: "Your learning, your activity, your journal and your progress — together in one place once you connect.",
+    icon: `<rect x="3.5" y="5" width="17" height="12" rx="2"/><path d="M8.5 21h7M12 17v4M7 13.5l2.5-2.5 2 2 3.5-3.5"/>`,
+  },
+];
+---
+
+<section class="section hub" id="hub">
+  <div class="container inner">
+    <div class="rail reveal">
+      <p class="eyebrow">Personal Hub</p>
+      <h2>Your LeverHub, built around your life.<br /><em>Everything in one place.</em></h2>
+      <p class="lede">
+        When you join, you get access to your Personal Hub &mdash; a space designed
+        entirely around you.
+      </p>
+      <p class="note">You do not need to fill everything in on day one. The important thing is to start.</p>
+      <a href="#access" class="btn btn-teal">Open My Personal Hub <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+
+    <div class="grid">
+      {
+        cards.map((card) => (
+          <article class="card feature reveal">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon} />
+            </span>
+            <span class="tag">{card.tag}</span>
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.6fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .rail {
+    position: sticky;
+    top: 110px;
+    display: grid;
+    gap: 1.15rem;
+    justify-items: start;
+  }
+
+  .rail h2 em {
+    font-style: normal;
+    color: var(--teal-deep);
+  }
+
+  .rail .lede {
+    font-family: var(--font-sub);
+    font-weight: 500;
+    color: rgba(12, 26, 48, 0.75);
+    font-size: 1.05rem;
+  }
+
+  .note {
+    color: rgba(12, 26, 48, 0.75);
+    font-size: 0.95rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--teal-wash);
+    border: 1px solid #c6e7e0;
+    border-radius: var(--radius-sm);
+    max-width: 40ch;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+
+  .feature {
+    padding: 1.6rem;
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .feature .icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    border: 1px solid #bcd9d2;
+    background: var(--teal-wash);
+    color: var(--teal-deep);
+    margin-bottom: 0.35rem;
+  }
+
+  .feature .icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .feature .tag {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+  }
+
+  .feature h3 {
+    font-size: 1.08rem;
+  }
+
+  .feature p {
+    color: rgba(12, 26, 48, 0.75);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 960px) {
+    .inner {
+      grid-template-columns: 1fr;
+    }
+
+    .rail {
+      position: static;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
