@@ -1,6 +1,7 @@
 ---
-// Introduction video — centered "stage" treatment. The play button is the one
-// call to action; heading and lede sit above the player.
+// Introduction video — dark "theater" continuation of the hero. A chart line
+// draws itself across the section as you scroll (the signature interaction),
+// and a soft teal glow sits behind the player.
 // Final video pending: drop it at public/media/leverhub-intro.mp4 and replace
 // the .player markup with:
 //   <video controls preload="metadata" poster="/images/video-poster.jpg">
@@ -8,7 +9,25 @@
 //   </video>
 ---
 
-<section class="section video-section" id="video">
+<section class="section video-section on-navy" id="video" data-theater>
+  <svg class="chartline" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      class="cl"
+      d="M0,225 C140,205 210,150 330,160 S540,80 690,100 S980,25 1200,45"
+      fill="none"
+      stroke="url(#clgrad)"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      pathLength="100"></path>
+    <defs>
+      <linearGradient id="clgrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="rgba(47,174,155,0)"></stop>
+        <stop offset="0.25" stop-color="rgba(47,174,155,0.55)"></stop>
+        <stop offset="1" stop-color="#2fae9b"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <div class="container">
     <div class="section-head center reveal">
       <h2>See how LeverHub puts <em>you</em> in the center</h2>
@@ -42,17 +61,51 @@
 
 <style>
   .video-section {
-    padding-top: clamp(4rem, 7vw, 6rem);
+    position: relative;
+    overflow: hidden;
+    background: var(--navy-deep);
+    padding-top: clamp(4.5rem, 8vw, 7rem);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+  }
+
+  /* Scroll-drawn chart line across the section top */
+  .chartline {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    width: 100%;
+    height: clamp(140px, 22vw, 260px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .cl {
+    stroke-dasharray: 100;
+    stroke-dashoffset: var(--draw, 100);
+  }
+
+  html:not(.js) .cl {
+    stroke-dashoffset: 0;
   }
 
   h2 em {
     font-style: normal;
-    color: var(--teal-deep);
+    color: var(--teal);
   }
 
   .stage {
+    position: relative;
     max-width: 940px;
     margin-inline: auto;
+  }
+
+  /* Soft teal glow behind the player */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: -14% -18%;
+    background: radial-gradient(55% 55% at 50% 48%, rgba(47, 174, 155, 0.2) 0%, rgba(47, 174, 155, 0) 70%);
+    pointer-events: none;
   }
 
   .player {
@@ -60,7 +113,7 @@
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(12, 26, 48, 0.08), 0 48px 96px -36px rgba(14, 39, 80, 0.55);
+    box-shadow: 0 2px 4px rgba(4, 12, 28, 0.4), 0 48px 96px -36px rgba(4, 12, 28, 0.9);
     background: var(--navy-deep);
   }
 
@@ -207,6 +260,10 @@
     .player:hover .poster {
       transform: none;
     }
+
+    .cl {
+      stroke-dashoffset: 0 !important;
+    }
   }
 </style>
 
@@ -221,4 +278,24 @@
       timer = setTimeout(() => player?.classList.remove("show-soon"), 2400);
     }),
   );
+
+  // Scroll-linked chart line: draws in as the section moves through the viewport.
+  const theater = document.querySelector<HTMLElement>("[data-theater]");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (theater && !reduced) {
+    // Direct update on scroll — a single getBoundingClientRect is cheap, and
+    // this stays correct even where requestAnimationFrame is throttled.
+    const update = () => {
+      const rect = theater.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0 when the section top enters the viewport, 1 once it's ~65% through
+      const progress = Math.min(Math.max((vh - rect.top) / (vh * 0.65 + rect.height * 0.35), 0), 1);
+      theater.style.setProperty("--draw", String(100 - progress * 100));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+  } else if (theater) {
+    theater.style.setProperty("--draw", "0");
+  }
 </script>

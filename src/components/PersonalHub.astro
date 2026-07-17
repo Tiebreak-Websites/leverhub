@@ -174,14 +174,27 @@
     grid-column: span 3;
   }
 
-  /* Balance Score — full-width dark banner with the gauge */
+  /* Balance Score — full-width dark banner with the gauge and a soft glow */
   .score {
+    position: relative;
+    overflow: hidden;
     grid-column: 1 / -1;
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: clamp(1.5rem, 4vw, 3rem);
     background: var(--navy-deep);
-    border-color: var(--navy-deep);
+  }
+
+  .score::before {
+    content: "";
+    position: absolute;
+    inset: -40% 60% -40% -15%;
+    background: radial-gradient(60% 80% at 30% 50%, rgba(47, 174, 155, 0.22) 0%, rgba(47, 174, 155, 0) 70%);
+    pointer-events: none;
+  }
+
+  .score > * {
+    position: relative;
   }
 
   .score h3 {

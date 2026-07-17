@@ -268,10 +268,20 @@ const journal = [
   /* ---------- dashboard mockup ---------- */
 
   .mock-wrap {
+    position: relative;
     display: grid;
     gap: 0.9rem;
     justify-items: center;
     perspective: 1400px;
+  }
+
+  /* Soft glow behind the dashboard mock */
+  .mock-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -12% -16%;
+    background: radial-gradient(55% 55% at 50% 45%, rgba(47, 174, 155, 0.16) 0%, rgba(47, 174, 155, 0) 70%);
+    pointer-events: none;
   }
 
   .mock {

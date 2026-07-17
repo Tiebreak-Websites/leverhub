@@ -77,6 +77,8 @@ const explore = [
   }
 
   .cta-panel {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -88,6 +90,19 @@ const explore = [
     background: linear-gradient(120deg, var(--navy) 0%, #12305f 100%);
     border: 1px solid var(--line-inverse);
     width: min(var(--container), calc(100% - 3rem));
+  }
+
+  .cta-panel::after {
+    content: "";
+    position: absolute;
+    inset: -50% -20% 20% 55%;
+    background: radial-gradient(55% 70% at 65% 40%, rgba(47, 174, 155, 0.22) 0%, rgba(47, 174, 155, 0) 70%);
+    pointer-events: none;
+  }
+
+  .cta-panel > * {
+    position: relative;
+    z-index: 1;
   }
 
   .cta-copy {
