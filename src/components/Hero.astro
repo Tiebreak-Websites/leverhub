@@ -79,7 +79,18 @@
     display: grid;
     gap: 1.5rem;
     justify-items: start;
-    max-width: 620px;
+  }
+
+  /* Exactly two rows, never wrapping — fluid size keeps the longest line
+     inside the container at every viewport width */
+  h1 {
+    font-size: clamp(1.5rem, 8vw, 5.25rem);
+    white-space: nowrap;
+  }
+
+  .descriptor,
+  .tagline {
+    max-width: 640px;
   }
 
   /* Staggered line-mask headline entrance */

@@ -9,27 +9,9 @@
 //   </video>
 ---
 
-<section class="section video-section on-navy" id="video" data-theater>
-  <svg class="chartline" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
-    <path
-      class="cl"
-      d="M0,225 C140,205 210,150 330,160 S540,80 690,100 S980,25 1200,45"
-      fill="none"
-      stroke="url(#clgrad)"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      pathLength="100"></path>
-    <defs>
-      <linearGradient id="clgrad" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="rgba(47,174,155,0)"></stop>
-        <stop offset="0.25" stop-color="rgba(47,174,155,0.55)"></stop>
-        <stop offset="1" stop-color="#2fae9b"></stop>
-      </linearGradient>
-    </defs>
-  </svg>
-
+<section class="section video-section on-navy" id="video">
   <div class="container">
-    <div class="section-head center reveal">
+    <div class="section-head reveal">
       <h2>See how LeverHub puts <em>you</em> in the center</h2>
       <p class="lede">
         Watch this short video to understand how LeverHub turns your situation, goals and
@@ -68,26 +50,6 @@
     padding-bottom: clamp(5rem, 9vw, 8rem);
   }
 
-  /* Scroll-drawn chart line across the section top */
-  .chartline {
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    width: 100%;
-    height: clamp(140px, 22vw, 260px);
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  .cl {
-    stroke-dasharray: 100;
-    stroke-dashoffset: var(--draw, 100);
-  }
-
-  html:not(.js) .cl {
-    stroke-dashoffset: 0;
-  }
-
   h2 em {
     font-style: normal;
     color: var(--teal);
@@ -96,7 +58,6 @@
   .stage {
     position: relative;
     max-width: 940px;
-    margin-inline: auto;
   }
 
   /* Soft teal glow behind the player */
@@ -260,10 +221,6 @@
     .player:hover .poster {
       transform: none;
     }
-
-    .cl {
-      stroke-dashoffset: 0 !important;
-    }
   }
 </style>
 
@@ -278,24 +235,4 @@
       timer = setTimeout(() => player?.classList.remove("show-soon"), 2400);
     }),
   );
-
-  // Scroll-linked chart line: draws in as the section moves through the viewport.
-  const theater = document.querySelector<HTMLElement>("[data-theater]");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (theater && !reduced) {
-    // Direct update on scroll — a single getBoundingClientRect is cheap, and
-    // this stays correct even where requestAnimationFrame is throttled.
-    const update = () => {
-      const rect = theater.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // 0 when the section top enters the viewport, 1 once it's ~65% through
-      const progress = Math.min(Math.max((vh - rect.top) / (vh * 0.65 + rect.height * 0.35), 0), 1);
-      theater.style.setProperty("--draw", String(100 - progress * 100));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
-  } else if (theater) {
-    theater.style.setProperty("--draw", "0");
-  }
 </script>

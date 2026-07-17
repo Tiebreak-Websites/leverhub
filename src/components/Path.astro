@@ -31,7 +31,7 @@ const steps = [
 
 <section class="section path" id="path">
   <div class="container">
-    <div class="section-head center reveal">
+    <div class="section-head reveal">
       <h2>Five steps. <em>One direction.</em> Your pace.</h2>
       <p class="lede">The Path is personal before it is technical &mdash; and it ends with life, not with a trade.</p>
     </div>
@@ -76,8 +76,8 @@ const steps = [
   .step {
     display: grid;
     gap: 0.55rem;
-    justify-items: center;
-    text-align: center;
+    justify-items: start;
+    text-align: left;
     position: relative;
   }
 
@@ -86,8 +86,8 @@ const steps = [
     content: "";
     position: absolute;
     top: 33px;
-    left: calc(50% + 44px);
-    width: calc(100% + 1.5rem - 88px);
+    left: 82px;
+    width: calc(100% + 1.5rem - 98px);
     border-top: 2px dotted rgba(47, 174, 155, 0.55);
     transform: scaleX(0);
     transform-origin: left center;
@@ -145,12 +145,10 @@ const steps = [
     font-size: 0.88rem;
     line-height: 1.6;
     color: var(--ink-75);
-    max-width: 24ch;
   }
 
   .disclosure {
     margin-top: clamp(2.5rem, 5vw, 3.5rem);
-    text-align: center;
   }
 
   @media (prefers-reduced-motion: reduce) {

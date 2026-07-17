@@ -152,26 +152,12 @@ video {
   padding-block: clamp(3.5rem, 6vw, 5rem);
 }
 
-/* Section heading block — headline leads, no kickers */
+/* Section heading block — headline leads, left-aligned, full section width */
 .section-head {
-  max-width: 680px;
   display: grid;
   gap: 1.1rem;
   margin-bottom: clamp(2.75rem, 6vw, 4.5rem);
-}
-
-.section-head.center {
-  text-align: center;
-  justify-items: center;
-  margin-inline: auto;
-}
-
-.section-head h2 {
-  max-width: 18ch;
-}
-
-.section-head.center h2 {
-  max-width: 22ch;
+  text-align: left;
 }
 
 .lede {
@@ -180,7 +166,6 @@ video {
   font-weight: 500;
   line-height: 1.55;
   color: var(--ink-75);
-  max-width: 52ch;
 }
 
 .on-navy h1,

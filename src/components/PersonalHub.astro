@@ -1,22 +1,21 @@
 ---
-// Personal Hub — rebalanced bento: wide horizontal Snapshot (long copy flows
-// sideways, not down), Goals + Coach as a pair, and the Balance Score as a
-// full-width dark banner with the animated gauge.
+// Personal Hub — bento v3: full-width left-aligned head, then a balanced
+// 4-column bento — wide Snapshot / Goals / Coach on top, dark Balance Score
+// banner and a teal CTA card below.
 ---
 
 <section class="section hub" id="hub">
   <div class="container">
-    <div class="grid stagger">
-      <div class="intro">
-        <h2>Your LeverHub, built around your life</h2>
-        <p class="lede">
-          When you join, you get access to your Personal Hub &mdash; a space designed
-          entirely around you. Four things live inside it.
-        </p>
-        <a href="#access" class="btn btn-teal">Open My Personal Hub</a>
-      </div>
+    <div class="section-head reveal">
+      <h2>Your LeverHub, built around your life</h2>
+      <p class="lede">
+        When you join, you get access to your Personal Hub &mdash; a space designed
+        entirely around you. Four things live inside it.
+      </p>
+    </div>
 
-      <article class="card feature snapshot wash">
+    <div class="grid stagger">
+      <article class="card feature snapshot">
         <span class="icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6.5" width="16" height="13" rx="2.5"/><path d="M9 6.5 10.2 4h3.6L15 6.5"/><circle cx="12" cy="12.8" r="3.2"/></svg>
         </span>
@@ -81,8 +80,15 @@
             Your personal score across five areas: Money Control, Time Balance, Market
             Understanding, Growth Readiness and Trading Readiness. It changes as you do.
           </p>
-          <p class="note">You do not need to fill everything in on day one. The important thing is to start.</p>
         </div>
+      </article>
+
+      <article class="card feature cta-card">
+        <div class="body">
+          <h3>You do not need to fill everything in on day one.</h3>
+          <p>The important thing is to start.</p>
+        </div>
+        <a href="#access" class="btn btn-navy">Open My Personal Hub</a>
       </article>
     </div>
   </div>
@@ -91,25 +97,12 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
   }
 
-  .intro {
-    grid-column: span 2;
-    display: grid;
-    gap: 1.2rem;
-    align-content: center;
-    justify-items: start;
-    padding-right: clamp(0rem, 2vw, 1.5rem);
-  }
-
-  .intro h2 {
-    max-width: 14ch;
-  }
-
   .feature {
-    padding: clamp(1.6rem, 3vw, 2rem);
+    padding: clamp(1.6rem, 3vw, 2.1rem);
     display: grid;
     gap: 1rem;
     align-content: start;
@@ -148,40 +141,27 @@
     line-height: 1.65;
   }
 
-  /* Snapshot — wide horizontal card: long copy flows sideways */
+  /* Row 1: wide Snapshot + Goals + Coach */
   .snapshot {
-    grid-column: span 4;
+    grid-column: span 2;
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 1.5rem;
-  }
-
-  .snapshot p {
-    max-width: 62ch;
-  }
-
-  .feature.wash {
     background: var(--teal-wash);
-    border-color: transparent;
   }
 
-  .feature.wash .icon {
+  .snapshot .icon {
     background: var(--white);
   }
 
-  /* Goals + Coach — the middle pair */
-  .feature:not(.snapshot):not(.score) {
-    grid-column: span 3;
-  }
-
-  /* Balance Score — full-width dark banner with the gauge and a soft glow */
+  /* Row 2: dark Score banner + teal CTA card */
   .score {
     position: relative;
     overflow: hidden;
-    grid-column: 1 / -1;
+    grid-column: span 3;
     grid-template-columns: auto 1fr;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
+    gap: clamp(1.5rem, 3.5vw, 2.75rem);
     background: var(--navy-deep);
   }
 
@@ -203,15 +183,28 @@
 
   .score p {
     color: var(--white-75);
-    max-width: 68ch;
   }
 
-  .score .note {
-    font-family: var(--font-sub);
+  .cta-card {
+    background: var(--teal);
+    align-content: space-between;
+  }
+
+  .cta-card h3 {
+    color: var(--white);
+  }
+
+  .cta-card p {
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    color: var(--teal);
-    font-size: 1.02rem;
-    margin-top: 0.35rem;
+  }
+
+  .cta-card .btn {
+    justify-self: start;
+  }
+
+  .cta-card .btn:hover {
+    background: var(--ink);
   }
 
   .gauge {
@@ -256,24 +249,19 @@
       grid-template-columns: 1fr 1fr;
     }
 
-    .intro,
     .snapshot,
     .score {
       grid-column: 1 / -1;
     }
 
-    .feature:not(.snapshot):not(.score) {
-      grid-column: span 1;
+    .cta-card {
+      grid-column: 1 / -1;
     }
   }
 
   @media (max-width: 640px) {
     .grid {
       grid-template-columns: 1fr;
-    }
-
-    .feature:not(.snapshot):not(.score) {
-      grid-column: 1 / -1;
     }
 
     .snapshot,
