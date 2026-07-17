@@ -1,58 +1,48 @@
 ---
-// Introduction video section (suggested by Andres).
-// The final video has not been delivered yet: the player is a designed placeholder.
-// When the cut arrives, drop it at public/media/leverhub-intro.mp4 and replace the
-// .player markup with:
+// Introduction video — centered "stage" treatment. The play button is the one
+// call to action; heading and lede sit above the player.
+// Final video pending: drop it at public/media/leverhub-intro.mp4 and replace
+// the .player markup with:
 //   <video controls preload="metadata" poster="/images/video-poster.jpg">
 //     <source src="/media/leverhub-intro.mp4" type="video/mp4" />
 //   </video>
 ---
 
-<section class="section tight video-section" id="video">
-  <div class="container inner">
-    <div class="copy reveal">
+<section class="section video-section" id="video">
+  <div class="container">
+    <div class="section-head center reveal">
       <h2>See how LeverHub puts <em>you</em> in the center</h2>
       <p class="lede">
         Watch this short video to understand how LeverHub turns your situation, goals and
         learning into real progress.
       </p>
-      <button class="btn btn-navy watch" type="button" data-video-cta>
-        Watch the video <span class="arrow" aria-hidden="true">&rarr;</span>
-      </button>
     </div>
 
-    <div class="player reveal" data-player>
-      <div class="poster" aria-hidden="true"></div>
-      <div class="shade" aria-hidden="true"></div>
-      <p class="caption">Your financial path<br />starts with <em>you.</em></p>
-      <button class="play" type="button" data-video-cta aria-label="Play the LeverHub introduction video">
-        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
-          <path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path>
-        </svg>
-      </button>
-      <div class="controls" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
-        <span class="time">0:00 / 1:45</span>
-        <span class="spacer"></span>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16.5 9.5a4 4 0 0 1 0 5"/></svg>
+    <div class="stage reveal">
+      <div class="player" data-player>
+        <div class="poster" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+        <p class="caption">Your financial path<br />starts with <em>you.</em></p>
+        <button class="play" type="button" data-video-cta aria-label="Play the LeverHub introduction video">
+          <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+            <path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path>
+          </svg>
+        </button>
+        <div class="controls" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
+          <span class="track"><span class="track-fill"></span></span>
+          <span class="time">0:00 / 1:45</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16.5 9.5a4 4 0 0 1 0 5"/></svg>
+        </div>
+        <span class="soon" data-soon>Final video coming soon</span>
       </div>
-      <span class="soon" data-soon>Final video coming soon</span>
     </div>
   </div>
 </section>
 
 <style>
-  .inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: center;
-  }
-
-  .copy {
-    display: grid;
-    gap: 1.2rem;
-    justify-items: start;
+  .video-section {
+    padding-top: clamp(4rem, 7vw, 6rem);
   }
 
   h2 em {
@@ -60,12 +50,9 @@
     color: var(--teal-deep);
   }
 
-  .copy .lede {
-    max-width: 38ch;
-  }
-
-  .watch {
-    margin-top: 0.3rem;
+  .stage {
+    max-width: 940px;
+    margin-inline: auto;
   }
 
   .player {
@@ -73,7 +60,7 @@
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: var(--shadow-lift);
+    box-shadow: 0 2px 4px rgba(12, 26, 48, 0.08), 0 48px 96px -36px rgba(14, 39, 80, 0.55);
     background: var(--navy-deep);
   }
 
@@ -98,10 +85,10 @@
 
   .caption {
     position: absolute;
-    left: 2rem;
-    top: 1.75rem;
+    left: clamp(1.25rem, 3vw, 2.25rem);
+    top: clamp(1.1rem, 2.5vw, 2rem);
     font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    font-size: clamp(1.25rem, 2.6vw, 1.9rem);
     line-height: 1.25;
     color: var(--white);
     text-shadow: 0 2px 18px rgba(6, 16, 34, 0.55);
@@ -119,8 +106,8 @@
     transform: translate(-50%, -50%);
     display: grid;
     place-items: center;
-    width: 76px;
-    height: 76px;
+    width: 84px;
+    height: 84px;
     border: 0;
     border-radius: 50%;
     background: var(--teal);
@@ -136,7 +123,7 @@
       box-shadow: 0 0 0 0 rgba(47, 174, 155, 0.45);
     }
     70% {
-      box-shadow: 0 0 0 22px rgba(47, 174, 155, 0);
+      box-shadow: 0 0 0 24px rgba(47, 174, 155, 0);
     }
     100% {
       box-shadow: 0 0 0 0 rgba(47, 174, 155, 0);
@@ -159,9 +146,25 @@
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    padding: 0.8rem 1.25rem;
+    padding: 0.85rem 1.25rem;
     color: var(--white-85);
     background: linear-gradient(180deg, transparent, rgba(6, 16, 34, 0.65));
+  }
+
+  .track {
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+  }
+
+  .track-fill {
+    display: block;
+    width: 12%;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--teal);
   }
 
   .time {
@@ -170,14 +173,10 @@
     letter-spacing: 0.06em;
   }
 
-  .spacer {
-    flex: 1;
-  }
-
   .soon {
     position: absolute;
     left: 50%;
-    bottom: 3.6rem;
+    bottom: 3.9rem;
     transform: translateX(-50%) translateY(8px);
     font-family: var(--font-mono);
     font-size: 0.68rem;
@@ -208,30 +207,15 @@
       transform: none;
     }
   }
-
-  @media (max-width: 860px) {
-    .inner {
-      grid-template-columns: 1fr;
-    }
-
-    .caption {
-      left: 1.25rem;
-      top: 1.1rem;
-    }
-  }
 </style>
 
 <script>
   // Placeholder behavior until the final video is delivered.
   const player = document.querySelector("[data-player]");
   let timer: ReturnType<typeof setTimeout> | undefined;
-  const scrollBehavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ? ("auto" as const)
-    : ("smooth" as const);
   document.querySelectorAll("[data-video-cta]").forEach((el) =>
     el.addEventListener("click", () => {
       player?.classList.add("show-soon");
-      player?.scrollIntoView({ behavior: scrollBehavior, block: "center" });
       clearTimeout(timer);
       timer = setTimeout(() => player?.classList.remove("show-soon"), 2400);
     }),

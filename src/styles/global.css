@@ -331,13 +331,13 @@ html.js .stagger.in > * {
   transform: none;
 }
 
-html.js .stagger.in > *:nth-child(2) { transition-delay: 0.08s; }
-html.js .stagger.in > *:nth-child(3) { transition-delay: 0.16s; }
-html.js .stagger.in > *:nth-child(4) { transition-delay: 0.24s; }
-html.js .stagger.in > *:nth-child(5) { transition-delay: 0.32s; }
-html.js .stagger.in > *:nth-child(6) { transition-delay: 0.4s; }
-html.js .stagger.in > *:nth-child(7) { transition-delay: 0.48s; }
-html.js .stagger.in > *:nth-child(8) { transition-delay: 0.56s; }
+html.js .stagger.in > *:nth-child(2) { transition-delay: 0.05s; }
+html.js .stagger.in > *:nth-child(3) { transition-delay: 0.1s; }
+html.js .stagger.in > *:nth-child(4) { transition-delay: 0.15s; }
+html.js .stagger.in > *:nth-child(5) { transition-delay: 0.2s; }
+html.js .stagger.in > *:nth-child(6) { transition-delay: 0.25s; }
+html.js .stagger.in > *:nth-child(7) { transition-delay: 0.3s; }
+html.js .stagger.in > *:nth-child(8) { transition-delay: 0.35s; }
 
 /* Progress bars — width set inline, entrance animated via scaleX */
 html.js .grow-bar {

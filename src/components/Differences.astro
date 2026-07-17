@@ -1,21 +1,20 @@
 ---
-// "What makes LeverHub different" — three editorial rows instead of a boxed grid.
-// The client's middle column ("what you actually need") becomes the row heading
-// that bridges the ✕ standard-academy line and the ✓ LeverHub line.
+// "What makes LeverHub different" — split-panel contrast: the standard academy
+// on dark, the LeverHub way on light, rows aligned so each pain meets its answer.
 const rows = [
   {
-    need: "To understand where you are.",
     standard: "Charts on day 1.",
+    need: "To understand where you are",
     leverhub: "Assesses your finances, your time, and your goals.",
   },
   {
-    need: "To know what you want.",
     standard: "Jargon on day 2.",
+    need: "To know what you want",
     leverhub: "Then takes you to the markets — when you are ready.",
   },
   {
-    need: "To learn at a pace that fits your life.",
     standard: "Overwhelmed by day 3.",
+    need: "To learn at a pace that fits your life",
     leverhub: "Makes a seamless transition between learning and practice.",
   },
 ];
@@ -23,102 +22,148 @@ const rows = [
 
 <section class="section" id="different">
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head center reveal">
       <h2>What makes LeverHub different</h2>
       <p class="lede">Other academies start with the market. We start with you.</p>
     </div>
 
-    <div class="legend reveal" aria-hidden="true">
-      <span>What you actually need</span>
-      <span class="muted">A standard trading academy</span>
-      <span class="teal">What LeverHub provides</span>
-    </div>
+    <div class="duel reveal">
+      <div class="panel them" aria-label="A standard trading academy">
+        <p class="panel-title">A standard trading academy</p>
+        <ul>
+          {
+            rows.map((row) => (
+              <li>
+                <span class="glyph no" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </span>
+                {row.standard}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
-    <ol class="rows stagger">
-      {
-        rows.map((row) => (
-          <li class="row">
-            <h3>{row.need}</h3>
-            <p class="them">
-              <span class="glyph no" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-              </span>
-              <span class="sr-label">A standard trading academy: </span>
-              {row.standard}
-            </p>
-            <p class="us">
-              <span class="glyph yes" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 12.5l5 5L20 6.5" />
-                </svg>
-              </span>
-              <span class="sr-label">What LeverHub provides: </span>
-              {row.leverhub}
-            </p>
-          </li>
-        ))
-      }
-    </ol>
+      <div class="panel us" aria-label="What LeverHub provides">
+        <p class="panel-title">
+          The LeverHub way
+          <svg class="mark" viewBox="0 0 127 156" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#173c77" d="M101.109 0H50.5532V68.789L75.8309 51.8152V25.3138H101.109V156C115.069 156 126.386 144.666 126.386 130.686V25.3138C126.386 11.3338 115.069 0 101.109 0Z"></path>
+            <path fill="#2fae9b" d="M50.5554 130.686H25.2777V0C11.3176 0 0 11.3338 0 25.3138V130.686C0 144.666 11.3176 156 25.2777 156H75.8331V82.291L50.5554 99.2648V130.686Z"></path>
+          </svg>
+        </p>
+        <ul>
+          {
+            rows.map((row) => (
+              <li>
+                <span class="glyph yes" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12.5l5 5L20 6.5" />
+                  </svg>
+                </span>
+                <span class="pair">
+                  <span class="need">{row.need}</span>
+                  <span class="provide">{row.leverhub}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  .legend {
+  .duel {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.3fr);
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-60);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    max-width: 1040px;
+    margin-inline: auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lift);
   }
 
-  .legend .teal {
-    color: var(--teal-ink);
+  .panel {
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    display: grid;
+    align-content: start;
+    gap: 1.5rem;
   }
 
-  .rows {
+  .panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .panel ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
   }
 
-  .row {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.3fr);
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    align-items: center;
-    padding-block: clamp(1.5rem, 3vw, 2.25rem);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .row h3 {
-    max-width: 18ch;
-  }
-
-  .them,
-  .us {
+  .panel li {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    font-size: 1rem;
-    line-height: 1.55;
+    gap: 1rem;
+    min-height: 108px;
+    padding-block: 1rem;
   }
 
+  /* Them — dark, muted */
   .them {
-    color: var(--ink-60);
+    background: var(--navy-deep);
   }
 
+  .them .panel-title {
+    color: var(--white-58);
+  }
+
+  .them li {
+    color: var(--white-75);
+    font-size: 1.02rem;
+    border-bottom: 1px solid var(--line-inverse);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+    text-decoration-thickness: 1px;
+  }
+
+  .them li:last-child {
+    border-bottom: 0;
+  }
+
+  /* Us — light, winning */
   .us {
-    color: var(--ink);
-    font-weight: 500;
+    background: var(--white);
+  }
+
+  .us .panel-title {
+    color: var(--navy);
+  }
+
+  .us .mark {
+    height: 26px;
+    width: auto;
+    flex: none;
+  }
+
+  .us li {
+    border-bottom: 1px solid var(--line);
+    align-items: flex-start;
+    padding-block: 1.1rem;
+  }
+
+  .us li:last-child {
+    border-bottom: 0;
   }
 
   .glyph {
@@ -130,9 +175,13 @@ const rows = [
     border-radius: 50%;
   }
 
+  .us .glyph {
+    margin-top: 0.15rem;
+  }
+
   .glyph.no {
-    background: var(--mist);
-    color: var(--ink-60);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white-58);
   }
 
   .glyph.yes {
@@ -140,32 +189,36 @@ const rows = [
     color: var(--white);
   }
 
-  .sr-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
+  .pair {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .need {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+  }
+
+  .provide {
+    font-family: var(--font-sub);
+    font-weight: 500;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--ink);
   }
 
   @media (max-width: 820px) {
-    .legend {
-      display: none;
-    }
-
-    .rows {
-      border-top: 1px solid var(--line);
-    }
-
-    .row {
+    .duel {
       grid-template-columns: 1fr;
-      gap: 0.9rem;
-      align-items: start;
     }
 
-    .row h3 {
-      max-width: none;
+    .panel li,
+    .us li {
+      min-height: 0;
     }
   }
 </style>

@@ -1,28 +1,6 @@
 ---
-// Hero — cinematic image treatment per client visual reference.
-// Headline enters with a staggered line-mask; the image breathes (Ken Burns).
-const positioning = [
-  {
-    strong: "More practical.",
-    rest: "vs. a financial course",
-    icon: `<circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10.2c.5-.8 1.4-1.2 2.5-1.2 1.5 0 2.5.8 2.5 2s-1 1.7-2.5 2c-1.5.3-2.5.8-2.5 2s1 2 2.5 2c1.1 0 2-.4 2.5-1.2"/>`,
-  },
-  {
-    strong: "More personal.",
-    rest: "vs. a trading academy",
-    icon: `<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19.5c1-3.2 3.4-4.8 6.5-4.8s5.5 1.6 6.5 4.8"/>`,
-  },
-  {
-    strong: "More aspirational.",
-    rest: "vs. a budgeting app",
-    icon: `<path d="M13.5 3.5 6.5 13h4.5l-.5 7.5L17.5 11H13l.5-7.5Z"/>`,
-  },
-  {
-    strong: "More structured.",
-    rest: "vs. random financial content",
-    icon: `<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 12.5h6M9 16h3.5"/>`,
-  },
-];
+// Hero — pure cinematic treatment. No side rail: the text column owns the left,
+// the silhouette in the artwork owns the right. One primary CTA.
 ---
 
 <section class="hero on-navy" id="top">
@@ -36,53 +14,45 @@ const positioning = [
         <span class="line"><span class="line-inner">not the charts.</span></span>
       </h1>
 
-      <p class="tagline rise" style="--d: 0.45s">Your financial transformation begins from within.</p>
+      <p class="tagline rise" style="--d: 0.4s">Your financial transformation begins from within.</p>
 
-      <p class="descriptor rise" style="--d: 0.55s">
+      <p class="descriptor rise" style="--d: 0.5s">
         A personal finance, markets and trading academy that helps you understand your
         situation, learn how money and markets move, take control and build a better
         work-life balance.
       </p>
 
-      <div class="actions rise" style="--d: 0.65s">
+      <div class="actions rise" style="--d: 0.6s">
         <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
         <a href="#video" class="btn btn-ghost">Watch the intro</a>
       </div>
 
-      <p class="microcopy rise" style="--d: 0.75s">
+      <p class="microcopy rise" style="--d: 0.7s">
         <span class="play-dot" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="10" height="10"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
         </span>
         Start your journey. Not your trades.
       </p>
     </div>
-
-    <ul class="positioning" aria-label="What makes LeverHub different at a glance">
-      {
-        positioning.map((item, i) => (
-          <li class="rise" style={`--d: ${0.55 + i * 0.12}s`}>
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
-            </span>
-            <span class="text">
-              <strong>{item.strong}</strong>
-              <span>{item.rest}</span>
-            </span>
-          </li>
-        ))
-      }
-    </ul>
   </div>
+
+  <a href="#video" class="scroll-cue rise" style="--d: 1s" aria-label="Scroll to the introduction video">
+    <span class="cue-line" aria-hidden="true"></span>
+    Scroll
+  </a>
 </section>
 
 <style>
   .hero {
     position: relative;
+    display: grid;
+    align-items: center;
+    min-height: min(92vh, 880px);
     overflow: hidden;
     background: var(--navy-deep);
     color: var(--white);
-    padding-top: clamp(8rem, 13vw, 11rem);
-    padding-bottom: clamp(4.5rem, 8vw, 7rem);
+    padding-top: clamp(7rem, 11vw, 9rem);
+    padding-bottom: clamp(5rem, 8vw, 7rem);
   }
 
   .bg {
@@ -90,7 +60,7 @@ const positioning = [
     inset: 0;
     background-image: url("/images/hero.jpg");
     background-size: cover;
-    background-position: 62% center;
+    background-position: 68% center;
     animation: kenburns 26s ease-in-out infinite alternate;
     will-change: transform;
   }
@@ -104,27 +74,24 @@ const positioning = [
     }
   }
 
+  /* Text side dark, image side open — the silhouette stays visible */
   .veil {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(90deg, rgba(14, 39, 80, 0.94) 0%, rgba(14, 39, 80, 0.72) 34%, rgba(14, 39, 80, 0.28) 62%, rgba(14, 39, 80, 0.55) 100%),
-      linear-gradient(180deg, rgba(14, 39, 80, 0.55) 0%, rgba(14, 39, 80, 0) 30%, rgba(14, 39, 80, 0.65) 100%);
+      linear-gradient(90deg, rgba(14, 39, 80, 0.92) 0%, rgba(14, 39, 80, 0.66) 38%, rgba(14, 39, 80, 0.12) 68%, rgba(14, 39, 80, 0.3) 100%),
+      linear-gradient(180deg, rgba(14, 39, 80, 0.5) 0%, rgba(14, 39, 80, 0) 30%, rgba(14, 39, 80, 0.55) 100%);
   }
 
   .inner {
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
-    gap: clamp(2.5rem, 6vw, 5.5rem);
-    align-items: center;
   }
 
   .intro {
     display: grid;
-    gap: 1.4rem;
+    gap: 1.5rem;
     justify-items: start;
-    max-width: 580px;
+    max-width: 620px;
   }
 
   /* Staggered line-mask headline entrance */
@@ -139,7 +106,7 @@ const positioning = [
   .line-inner {
     display: block;
     transform: translateY(115%);
-    transition: transform 0.95s var(--ease-out);
+    transition: transform 0.9s var(--ease-out);
   }
 
   html.js .in .line-inner,
@@ -148,27 +115,28 @@ const positioning = [
   }
 
   .line:nth-child(2) .line-inner {
-    transition-delay: 0.14s;
+    transition-delay: 0.12s;
   }
 
   .tagline {
     font-family: var(--font-sub);
-    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    font-size: clamp(1.15rem, 1.9vw, 1.35rem);
     font-weight: 600;
     color: var(--white);
   }
 
   .descriptor {
     color: var(--white-75);
-    font-size: 1.02rem;
-    max-width: 46ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 52ch;
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.9rem;
-    margin-top: 0.35rem;
+    margin-top: 0.5rem;
   }
 
   .microcopy {
@@ -191,60 +159,55 @@ const positioning = [
     color: var(--white);
   }
 
-  /* Positioning rail — hairline rows, no boxes */
-  .positioning {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    align-content: center;
-  }
-
-  .positioning li {
-    display: flex;
+  /* Quiet scroll cue, bottom-left */
+  .scroll-cue {
+    position: absolute;
+    left: max(calc((100% - var(--container)) / 2), 1.5rem);
+    bottom: 2rem;
+    display: inline-flex;
     align-items: center;
-    gap: 1.1rem;
-    padding-block: 1.05rem;
-    border-bottom: 1px solid var(--line-inverse);
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--white-58);
+    transition: color 0.2s ease;
   }
 
-  .positioning li:last-child {
-    border-bottom: 0;
-  }
-
-  .icon {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid rgba(47, 174, 155, 0.55);
-    color: var(--teal);
-  }
-
-  .icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .text {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.4rem 0.6rem;
-  }
-
-  .positioning strong {
-    font-family: var(--font-sub);
-    font-weight: 600;
-    font-size: 1rem;
+  .scroll-cue:hover {
     color: var(--white);
   }
 
-  .positioning .text > span {
-    color: var(--white-58);
-    font-size: 0.85rem;
+  .cue-line {
+    display: block;
+    width: 44px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cue-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--teal);
+    transform: translateX(-100%);
+    animation: cue 2.4s var(--ease-out) infinite;
+  }
+
+  @keyframes cue {
+    0% {
+      transform: translateX(-100%);
+    }
+    55% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
 
   /* Load-in rise for hero content (fires when the section gets .in) */
@@ -265,6 +228,11 @@ const positioning = [
       animation: none;
     }
 
+    .cue-line::after {
+      animation: none;
+      transform: none;
+    }
+
     .line-inner,
     .rise {
       transform: none;
@@ -274,12 +242,16 @@ const positioning = [
   }
 
   @media (max-width: 900px) {
-    .inner {
-      grid-template-columns: 1fr;
+    .hero {
+      min-height: 0;
     }
 
     .bg {
-      background-position: 70% center;
+      background-position: 72% center;
+    }
+
+    .scroll-cue {
+      display: none;
     }
   }
 </style>
