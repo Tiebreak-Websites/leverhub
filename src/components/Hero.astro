@@ -23,23 +23,11 @@
       </p>
 
       <div class="actions rise" style="--d: 0.6s">
-        <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a href="#hub" class="btn btn-teal">Start My LeverHub Journey</a>
         <a href="#video" class="btn btn-ghost">Watch the intro</a>
       </div>
-
-      <p class="microcopy rise" style="--d: 0.7s">
-        <span class="play-dot" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="10" height="10"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
-        </span>
-        Start your journey. Not your trades.
-      </p>
     </div>
   </div>
-
-  <a href="#video" class="scroll-cue rise" style="--d: 1s" aria-label="Scroll to the introduction video">
-    <span class="cue-line" aria-hidden="true"></span>
-    Scroll
-  </a>
 </section>
 
 <style>
@@ -139,77 +127,6 @@
     margin-top: 0.5rem;
   }
 
-  .microcopy {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: var(--white-75);
-  }
-
-  .play-dot {
-    display: grid;
-    place-items: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: var(--white);
-  }
-
-  /* Quiet scroll cue, bottom-left */
-  .scroll-cue {
-    position: absolute;
-    left: max(calc((100% - var(--container)) / 2), 1.5rem);
-    bottom: 2rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--white-58);
-    transition: color 0.2s ease;
-  }
-
-  .scroll-cue:hover {
-    color: var(--white);
-  }
-
-  .cue-line {
-    display: block;
-    width: 44px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.35);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .cue-line::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--teal);
-    transform: translateX(-100%);
-    animation: cue 2.4s var(--ease-out) infinite;
-  }
-
-  @keyframes cue {
-    0% {
-      transform: translateX(-100%);
-    }
-    55% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
   /* Load-in rise for hero content (fires when the section gets .in) */
   .rise {
     opacity: 0;
@@ -228,11 +145,6 @@
       animation: none;
     }
 
-    .cue-line::after {
-      animation: none;
-      transform: none;
-    }
-
     .line-inner,
     .rise {
       transform: none;
@@ -248,10 +160,6 @@
 
     .bg {
       background-position: 72% center;
-    }
-
-    .scroll-cue {
-      display: none;
     }
   }
 </style>
