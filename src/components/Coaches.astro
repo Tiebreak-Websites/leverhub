@@ -1,0 +1,108 @@
+---
+// Meet your Progress Coaches — portrait strip. Specialty labels are drawn from
+// the Balance Score areas; real names/bios to be supplied by the team before
+// launch (placeholder-free by design until then).
+const coaches = [
+  { img: "/images/people/coach-1.jpg", focus: "Snapshot & Personal Goals", alt: "LeverHub Progress Coach portrait" },
+  { img: "/images/people/coach-2.jpg", focus: "Money Control & Habits", alt: "LeverHub Progress Coach portrait" },
+  { img: "/images/people/coach-3.jpg", focus: "Markets & Trading Readiness", alt: "LeverHub Progress Coach portrait" },
+  { img: "/images/people/coach-4.jpg", focus: "Work-Life Balance", alt: "LeverHub Progress Coach portrait" },
+];
+---
+
+<section class="section tight coaches">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Meet your Progress Coaches</h2>
+      <p class="lede">
+        A real person who helps you complete your Snapshot, define your goals, personalise
+        your learning path and keep you moving forward.
+      </p>
+    </div>
+
+    <div class="grid stagger">
+      {
+        coaches.map((coach) => (
+          <figure class="card coach">
+            <img src={coach.img} alt={coach.alt} width="720" height="1139" loading="lazy" />
+            <figcaption>
+              <span class="role">Progress Coach</span>
+              <span class="focus">{coach.focus}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .coach {
+    margin: 0;
+    overflow: hidden;
+    display: grid;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+
+  .coach:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .coach img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  figcaption {
+    display: grid;
+    gap: 0.15rem;
+    padding: 1.15rem 1.35rem 1.3rem;
+  }
+
+  .role {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+  }
+
+  .focus {
+    font-family: var(--font-sub);
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 1.02rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coach:hover {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .coach img {
+      aspect-ratio: 1 / 1;
+    }
+  }
+</style>
