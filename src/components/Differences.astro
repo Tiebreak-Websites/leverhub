@@ -1,24 +1,21 @@
 ---
-const columns = [
-  { key: "standard", label: "Standard trading academy", tone: "muted" },
-  { key: "need", label: "What you actually need", tone: "plain" },
-  { key: "leverhub", label: "What LeverHub provides", tone: "teal" },
-];
-
+// "What makes LeverHub different" — three editorial rows instead of a boxed grid.
+// The client's middle column ("what you actually need") becomes the row heading
+// that bridges the ✕ standard-academy line and the ✓ LeverHub line.
 const rows = [
   {
-    standard: "Charts on day 1.",
     need: "To understand where you are.",
+    standard: "Charts on day 1.",
     leverhub: "Assesses your finances, your time, and your goals.",
   },
   {
-    standard: "Jargon on day 2.",
     need: "To know what you want.",
+    standard: "Jargon on day 2.",
     leverhub: "Then takes you to the markets — when you are ready.",
   },
   {
-    standard: "Overwhelmed by day 3.",
     need: "To learn at a pace that fits your life.",
+    standard: "Overwhelmed by day 3.",
     leverhub: "Makes a seamless transition between learning and practice.",
   },
 ];
@@ -27,138 +24,115 @@ const rows = [
 <section class="section" id="different">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Why LeverHub</p>
       <h2>What makes LeverHub different</h2>
       <p class="lede">Other academies start with the market. We start with you.</p>
     </div>
 
-    <div class="compare reveal" role="table" aria-label="How LeverHub compares to a standard trading academy">
-      <div class="col-labels" role="row">
-        {
-          columns.map((col) => (
-            <span class:list={["col-label", col.tone]} role="columnheader">
-              {col.label}
-            </span>
-          ))
-        }
-      </div>
+    <div class="legend reveal" aria-hidden="true">
+      <span>What you actually need</span>
+      <span class="muted">A standard trading academy</span>
+      <span class="teal">What LeverHub provides</span>
+    </div>
 
+    <ol class="rows stagger">
       {
-        rows.map((row, i) => (
-          <div class="row" role="row">
-            <div class="cell muted" role="cell">
-              <span class="col-hint" aria-hidden="true">Standard trading academy</span>
-              <span class="glyph no" aria-hidden="true">&times;</span>
-              <p>{row.standard}</p>
-            </div>
-            <div class="cell" role="cell">
-              <span class="col-hint" aria-hidden="true">What you actually need</span>
-              <span class="glyph num" aria-hidden="true">0{i + 1}</span>
-              <p>{row.need}</p>
-            </div>
-            <div class="cell teal" role="cell">
-              <span class="col-hint" aria-hidden="true">What LeverHub provides</span>
-              <span class="glyph yes" aria-hidden="true">&check;</span>
-              <p>{row.leverhub}</p>
-            </div>
-          </div>
+        rows.map((row) => (
+          <li class="row">
+            <h3>{row.need}</h3>
+            <p class="them">
+              <span class="glyph no" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </span>
+              <span class="sr-label">A standard trading academy: </span>
+              {row.standard}
+            </p>
+            <p class="us">
+              <span class="glyph yes" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12.5l5 5L20 6.5" />
+                </svg>
+              </span>
+              <span class="sr-label">What LeverHub provides: </span>
+              {row.leverhub}
+            </p>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 </section>
 
 <style>
-  .compare {
+  .legend {
     display: grid;
-    gap: 0.85rem;
-  }
-
-  .col-labels {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem;
-    padding-inline: 0.25rem;
-  }
-
-  .col-label {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(12, 26, 48, 0.6);
-    padding: 0.4rem 1.25rem;
+    color: var(--ink-60);
   }
 
-  .col-label.teal {
+  .legend .teal {
     color: var(--teal-ink);
+  }
+
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
   }
 
   .row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row h3 {
+    max-width: 18ch;
+  }
+
+  .them,
+  .us {
+    display: flex;
+    align-items: center;
     gap: 0.85rem;
-  }
-
-  .cell {
-    position: relative;
-    background: var(--white);
-    border: 1px solid var(--mist);
-    border-radius: var(--radius-sm);
-    padding: 1.35rem 1.5rem 1.35rem 3.4rem;
-    box-shadow: var(--shadow-card);
-  }
-
-  .cell p {
-    font-size: 0.98rem;
+    font-size: 1rem;
     line-height: 1.55;
   }
 
-  .cell.muted {
-    background: var(--mist);
-    border-color: var(--mist);
-    box-shadow: none;
+  .them {
+    color: var(--ink-60);
   }
 
-  .cell.muted p {
-    color: rgba(12, 26, 48, 0.6);
-  }
-
-  .cell.teal {
-    background: var(--teal-wash);
-    border-color: #c6e7e0;
-  }
-
-  .cell.teal p {
+  .us {
     color: var(--ink);
     font-weight: 500;
   }
 
   .glyph {
-    position: absolute;
-    left: 1.15rem;
-    top: 1.3rem;
+    flex: none;
     display: grid;
     place-items: center;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 700;
   }
 
   .glyph.no {
     background: var(--mist);
-    color: rgba(12, 26, 48, 0.6);
-  }
-
-  .glyph.num {
-    background: var(--paper);
-    border: 1px solid var(--mist);
-    color: var(--navy);
-    font-size: 0.68rem;
+    color: var(--ink-60);
   }
 
   .glyph.yes {
@@ -166,48 +140,32 @@ const rows = [
     color: var(--white);
   }
 
-  .col-hint {
-    display: none;
+  .sr-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   @media (max-width: 820px) {
-    /* Keep column headers in the accessibility tree — the visible
-       per-cell .col-hint duplicates are aria-hidden. */
-    .col-labels {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-      white-space: nowrap;
+    .legend {
+      display: none;
+    }
+
+    .rows {
+      border-top: 1px solid var(--line);
     }
 
     .row {
       grid-template-columns: 1fr;
-      gap: 0.6rem;
-      padding-bottom: 1.4rem;
-      margin-bottom: 0.35rem;
-      border-bottom: 1px dashed var(--mist);
+      gap: 0.9rem;
+      align-items: start;
     }
 
-    .row:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .col-hint {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(12, 26, 48, 0.6);
-      margin-bottom: 0.35rem;
-    }
-
-    .cell.teal .col-hint {
-      color: var(--teal-ink);
+    .row h3 {
+      max-width: none;
     }
   }
 </style>

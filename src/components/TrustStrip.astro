@@ -1,37 +1,21 @@
 ---
-// Compliance-forward trust strip per client visual reference:
-// "LEVERHUB IS NOT A BROKER." + what LeverHub is not (brandbook §02).
-const items = [
-  {
-    label: "Not a broker",
-    icon: `<rect x="4" y="9" width="16" height="11" rx="2"/><path d="M4 13h16M9 9V7a3 3 0 0 1 6 0v2"/>`,
-  },
-  {
-    label: "Not tips or signals",
-    icon: `<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19.5c1-3.2 3.4-4.8 6.5-4.8s5.5 1.6 6.5 4.8"/>`,
-  },
-  {
-    label: "Not a promise of profit",
-    icon: `<path d="M4 17l5-5 3.5 3.5L19 9M19 9h-4M19 9v4"/>`,
-  },
-  {
-    label: "Not financial advice",
-    icon: `<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 12.5h6M9 16h3.5"/>`,
-  },
-];
+// Compliance-forward trust strip — one slim line, no boxes.
+const items = ["Not a broker", "Not tips or signals", "Not a promise of profit", "Not financial advice"];
 ---
 
 <aside class="strip on-navy" aria-label="What LeverHub is not">
   <div class="container inner">
-    <p class="title">LeverHub is<br /><strong>not a broker.</strong></p>
+    <p class="title">LeverHub is not a broker.</p>
     <ul>
       {
         items.map((item) => (
           <li>
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
+            <span class="mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
             </span>
-            {item.label}
+            {item}
           </li>
         ))
       }
@@ -43,82 +27,50 @@ const items = [
   .strip {
     background: var(--navy-deep);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-block: 1.5rem;
+    padding-block: 1.35rem;
   }
 
   .inner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
+    gap: 1rem clamp(1.5rem, 4vw, 3rem);
   }
 
   .title {
-    flex: none;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--teal);
-    line-height: 1.5;
-  }
-
-  .title strong {
-    color: var(--teal);
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--white);
   }
 
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem clamp(1.25rem, 3vw, 2.5rem);
   }
 
   li {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.55rem;
     font-family: var(--font-sub);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.78);
-    padding-left: 1.25rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--white-75);
   }
 
-  .icon {
-    flex: none;
+  .mark {
     display: grid;
     place-items: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    border: 1px solid rgba(47, 174, 155, 0.45);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(47, 174, 155, 0.55);
     color: var(--teal);
-  }
-
-  .icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  @media (max-width: 900px) {
-    .inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    ul {
-      grid-template-columns: repeat(2, 1fr);
-      width: 100%;
-    }
-
-    li {
-      padding-left: 0;
-      border-left: 0;
-    }
+    flex: none;
   }
 </style>

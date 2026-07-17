@@ -1,10 +1,10 @@
 ---
 // Hero — cinematic image treatment per client visual reference.
-// Image lives at /images/hero.jpg (AI-generated placeholder, swappable).
+// Headline enters with a staggered line-mask; the image breathes (Ken Burns).
 const positioning = [
   {
     strong: "More practical.",
-    rest: "vs. a finance course",
+    rest: "vs. a financial course",
     icon: `<circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10.2c.5-.8 1.4-1.2 2.5-1.2 1.5 0 2.5.8 2.5 2s-1 1.7-2.5 2c-1.5.3-2.5.8-2.5 2s1 2 2.5 2c1.1 0 2-.4 2.5-1.2"/>`,
   },
   {
@@ -19,7 +19,7 @@ const positioning = [
   },
   {
     strong: "More structured.",
-    rest: "vs. random fin-content",
+    rest: "vs. random financial content",
     icon: `<rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 12.5h6M9 16h3.5"/>`,
   },
 ];
@@ -31,23 +31,25 @@ const positioning = [
 
   <div class="container inner">
     <div class="intro">
-      <p class="eyebrow light reveal">Personal money &middot; Markets &middot; Trading academy</p>
+      <h1>
+        <span class="line"><span class="line-inner">It starts with <em>you</em>,</span></span>
+        <span class="line"><span class="line-inner">not the charts.</span></span>
+      </h1>
 
-      <h1 class="reveal">It starts with <em>you</em>,<br />not the charts.</h1>
+      <p class="tagline rise" style="--d: 0.45s">Your financial transformation begins from within.</p>
 
-      <p class="tagline reveal">Your financial transformation begins from within.</p>
-
-      <p class="descriptor reveal">
+      <p class="descriptor rise" style="--d: 0.55s">
         A personal finance, markets and trading academy that helps you understand your
         situation, learn how money and markets move, take control and build a better
         work-life balance.
       </p>
 
-      <div class="actions reveal">
+      <div class="actions rise" style="--d: 0.65s">
         <a href="#hub" class="btn btn-teal">Start My LeverHub Journey <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a href="#video" class="btn btn-ghost">Watch the intro</a>
       </div>
 
-      <p class="microcopy reveal">
+      <p class="microcopy rise" style="--d: 0.75s">
         <span class="play-dot" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="10" height="10"><path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
         </span>
@@ -55,10 +57,10 @@ const positioning = [
       </p>
     </div>
 
-    <ul class="positioning reveal" aria-label="What makes LeverHub different at a glance">
+    <ul class="positioning" aria-label="What makes LeverHub different at a glance">
       {
-        positioning.map((item) => (
-          <li>
+        positioning.map((item, i) => (
+          <li class="rise" style={`--d: ${0.55 + i * 0.12}s`}>
             <span class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
             </span>
@@ -79,8 +81,8 @@ const positioning = [
     overflow: hidden;
     background: var(--navy-deep);
     color: var(--white);
-    padding-top: clamp(7.5rem, 12vw, 10rem);
-    padding-bottom: clamp(4rem, 7vw, 6rem);
+    padding-top: clamp(8rem, 13vw, 11rem);
+    padding-bottom: clamp(4.5rem, 8vw, 7rem);
   }
 
   .bg {
@@ -89,6 +91,17 @@ const positioning = [
     background-image: url("/images/hero.jpg");
     background-size: cover;
     background-position: 62% center;
+    animation: kenburns 26s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07);
+    }
   }
 
   .veil {
@@ -103,20 +116,39 @@ const positioning = [
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
-    gap: clamp(2rem, 6vw, 5rem);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
     align-items: center;
   }
 
   .intro {
     display: grid;
-    gap: 1.35rem;
+    gap: 1.4rem;
     justify-items: start;
-    max-width: 560px;
+    max-width: 580px;
   }
 
-  h1 em {
-    font-style: normal;
-    color: var(--teal);
+  /* Staggered line-mask headline entrance */
+  .line {
+    display: block;
+    overflow: hidden;
+    /* room for descenders inside the mask without changing line rhythm */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
+  .line-inner {
+    display: block;
+    transform: translateY(115%);
+    transition: transform 0.95s var(--ease-out);
+  }
+
+  html.js .in .line-inner,
+  html:not(.js) .line-inner {
+    transform: none;
+  }
+
+  .line:nth-child(2) .line-inner {
+    transition-delay: 0.14s;
   }
 
   .tagline {
@@ -127,12 +159,15 @@ const positioning = [
   }
 
   .descriptor {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--white-75);
     font-size: 1.02rem;
     max-width: 46ch;
   }
 
   .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
     margin-top: 0.35rem;
   }
 
@@ -143,7 +178,7 @@ const positioning = [
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--white-75);
   }
 
   .play-dot {
@@ -156,57 +191,86 @@ const positioning = [
     color: var(--white);
   }
 
+  /* Positioning rail — hairline rows, no boxes */
   .positioning {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.8rem;
     align-content: center;
   }
 
   .positioning li {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: var(--radius-sm);
-    background: rgba(14, 39, 80, 0.55);
-    backdrop-filter: blur(6px);
+    gap: 1.1rem;
+    padding-block: 1.05rem;
+    border-bottom: 1px solid var(--line-inverse);
+  }
+
+  .positioning li:last-child {
+    border-bottom: 0;
   }
 
   .icon {
     flex: none;
     display: grid;
     place-items: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid rgba(47, 174, 155, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(47, 174, 155, 0.55);
     color: var(--teal);
   }
 
   .icon svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .text {
-    display: grid;
-    gap: 0.1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.6rem;
   }
 
   .positioning strong {
     font-family: var(--font-sub);
     font-weight: 600;
-    font-size: 0.98rem;
+    font-size: 1rem;
     color: var(--white);
   }
 
   .positioning .text > span {
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 0.82rem;
+    color: var(--white-58);
+    font-size: 0.85rem;
+  }
+
+  /* Load-in rise for hero content (fires when the section gets .in) */
+  .rise {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-out) var(--d, 0s), transform 0.8s var(--ease-out) var(--d, 0s);
+  }
+
+  html.js .in .rise,
+  html:not(.js) .rise {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg {
+      animation: none;
+    }
+
+    .line-inner,
+    .rise {
+      transform: none;
+      opacity: 1;
+      transition: none;
+    }
   }
 
   @media (max-width: 900px) {
@@ -217,15 +281,15 @@ const positioning = [
     .bg {
       background-position: 70% center;
     }
-
-    .positioning {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 560px) {
-    .positioning {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
+
+<script>
+  // The hero is its own reveal root: mark it .in on load so the line-mask
+  // and rise transitions play immediately. The timeout is a safety net for
+  // environments where requestAnimationFrame is throttled.
+  const hero = document.getElementById("top");
+  const show = () => hero?.classList.add("in");
+  requestAnimationFrame(show);
+  setTimeout(show, 400);
+</script>

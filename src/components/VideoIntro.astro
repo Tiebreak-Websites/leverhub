@@ -1,5 +1,5 @@
 ---
-// Introduction video section (suggested by Andres) — layout per client reference.
+// Introduction video section (suggested by Andres).
 // The final video has not been delivered yet: the player is a designed placeholder.
 // When the cut arrives, drop it at public/media/leverhub-intro.mp4 and replace the
 // .player markup with:
@@ -8,21 +8,20 @@
 //   </video>
 ---
 
-<section class="section video-section" id="video">
-  <div class="container card panel reveal">
-    <div class="copy">
-      <p class="eyebrow">The intro</p>
+<section class="section tight video-section" id="video">
+  <div class="container inner">
+    <div class="copy reveal">
       <h2>See how LeverHub puts <em>you</em> in the center</h2>
       <p class="lede">
         Watch this short video to understand how LeverHub turns your situation, goals and
         learning into real progress.
       </p>
-      <button class="btn btn-teal watch" type="button" data-video-cta>
+      <button class="btn btn-navy watch" type="button" data-video-cta>
         Watch the video <span class="arrow" aria-hidden="true">&rarr;</span>
       </button>
     </div>
 
-    <div class="player" data-player>
+    <div class="player reveal" data-player>
       <div class="poster" aria-hidden="true"></div>
       <div class="shade" aria-hidden="true"></div>
       <p class="caption">Your financial path<br />starts with <em>you.</em></p>
@@ -36,7 +35,6 @@
         <span class="time">0:00 / 1:45</span>
         <span class="spacer"></span>
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16.5 9.5a4 4 0 0 1 0 5"/></svg>
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2M6.8 6.8l1.4 1.4M15.8 15.8l1.4 1.4M6.8 17.2l1.4-1.4M15.8 8.2l1.4-1.4"/></svg>
       </div>
       <span class="soon" data-soon>Final video coming soon</span>
     </div>
@@ -44,21 +42,16 @@
 </section>
 
 <style>
-  .video-section {
-    padding-top: clamp(3.5rem, 6vw, 5rem);
-  }
-
-  .panel {
+  .inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
-    gap: clamp(1.75rem, 4vw, 3.5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
-    padding: clamp(1.75rem, 4vw, 3rem);
   }
 
   .copy {
     display: grid;
-    gap: 1.1rem;
+    gap: 1.2rem;
     justify-items: start;
   }
 
@@ -68,15 +61,11 @@
   }
 
   .copy .lede {
-    font-family: var(--font-sub);
-    font-weight: 500;
-    color: rgba(12, 26, 48, 0.75);
-    font-size: 1.02rem;
     max-width: 38ch;
   }
 
   .watch {
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
   }
 
   .player {
@@ -94,6 +83,11 @@
     background-image: url("/images/video-poster.jpg");
     background-size: cover;
     background-position: center;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .player:hover .poster {
+    transform: scale(1.03);
   }
 
   .shade {
@@ -132,12 +126,25 @@
     background: var(--teal);
     color: var(--white);
     cursor: pointer;
-    box-shadow: 0 0 0 10px rgba(47, 174, 155, 0.25);
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 0 0 0 rgba(47, 174, 155, 0.4);
+    transition: transform 0.25s var(--ease-out), background-color 0.2s ease;
+    animation: pulse 2.6s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(47, 174, 155, 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 22px rgba(47, 174, 155, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(47, 174, 155, 0);
+    }
   }
 
   .play:hover {
-    transform: translate(-50%, -50%) scale(1.06);
+    transform: translate(-50%, -50%) scale(1.08);
     background: var(--teal-deep);
   }
 
@@ -153,7 +160,7 @@
     align-items: center;
     gap: 0.9rem;
     padding: 0.8rem 1.25rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--white-85);
     background: linear-gradient(180deg, transparent, rgba(6, 16, 34, 0.65));
   }
 
@@ -192,8 +199,18 @@
     transform: translateX(-50%) translateY(0);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .play {
+      animation: none;
+    }
+
+    .player:hover .poster {
+      transform: none;
+    }
+  }
+
   @media (max-width: 860px) {
-    .panel {
+    .inner {
       grid-template-columns: 1fr;
     }
 

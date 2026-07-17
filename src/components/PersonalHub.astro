@@ -1,123 +1,146 @@
 ---
-// Personal Hub — intro rail + five icon cards per client visual reference.
-const cards = [
-  {
-    tag: "Snapshot",
-    title: "Life & Money Snapshot",
-    body: "Answer a few honest questions about your income, spending, time, stress and habits. LeverHub turns your answers into a clear picture of where you stand today — and where you can go.",
-    icon: `<rect x="4" y="6.5" width="16" height="13" rx="2.5"/><path d="M9 6.5 10.2 4h3.6L15 6.5"/><circle cx="12" cy="12.8" r="3.2"/>`,
-  },
-  {
-    tag: "Score",
-    title: "LeverHub Balance Score",
-    body: "Your personal score across five areas: Money Control, Time Balance, Market Understanding, Growth Readiness and Trading Readiness. It changes as you do.",
-    icon: `<path d="M5 15.5a7 7 0 1 1 14 0"/><path d="M12 15.5 15.5 10"/><path d="M4.5 19h15"/>`,
-  },
-  {
-    tag: "Goals",
-    title: "Personal Goals",
-    body: "A car. A home. An emergency fund. A better routine. Define what you actually want — and connect it to your learning path.",
-    icon: `<path d="M6 21V4"/><path d="M6 5h11.5l-2.6 3.5L17.5 12H6"/>`,
-  },
-  {
-    tag: "Coach",
-    title: "Progress Coach",
-    body: "A real person who helps you complete your Snapshot, define your goals, personalise your learning path and keep you moving forward.",
-    icon: `<circle cx="9.5" cy="9" r="3.2"/><path d="M3.8 19.5c.9-2.9 3-4.4 5.7-4.4 2.7 0 4.8 1.5 5.7 4.4"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.2M17.5 15.3c1.6.6 2.7 1.9 3.2 4.2"/>`,
-  },
-  {
-    tag: "Dashboard",
-    title: "All in One Dashboard",
-    body: "Your learning, your activity, your journal and your progress — together in one place once you connect.",
-    icon: `<rect x="3.5" y="5" width="17" height="12" rx="2"/><path d="M8.5 21h7M12 17v4M7 13.5l2.5-2.5 2 2 3.5-3.5"/>`,
-  },
+// Personal Hub — bento grid. The Balance Score card is the dark focal point
+// with an animated gauge; the intro lives inside the grid, not above it.
+const scoreAreas = [
+  { label: "Money Control", value: 62 },
+  { label: "Time Balance", value: 48 },
+  { label: "Market Understanding", value: 35 },
+  { label: "Growth Readiness", value: 55 },
+  { label: "Trading Readiness", value: 28 },
 ];
 ---
 
 <section class="section hub" id="hub">
-  <div class="container inner">
-    <div class="rail reveal">
-      <p class="eyebrow">Personal Hub</p>
-      <h2>Your LeverHub, built around your life.<br /><em>Everything in one place.</em></h2>
-      <p class="lede">
-        When you join, you get access to your Personal Hub &mdash; a space designed
-        entirely around you.
-      </p>
-      <p class="note">You do not need to fill everything in on day one. The important thing is to start.</p>
-      <a href="#access" class="btn btn-teal">Open My Personal Hub <span class="arrow" aria-hidden="true">&rarr;</span></a>
-    </div>
+  <div class="container">
+    <div class="grid stagger">
+      <div class="intro">
+        <h2>Your LeverHub, built around your life</h2>
+        <p class="lede">
+          When you join, you get access to your Personal Hub &mdash; a space designed
+          entirely around you. Four things live inside it.
+        </p>
+        <p class="note">
+          You do not need to fill everything in on day one. The important thing is to start.
+        </p>
+        <a href="#access" class="btn btn-teal">Open My Personal Hub <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
 
-    <div class="grid">
-      {
-        cards.map((card) => (
-          <article class="card feature reveal">
-            <span class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon} />
-            </span>
-            <span class="tag">{card.tag}</span>
-            <h3>{card.title}</h3>
-            <p>{card.body}</p>
-          </article>
-        ))
-      }
+      <article class="card feature score reveal">
+        <div class="gauge" role="img" aria-label="Illustrative LeverHub Balance Score of 72 out of 100">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="9"></circle>
+            <circle
+              class="ring"
+              cx="60"
+              cy="60"
+              r="52"
+              fill="none"
+              stroke="#2fae9b"
+              stroke-width="9"
+              stroke-linecap="round"
+              stroke-dasharray="327"
+              stroke-dashoffset="327"
+              transform="rotate(-90 60 60)"></circle>
+          </svg>
+          <span class="gauge-num" data-count="72" aria-hidden="true">0</span>
+        </div>
+        <h3>LeverHub Balance Score</h3>
+        <p>
+          Your personal score across five areas: Money Control, Time Balance, Market
+          Understanding, Growth Readiness and Trading Readiness. It changes as you do.
+        </p>
+        <div class="areas" aria-hidden="true">
+          {
+            scoreAreas.map((area) => (
+              <div class="bar-row">
+                <span class="bar-label">{area.label}</span>
+                <span class="bar-track">
+                  <span class="bar-fill grow-bar" style={`width:${area.value}%`} />
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        <p class="fine">Illustrative &mdash; your score starts with your Snapshot.</p>
+      </article>
+
+      <article class="card feature wash">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6.5" width="16" height="13" rx="2.5"/><path d="M9 6.5 10.2 4h3.6L15 6.5"/><circle cx="12" cy="12.8" r="3.2"/></svg>
+        </span>
+        <h3>Life &amp; Money Snapshot</h3>
+        <p>
+          Answer a few honest questions about your income, spending, time, stress and
+          habits. LeverHub turns your answers into a clear picture of where you stand
+          today &mdash; and where you can go.
+        </p>
+      </article>
+
+      <article class="card feature">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 5h11.5l-2.6 3.5L17.5 12H6"/></svg>
+        </span>
+        <h3>Personal Goals</h3>
+        <p>
+          A car. A home. An emergency fund. A better routine. Define what you actually
+          want &mdash; and connect it to your learning path.
+        </p>
+      </article>
+
+      <article class="card feature">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="9" r="3.2"/><path d="M3.8 19.5c.9-2.9 3-4.4 5.7-4.4 2.7 0 4.8 1.5 5.7 4.4"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.2M17.5 15.3c1.6.6 2.7 1.9 3.2 4.2"/></svg>
+        </span>
+        <h3>Progress Coach</h3>
+        <p>
+          A real person who helps you complete your Snapshot, define your goals,
+          personalise your learning path and keep you moving forward.
+        </p>
+      </article>
+
     </div>
   </div>
 </section>
 
 <style>
-  .inner {
+  .grid {
     display: grid;
-    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.6fr);
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.25rem;
   }
 
-  .rail {
-    position: sticky;
-    top: 110px;
+  .intro {
     display: grid;
-    gap: 1.15rem;
+    gap: 1.2rem;
+    align-content: center;
     justify-items: start;
+    padding-right: clamp(0rem, 2vw, 1.5rem);
   }
 
-  .rail h2 em {
-    font-style: normal;
-    color: var(--teal-deep);
-  }
-
-  .rail .lede {
-    font-family: var(--font-sub);
-    font-weight: 500;
-    color: rgba(12, 26, 48, 0.75);
-    font-size: 1.05rem;
+  .intro h2 {
+    max-width: 14ch;
   }
 
   .note {
-    color: rgba(12, 26, 48, 0.75);
+    color: var(--ink-75);
     font-size: 0.95rem;
-    padding: 0.9rem 1.1rem;
+    padding: 0.85rem 1.1rem;
     background: var(--teal-wash);
-    border: 1px solid #c6e7e0;
     border-radius: var(--radius-sm);
     max-width: 40ch;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.1rem;
-  }
-
   .feature {
-    padding: 1.6rem;
+    padding: 1.75rem;
     display: grid;
-    gap: 0.6rem;
+    gap: 0.7rem;
     align-content: start;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   }
 
   .feature:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-lift);
   }
 
@@ -126,8 +149,7 @@ const cards = [
     place-items: center;
     width: 46px;
     height: 46px;
-    border-radius: 13px;
-    border: 1px solid #bcd9d2;
+    border-radius: 50%;
     background: var(--teal-wash);
     color: var(--teal-deep);
     margin-bottom: 0.35rem;
@@ -138,32 +160,130 @@ const cards = [
     height: 24px;
   }
 
-  .feature .tag {
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--teal-ink);
-  }
-
-  .feature h3 {
-    font-size: 1.08rem;
-  }
-
   .feature p {
-    color: rgba(12, 26, 48, 0.75);
-    font-size: 0.92rem;
+    color: var(--ink-75);
+    font-size: 0.94rem;
     line-height: 1.6;
   }
 
-  @media (max-width: 960px) {
-    .inner {
-      grid-template-columns: 1fr;
+  .feature.wash {
+    background: var(--teal-wash);
+    border-color: transparent;
+  }
+
+  .feature.wash .icon {
+    background: var(--white);
+  }
+
+  /* Featured dark score card spans both rows */
+  .score {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    background: var(--navy-deep);
+    border-color: var(--navy-deep);
+    justify-items: center;
+    text-align: center;
+    align-content: center;
+    gap: 0.9rem;
+  }
+
+  .score h3 {
+    color: var(--white);
+  }
+
+  .score > p {
+    color: var(--white-75);
+  }
+
+  .score .fine {
+    color: var(--white-58);
+  }
+
+  .gauge {
+    position: relative;
+    width: 128px;
+    height: 128px;
+  }
+
+  .ring {
+    transition: stroke-dashoffset 1.5s var(--ease-out) 0.3s;
+  }
+
+  html.js .score.in .ring,
+  html:not(.js) .ring {
+    stroke-dashoffset: 92; /* 327 × (1 − 0.72) */
+  }
+
+  .gauge-num {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-sub);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .areas {
+    width: 100%;
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 0.4rem;
+    text-align: left;
+  }
+
+  .bar-row {
+    display: grid;
+    gap: 0.28rem;
+  }
+
+  .bar-label {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white-58);
+  }
+
+  .bar-track {
+    display: block;
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--teal-deep), var(--teal));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring {
+      transition: none;
+      stroke-dashoffset: 92;
     }
 
-    .rail {
-      position: static;
+    .feature:hover {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .intro {
+      grid-column: 1 / -1;
+    }
+
+    .score {
+      grid-column: auto;
+      grid-row: auto;
     }
   }
 

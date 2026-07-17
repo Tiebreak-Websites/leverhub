@@ -27,14 +27,13 @@ const plans = [
 <section class="section" id="access">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Access</p>
       <h2>Two ways in. One destination.</h2>
     </div>
 
-    <div class="plans">
+    <div class="plans stagger">
       {
         plans.map((plan) => (
-          <article class:list={["plan", "card", "reveal", { featured: plan.featured }]}>
+          <article class:list={["plan", "card", { featured: plan.featured }]}>
             <p class="plan-tag">{plan.tag}</p>
             <h3>{plan.name}</h3>
             <p class="plan-body">{plan.body}</p>
@@ -76,7 +75,19 @@ const plans = [
     display: grid;
     gap: 1rem;
     align-content: start;
-    padding: 2.25rem;
+    padding: clamp(2rem, 3.5vw, 2.75rem);
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+
+  .plan:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .plan:hover {
+      transform: none;
+    }
   }
 
   .plan-tag {
