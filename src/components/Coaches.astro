@@ -1,7 +1,7 @@
 ---
-// Meet your Progress Coaches — portrait strip. Specialty labels are drawn from
-// the Balance Score areas; real names/bios to be supplied by the team before
-// launch (placeholder-free by design until then).
+// Meet your Progress Coaches — horizontal profile cards (2×2). The photo sits
+// in a fixed-width column with object-fit: cover, so it can never stretch.
+// Real names/bios to be supplied by the team before launch.
 const coaches = [
   { img: "/images/people/coach-1.jpg", focus: "Snapshot & Personal Goals", alt: "LeverHub Progress Coach portrait" },
   { img: "/images/people/coach-2.jpg", focus: "Money Control & Habits", alt: "LeverHub Progress Coach portrait" },
@@ -23,13 +23,15 @@ const coaches = [
     <div class="grid stagger">
       {
         coaches.map((coach) => (
-          <figure class="card coach">
-            <img src={coach.img} alt={coach.alt} width="720" height="1139" loading="lazy" />
-            <figcaption>
+          <article class="card coach">
+            <div class="photo-box">
+              <img src={coach.img} alt={coach.alt} width="720" height="1139" loading="lazy" />
+            </div>
+            <div class="info">
               <span class="role">Progress Coach</span>
-              <span class="focus">{coach.focus}</span>
-            </figcaption>
-          </figure>
+              <h3>{coach.focus}</h3>
+            </div>
+          </article>
         ))
       }
     </div>
@@ -39,33 +41,42 @@ const coaches = [
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
   .coach {
-    margin: 0;
-    overflow: hidden;
     display: grid;
+    grid-template-columns: 150px 1fr;
+    overflow: hidden;
     transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   }
 
   .coach:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lift);
   }
 
-  .coach img {
+  .photo-box {
+    position: relative;
+    min-height: 170px;
+    background: var(--navy-deep);
+  }
+
+  .photo-box img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     object-fit: cover;
     object-position: top center;
   }
 
-  figcaption {
+  .info {
     display: grid;
-    gap: 0.15rem;
-    padding: 1.15rem 1.35rem 1.3rem;
+    gap: 0.35rem;
+    align-content: center;
+    padding: 1.5rem 1.75rem;
   }
 
   .role {
@@ -77,11 +88,8 @@ const coaches = [
     color: var(--teal-ink);
   }
 
-  .focus {
-    font-family: var(--font-sub);
-    font-weight: 600;
-    color: var(--navy);
-    font-size: 1.02rem;
+  .info h3 {
+    font-size: 1.15rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -90,19 +98,19 @@ const coaches = [
     }
   }
 
-  @media (max-width: 960px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 520px) {
+  @media (max-width: 860px) {
     .grid {
       grid-template-columns: 1fr;
     }
+  }
 
-    .coach img {
-      aspect-ratio: 1 / 1;
+  @media (max-width: 440px) {
+    .coach {
+      grid-template-columns: 120px 1fr;
+    }
+
+    .info {
+      padding: 1.1rem 1.25rem;
     }
   }
 </style>
