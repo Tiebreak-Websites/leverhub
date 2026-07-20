@@ -1,9 +1,64 @@
 ---
-// Hero — centered, text-only, light. Full first screen so the trust strip
-// below lands at the bottom of the viewport without scrolling.
+// Hero — centered text on light, with real product fragments floating at the
+// edges (Balance Score gauge, learning-path sparkline, Snapshot chip, course
+// progress). Chips drift with the cursor via parallax; decorative only.
 ---
 
 <section class="hero" id="top">
+  <!-- Floating product chips — decorative, hidden from assistive tech -->
+  <div class="chips" aria-hidden="true">
+    <div class="chip chip-score" data-depth="26">
+      <span class="chip-label">Balance Score</span>
+      <div class="gauge">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="10"></circle>
+          <circle
+            class="ring"
+            cx="60"
+            cy="60"
+            r="52"
+            fill="none"
+            stroke="#34d3ba"
+            stroke-width="10"
+            stroke-linecap="round"
+            stroke-dasharray="327"
+            stroke-dashoffset="327"
+            transform="rotate(-90 60 60)"></circle>
+        </svg>
+        <span class="gauge-num" data-count="72">0</span>
+      </div>
+    </div>
+
+    <div class="chip chip-spark" data-depth="42">
+      <span class="chip-label dark">Learning path</span>
+      <svg class="spark" viewBox="0 0 200 56" preserveAspectRatio="none">
+        <polyline
+          points="0,48 28,42 56,45 84,31 112,35 140,20 170,24 200,9"
+          fill="none"
+          stroke="#2fae9b"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></polyline>
+      </svg>
+      <span class="chip-foot">Snapshot &rarr; Courses &rarr; Practice</span>
+    </div>
+
+    <div class="chip chip-done" data-depth="34">
+      <span class="tick">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12.5l5 5L20 6.5" />
+        </svg>
+      </span>
+      <span class="chip-text">Snapshot complete</span>
+    </div>
+
+    <div class="chip chip-course" data-depth="20">
+      <span class="chip-label dark">Course 2 of 5</span>
+      <span class="bar"><span class="bar-fill"></span></span>
+      <span class="chip-foot">Economy &amp; markets</span>
+    </div>
+  </div>
+
   <div class="container inner">
     <div class="intro">
       <h1>
@@ -39,9 +94,12 @@
     border-bottom: 1px solid var(--line);
     padding-top: clamp(6.5rem, 10vw, 8.5rem);
     padding-bottom: clamp(3rem, 5vw, 4.5rem);
+    overflow: hidden;
   }
 
   .inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     justify-items: center;
     text-align: center;
@@ -106,6 +164,179 @@
     margin-top: 0.4rem;
   }
 
+  /* ---------- floating product chips ---------- */
+
+  .chips {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .chip {
+    position: absolute;
+    display: grid;
+    gap: 0.55rem;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 4px rgba(12, 26, 48, 0.05), 0 22px 44px -20px rgba(12, 26, 48, 0.28);
+    padding: 1rem 1.15rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    /* parallax offset, set from JS */
+    --px: 0px;
+    --py: 0px;
+  }
+
+  html.js .in .chip,
+  html:not(.js) .chip {
+    opacity: 1;
+    transform: translate3d(var(--px), var(--py), 0);
+  }
+
+  html.js .in .chip {
+    transition:
+      opacity 0.9s var(--ease-out) var(--delay, 0s),
+      transform 0.5s var(--ease-out);
+  }
+
+  .chip-label {
+    font-family: var(--font-sub);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+  }
+
+  .chip-label.dark {
+    color: var(--teal-ink);
+  }
+
+  .chip-foot {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--ink-60);
+  }
+
+  /* Score chip — dark, top left */
+  .chip-score {
+    top: 16%;
+    left: 4%;
+    --delay: 0.7s;
+    justify-items: center;
+    background: var(--ink-black);
+    padding: 1.15rem 1.35rem 1.25rem;
+  }
+
+  .gauge {
+    position: relative;
+    width: 82px;
+    aspect-ratio: 1;
+  }
+
+  .ring {
+    transition: stroke-dashoffset 1.6s var(--ease-out) 1.1s;
+  }
+
+  html.js .in .ring,
+  html:not(.js) .ring {
+    stroke-dashoffset: 92; /* 327 × (1 − 0.72) */
+  }
+
+  .gauge-num {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-sub);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* Sparkline chip — right, upper middle */
+  .chip-spark {
+    top: 22%;
+    right: 4%;
+    width: 210px;
+    --delay: 0.85s;
+  }
+
+  .spark {
+    width: 100%;
+    height: 46px;
+  }
+
+  /* Snapshot-complete chip — left, lower */
+  .chip-done {
+    bottom: 20%;
+    left: 9%;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 0.65rem;
+    --delay: 1s;
+  }
+
+  .tick {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--teal-bright);
+    color: var(--ink-black);
+  }
+
+  .chip-text {
+    font-family: var(--font-sub);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-black);
+    white-space: nowrap;
+  }
+
+  /* Course-progress chip — right, lower */
+  .chip-course {
+    bottom: 17%;
+    right: 8%;
+    width: 190px;
+    --delay: 1.15s;
+  }
+
+  .bar {
+    display: block;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--mist);
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    display: block;
+    width: 40%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--teal-deep), var(--teal-bright));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .line-inner,
+    .rise,
+    .chip {
+      transform: none;
+      opacity: 1;
+      transition: none;
+    }
+
+    .ring {
+      transition: none;
+      stroke-dashoffset: 92;
+    }
+  }
+
+  /* Load-in rise for hero text */
   .rise {
     opacity: 0;
     transform: translateY(24px);
@@ -118,12 +349,20 @@
     transform: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .line-inner,
-    .rise {
-      transform: none;
-      opacity: 1;
-      transition: none;
+  /* The sparkline chip is the widest and sits level with the nowrap headline,
+     so it needs the most room. The score chip rides above the text and the
+     bottom pair flanks the much narrower CTA row, so both survive longer. */
+  @media (max-width: 1500px) {
+    .chip-spark {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .chip-score,
+    .chip-done,
+    .chip-course {
+      display: none;
     }
   }
 
@@ -132,10 +371,11 @@
       min-height: calc(100svh - 120px);
     }
 
-    h1 {
-      white-space: normal;
+    .chips {
+      display: none;
     }
 
+    h1,
     .line {
       white-space: normal;
     }
@@ -147,4 +387,37 @@
   const show = () => hero?.classList.add("in");
   requestAnimationFrame(show);
   setTimeout(show, 400);
+
+  // Mouse parallax — each chip drifts by its own depth factor.
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(pointer: fine)").matches;
+  // Scoped to the hero — the dashboard mock elsewhere also uses a .chip class
+  const chips = [...document.querySelectorAll<HTMLElement>("#top .chips .chip")];
+
+  if (hero && chips.length && !reduced && fine) {
+    // Time-based throttle rather than requestAnimationFrame: rAF can stall in
+    // non-painting contexts, which would leave the throttle flag stuck.
+    let last = 0;
+    hero.addEventListener("pointermove", (event) => {
+      const now = event.timeStamp || Date.now();
+      if (now - last < 16) return;
+      last = now;
+      const rect = hero.getBoundingClientRect();
+      // -0.5 … 0.5 from the hero's center
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      for (const chip of chips) {
+        const depth = Number(chip.dataset.depth || 24);
+        chip.style.setProperty("--px", `${(-x * depth).toFixed(1)}px`);
+        chip.style.setProperty("--py", `${(-y * depth).toFixed(1)}px`);
+      }
+    });
+
+    hero.addEventListener("pointerleave", () => {
+      for (const chip of chips) {
+        chip.style.setProperty("--px", "0px");
+        chip.style.setProperty("--py", "0px");
+      }
+    });
+  }
 </script>
