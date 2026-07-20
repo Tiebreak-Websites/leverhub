@@ -21,7 +21,6 @@
       <div class="player" data-player>
         <div class="poster" aria-hidden="true"></div>
         <div class="shade" aria-hidden="true"></div>
-        <p class="caption">Your financial path<br />starts with <em>you.</em></p>
         <button class="play" type="button" data-video-cta aria-label="Play the LeverHub introduction video">
           <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
             <path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"></path>
@@ -88,23 +87,6 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(10, 20, 40, 0.35) 0%, rgba(10, 20, 40, 0.05) 45%, rgba(10, 20, 40, 0.72) 100%);
-  }
-
-  .caption {
-    position: absolute;
-    left: clamp(1.25rem, 3vw, 2.25rem);
-    top: clamp(1.1rem, 2.5vw, 2rem);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.25rem, 2.6vw, 1.9rem);
-    line-height: 1.25;
-    color: var(--white);
-    text-shadow: 0 2px 18px rgba(2, 8, 20, 0.55);
-  }
-
-  .caption em {
-    font-style: normal;
-    color: var(--teal-bright);
   }
 
   .play {
