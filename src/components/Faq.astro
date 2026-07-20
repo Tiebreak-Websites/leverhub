@@ -31,8 +31,10 @@ const faqs = [
 
 <section class="section faq" id="faq">
   <div class="container inner">
-    <div class="section-head reveal">
-      <h2>FAQ</h2>
+    <div class="section-head faq-head reveal">
+      <span class="qghost" aria-hidden="true">?</span>
+      <h2>Frequently asked questions</h2>
+      <p class="lede">The short version of everything people ask before joining.</p>
     </div>
 
     <div class="list reveal" data-accordion>
@@ -78,6 +80,31 @@ const faqs = [
 
   .inner {
     max-width: 860px;
+  }
+
+  /* Giant ghost question mark behind the head */
+  .faq-head {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+
+  .qghost {
+    position: absolute;
+    top: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(8rem, 16vw, 12rem);
+    line-height: 1;
+    color: rgba(47, 174, 155, 0.09);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .faq-head h2,
+  .faq-head .lede {
+    position: relative;
   }
 
   .list {

@@ -191,10 +191,23 @@ video {
   max-width: none;
 }
 
-/* Titles pinned to a single row — fluid size keeps the line inside the container */
+/* Titles pinned to a single row — fluid size keeps the line inside the container.
+   Heads holding a one-row title drop their width cap (browsers safe-center
+   overflowing grid items, which pushed wide titles off-center); the lede keeps
+   the readable cap. */
 .section-head h2.one-row {
   white-space: nowrap;
   font-size: min(4vw, 3.05rem);
+  width: max-content;
+  justify-self: center;
+}
+
+.section-head:has(h2.one-row) {
+  max-width: none;
+}
+
+.section-head:has(h2.one-row) .lede {
+  max-width: 880px;
 }
 
 .lede {
@@ -231,6 +244,8 @@ h2 em {
 /* ---------- buttons — squared modern ---------- */
 
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -243,17 +258,35 @@ h2 em {
   border-radius: var(--radius-btn);
   border: 2px solid transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
-    transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   white-space: nowrap;
 }
 
+/* Sheen sweep on hover */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-180%) skewX(-14deg);
+  transition: transform 0.65s var(--ease-out);
+  pointer-events: none;
+}
+
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn:hover::before {
+  transform: translateX(320%) skewX(-14deg);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.99);
 }
 
 /* Primary — electric teal with near-black text */
@@ -379,6 +412,10 @@ html.js .reveal.in .grow-bar {
 
   .btn {
     transition: none;
+  }
+
+  .btn::before {
+    display: none;
   }
 
   .btn:hover {
