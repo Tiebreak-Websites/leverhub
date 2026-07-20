@@ -41,6 +41,7 @@ const plans = [
       </svg>
     </div>
 
+
     <div class="plans stagger">
       {
         plans.map((plan) => (
@@ -77,19 +78,16 @@ const plans = [
 </section>
 
 <style>
-  /* The fork — origin node splitting toward the two cards */
+  /* The fork — origin node in normal flow, clear gap below the lede */
   .fork {
-    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1.1rem;
     max-width: 600px;
-    /* breathing room below the lede for the "You" origin node */
-    margin: 4.5rem auto 0.5rem;
+    margin: 0 auto 0.5rem;
   }
 
   .origin {
-    position: absolute;
-    top: -1.4rem;
-    left: 50%;
-    transform: translate(-50%, -100%);
     display: grid;
     place-items: center;
     width: 58px;
@@ -218,8 +216,10 @@ const plans = [
     color: var(--ink-black);
   }
 
+  /* Never wider than the two cards above it */
   .fine {
-    margin-top: 1.75rem;
+    max-width: 1040px;
+    margin: 1.75rem auto 0;
     text-align: center;
   }
 
