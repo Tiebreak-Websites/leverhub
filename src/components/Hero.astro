@@ -1,13 +1,9 @@
 ---
-// Hero — full first screen: cinematic image (placeholder until the new
-// professional-academy artwork arrives), institutional copy, sized so the
-// trust strip below lands at the bottom of the viewport without scrolling.
+// Hero — centered, text-only, light. Full first screen so the trust strip
+// below lands at the bottom of the viewport without scrolling.
 ---
 
-<section class="hero on-navy" id="top">
-  <div class="bg" aria-hidden="true"></div>
-  <div class="veil" aria-hidden="true"></div>
-
+<section class="hero grid-paper" id="top">
   <div class="container inner">
     <div class="intro">
       <h1>
@@ -26,7 +22,7 @@
 
       <div class="actions rise" style="--d: 0.55s">
         <a href="#hub" class="btn btn-teal">Start My LeverHub Journey</a>
-        <a href="#video" class="btn btn-ghost">Watch the intro</a>
+        <a href="#video" class="btn btn-outline">Watch the intro</a>
       </div>
     </div>
   </div>
@@ -39,52 +35,30 @@
     align-items: center;
     /* Full first screen minus the trust strip below it */
     min-height: calc(100svh - 76px);
-    overflow: hidden;
-    background: var(--ink-black);
-    color: var(--white);
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--line);
     padding-top: clamp(6.5rem, 10vw, 8.5rem);
     padding-bottom: clamp(3rem, 5vw, 4.5rem);
   }
 
-  .bg {
-    position: absolute;
-    inset: 0;
-    background-image: url("/images/hero.jpg");
-    background-size: cover;
-    background-position: 68% center;
-    animation: kenburns 26s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  @keyframes kenburns {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.07);
-    }
-  }
-
-  .veil {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, rgba(12, 30, 60, 0.92) 0%, rgba(12, 30, 60, 0.64) 38%, rgba(12, 30, 60, 0.1) 68%, rgba(12, 30, 60, 0.3) 100%),
-      linear-gradient(180deg, rgba(12, 30, 60, 0.5) 0%, rgba(12, 30, 60, 0) 30%, rgba(12, 30, 60, 0.6) 100%);
-  }
-
   .inner {
-    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
   }
 
+  /* No max-width here — the h1's nowrap lines can be wider than a fixed cap
+     at large viewports, and a cap narrower than the content triggers the
+     browser's overflow-safe centering fallback (silently left-aligns). Only
+     the descriptor needs a line-length cap, applied directly on it below. */
   .intro {
     display: grid;
-    gap: 1.4rem;
-    justify-items: start;
+    gap: 1.5rem;
+    justify-items: center;
   }
 
   h1 {
-    color: var(--white);
+    color: var(--ink-black);
   }
 
   .line {
@@ -114,19 +88,20 @@
     font-family: var(--font-sub);
     font-size: clamp(1.1rem, 1.8vw, 1.3rem);
     font-weight: 600;
-    color: var(--white);
+    color: var(--navy);
   }
 
   .descriptor {
-    color: var(--white-75);
+    color: var(--ink-75);
     font-size: 1.05rem;
     line-height: 1.7;
-    max-width: 38ch;
+    max-width: 44ch;
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.9rem;
     margin-top: 0.4rem;
   }
@@ -144,10 +119,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .bg {
-      animation: none;
-    }
-
     .line-inner,
     .rise {
       transform: none;
@@ -161,8 +132,12 @@
       min-height: calc(100svh - 120px);
     }
 
-    .bg {
-      background-position: 72% center;
+    h1 {
+      white-space: normal;
+    }
+
+    .line {
+      white-space: normal;
     }
   }
 </style>
