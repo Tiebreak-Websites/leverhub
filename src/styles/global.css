@@ -8,7 +8,7 @@
   /* Color */
   --navy: #173c77;          /* Lever Navy — structure */
   --navy-deep: #0e2750;     /* Deep Navy — mid depth */
-  --ink-black: #0a1428;     /* near-black navy — dark sections & display text */
+  --ink-black: #0c1e3c;     /* midnight blue — dark sections & display text */
   --teal: #2fae9b;          /* Pivot Teal — brand accent */
   --teal-bright: #34d3ba;   /* electric teal — CTAs & data moments */
   --teal-deep: #208c7c;     /* hovers & large teal accents */
@@ -189,6 +189,12 @@ video {
   text-align: left;
   margin-inline: 0;
   max-width: none;
+}
+
+/* Titles pinned to a single row — fluid size keeps the line inside the container */
+.section-head h2.one-row {
+  white-space: nowrap;
+  font-size: min(4vw, 3.05rem);
 }
 
 .lede {
