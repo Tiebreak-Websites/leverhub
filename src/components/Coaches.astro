@@ -1,6 +1,7 @@
 ---
-// Meet your Progress Coaches — horizontal profile cards (2×2). The photo sits
-// in a fixed-width column with object-fit: cover, so it can never stretch.
+// Meet your Progress Coaches — one row of four gallery frames. Portraits are
+// shown at their natural aspect ratio (width: 100%, height: auto) so nothing
+// is ever cropped or stretched; labels sit below each photo.
 // Real names/bios to be supplied by the team before launch.
 const coaches = [
   { img: "/images/people/coach-1.jpg", focus: "Snapshot & Personal Goals", alt: "LeverHub Progress Coach portrait" },
@@ -20,18 +21,18 @@ const coaches = [
       </p>
     </div>
 
-    <div class="grid stagger">
+    <div class="row stagger">
       {
         coaches.map((coach) => (
-          <article class="card coach">
-            <div class="photo-box">
+          <figure class="coach">
+            <div class="frame">
               <img src={coach.img} alt={coach.alt} width="720" height="1139" loading="lazy" />
             </div>
-            <div class="info">
+            <figcaption>
               <span class="role">Progress Coach</span>
-              <h3>{coach.focus}</h3>
-            </div>
-          </article>
+              <span class="focus">{coach.focus}</span>
+            </figcaption>
+          </figure>
         ))
       }
     </div>
@@ -39,78 +40,79 @@ const coaches = [
 </section>
 
 <style>
-  .grid {
+  .row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.25rem, 2.5vw, 2rem);
   }
 
   .coach {
+    margin: 0;
     display: grid;
-    grid-template-columns: 150px 1fr;
+    gap: 1rem;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .frame {
+    width: 100%;
+    border-radius: var(--radius);
     overflow: hidden;
+    box-shadow: var(--shadow-card);
     transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   }
 
-  .coach:hover {
-    transform: translateY(-4px);
+  .coach:hover .frame {
+    transform: translateY(-5px);
     box-shadow: var(--shadow-lift);
   }
 
-  .photo-box {
-    position: relative;
-    min-height: 170px;
-    background: var(--navy-deep);
-  }
-
-  .photo-box img {
-    position: absolute;
-    inset: 0;
+  /* Natural aspect — the full portrait is always visible */
+  .frame img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
+    height: auto;
+    display: block;
   }
 
-  .info {
+  figcaption {
     display: grid;
-    gap: 0.35rem;
-    align-content: center;
-    padding: 1.5rem 1.75rem;
+    gap: 0.2rem;
   }
 
   .role {
-    font-family: var(--font-mono);
+    font-family: var(--font-sub);
     font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--teal-ink);
   }
 
-  .info h3 {
-    font-size: 1.15rem;
+  .focus {
+    font-family: var(--font-sub);
+    font-weight: 600;
+    color: var(--ink-black);
+    font-size: 1.02rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .coach:hover {
+    .coach:hover .frame {
       transform: none;
     }
   }
 
-  @media (max-width: 860px) {
-    .grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 900px) {
+    .row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.25rem;
     }
   }
 
-  @media (max-width: 440px) {
-    .coach {
-      grid-template-columns: 120px 1fr;
-    }
-
-    .info {
-      padding: 1.1rem 1.25rem;
+  @media (max-width: 480px) {
+    .row {
+      grid-template-columns: 1fr;
+      max-width: 340px;
+      margin-inline: auto;
     }
   }
 </style>

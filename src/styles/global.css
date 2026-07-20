@@ -1,40 +1,43 @@
 /* ============================================================
-   LeverHub — design tokens & base styles
-   Source: LeverHub Brand Book v2.0 (Internovus Creative, Jun 2026)
-   "Navy holds. Teal moves." — 64 navy / 26 neutral / 10 teal
+   LeverHub — "Swiss Precision, Trading DNA" design system (2026)
+   Light Swiss foundation, three near-black anchors (hero/practice/footer),
+   electric teal actions, Poppins-only with dramatic scale.
    ============================================================ */
 
 :root {
-  /* Color — brandbook §07 */
-  --navy: #173c77;        /* Lever Navy — primary, structure */
-  --navy-deep: #0e2750;   /* Deep Navy — depth */
-  --teal: #2fae9b;        /* Pivot Teal — the single accent */
-  --teal-deep: #208c7c;   /* Teal Deep — hovers & large teal accents */
-  --teal-ink: #1b7568;    /* darker teal for SMALL text — #208c7c is only 4.11:1 on white, below AA; flag to brand owners */
-  --teal-wash: #e2f3f0;   /* Teal Wash — tints & soft fills */
-  --mist: #ebebeb;        /* Mist — neutral */
-  --paper: #f6f7f9;       /* Paper — page background */
-  --ink: #0c1a30;         /* Ink — body copy */
+  /* Color */
+  --navy: #173c77;          /* Lever Navy — structure */
+  --navy-deep: #0e2750;     /* Deep Navy — mid depth */
+  --ink-black: #0a1428;     /* near-black navy — dark sections & display text */
+  --teal: #2fae9b;          /* Pivot Teal — brand accent */
+  --teal-bright: #34d3ba;   /* electric teal — CTAs & data moments */
+  --teal-deep: #208c7c;     /* hovers & large teal accents */
+  --teal-ink: #1b7568;      /* darker teal for SMALL text on light (AA) */
+  --teal-wash: #e2f3f0;     /* soft fills */
+  --mist: #ebebeb;
+  --paper: #f6f7f9;
+  --ink: #0c1a30;
   --white: #ffffff;
 
-  /* Derived tints (Ink / white alpha only — no off-palette hues) */
+  /* Derived tints */
   --ink-75: rgba(12, 26, 48, 0.75);
   --ink-60: rgba(12, 26, 48, 0.6);
   --white-85: rgba(255, 255, 255, 0.85);
   --white-75: rgba(255, 255, 255, 0.75);
   --white-58: rgba(255, 255, 255, 0.58);
   --line: rgba(12, 26, 48, 0.1);
+  --line-soft: rgba(12, 26, 48, 0.05);
   --line-inverse: rgba(255, 255, 255, 0.14);
 
-  /* Typography — client decision (Jul 2026): Poppins only, sitewide.
-     Hierarchy comes from weight and tracking, not typeface changes. */
-  --font-display: "Poppins", sans-serif; /* headlines — 600/700 */
-  --font-sub: "Poppins", sans-serif;     /* subheads, deck text, buttons */
-  --font-body: "Poppins", sans-serif;    /* body, UI, long copy — 400 */
-  --font-mono: "Poppins", sans-serif;    /* small labels & fine print — tracked uppercase */
+  /* Typography — Poppins only, hierarchy through weight & scale */
+  --font-display: "Poppins", sans-serif;
+  --font-sub: "Poppins", sans-serif;
+  --font-body: "Poppins", sans-serif;
+  --font-mono: "Poppins", sans-serif;
 
-  --radius: 22px;
-  --radius-sm: 14px;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --radius-btn: 12px;
   --container: 1180px;
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --shadow-card: 0 1px 2px rgba(12, 26, 48, 0.04), 0 12px 32px -16px rgba(12, 26, 48, 0.14);
@@ -56,7 +59,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink);
   background: var(--paper);
   -webkit-font-smoothing: antialiased;
@@ -73,26 +76,26 @@ h2,
 h3 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.08;
-  color: var(--navy);
+  line-height: 1.06;
+  color: var(--ink-black);
   margin: 0;
 }
 
 h1 {
-  font-size: clamp(2.9rem, 7.5vw, 5.25rem);
-  letter-spacing: -0.025em;
-  line-height: 1.05;
+  font-size: clamp(2.9rem, 7.5vw, 6rem);
+  letter-spacing: -0.03em;
 }
 
 h2 {
-  font-size: clamp(2.1rem, 4.6vw, 3.2rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  letter-spacing: -0.025em;
 }
 
 h3 {
   font-size: clamp(1.15rem, 1.9vw, 1.4rem);
   font-weight: 600;
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 p {
@@ -117,15 +120,15 @@ video {
   border-radius: 4px;
 }
 
-/* Skip link — visually hidden until focused, sits above the fixed header */
+/* Skip link */
 .skip-link {
   position: fixed;
   top: 0.75rem;
   left: 0.75rem;
   z-index: 100;
   padding: 0.8rem 1.25rem;
-  border-radius: 999px;
-  background: var(--navy);
+  border-radius: var(--radius-btn);
+  background: var(--ink-black);
   color: var(--white);
   font-family: var(--font-sub);
   font-weight: 600;
@@ -145,19 +148,47 @@ video {
 }
 
 .section {
-  padding-block: clamp(5rem, 10vw, 8rem);
+  padding-block: clamp(5rem, 10vw, 8.5rem);
 }
 
 .section.tight {
   padding-block: clamp(3.5rem, 6vw, 5rem);
 }
 
-/* Section heading block — headline leads, left-aligned, full section width */
+/* Graph-grid whisper — quiet trading DNA on light sections */
+.grid-paper {
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Tracked-caps label */
+.caps {
+  font-family: var(--font-sub);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--teal-ink);
+}
+
+/* Section heading block — centered by default; .left where layout demands */
 .section-head {
   display: grid;
   gap: 1.1rem;
-  margin-bottom: clamp(2.75rem, 6vw, 4.5rem);
+  justify-items: center;
+  text-align: center;
+  max-width: 880px;
+  margin-inline: auto;
+  margin-bottom: clamp(3rem, 6.5vw, 5rem);
+}
+
+.section-head.left {
+  justify-items: start;
   text-align: left;
+  margin-inline: 0;
+  max-width: none;
 }
 
 .lede {
@@ -178,19 +209,20 @@ video {
   color: var(--white-75);
 }
 
-/* Teal accent inside display headlines (large text — 3:1 passes) */
-h1 em,
+.on-navy .caps {
+  color: var(--teal-bright);
+}
+
 h2 em {
   font-style: normal;
   color: var(--teal-deep);
 }
 
-.on-navy h1 em,
 .on-navy h2 em {
-  color: var(--teal);
+  color: var(--teal-bright);
 }
 
-/* ---------- buttons ---------- */
+/* ---------- buttons — squared modern ---------- */
 
 .btn {
   display: inline-flex;
@@ -201,8 +233,8 @@ h2 em {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1;
-  padding: 1.05rem 1.75rem;
-  border-radius: 999px;
+  padding: 1.05rem 1.9rem;
+  border-radius: var(--radius-btn);
   border: 2px solid transparent;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
@@ -218,23 +250,25 @@ h2 em {
   transform: translateY(0);
 }
 
+/* Primary — electric teal with near-black text */
 .btn-teal {
-  background: var(--teal);
-  color: var(--white);
+  background: var(--teal-bright);
+  color: var(--ink-black);
 }
 
 .btn-teal:hover {
-  background: var(--teal-deep);
-  box-shadow: 0 12px 24px -10px rgba(32, 140, 124, 0.55);
+  background: var(--teal);
+  color: var(--ink-black);
+  box-shadow: 0 14px 28px -12px rgba(47, 174, 155, 0.55);
 }
 
 .btn-navy {
-  background: var(--navy);
+  background: var(--ink-black);
   color: var(--white);
 }
 
 .btn-navy:hover {
-  background: var(--navy-deep);
+  background: var(--navy);
 }
 
 .btn-ghost {
@@ -247,18 +281,17 @@ h2 em {
 }
 
 .btn-outline {
-  border-color: var(--navy);
-  color: var(--navy);
+  border-color: var(--ink-black);
+  color: var(--ink-black);
 }
 
 .btn-outline:hover {
-  background: var(--navy);
+  background: var(--ink-black);
   color: var(--white);
 }
 
 /* ---------- cards ---------- */
 
-/* Borderless surfaces — depth comes from layered shadow only */
 .card {
   background: var(--white);
   border-radius: var(--radius);
@@ -268,9 +301,10 @@ h2 em {
 /* ---------- fine print ---------- */
 
 .fine {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-sub);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   line-height: 1.7;
   color: var(--ink-60);
 }
@@ -280,10 +314,7 @@ h2 em {
 }
 
 /* ============================================================
-   Motion system
-   Hidden states only apply once JS tags <html class="js">, so the
-   page is fully readable without JavaScript. Everything respects
-   prefers-reduced-motion.
+   Motion system — gated behind html.js, reduced-motion-safe
    ============================================================ */
 
 html.js .reveal {
@@ -297,7 +328,6 @@ html.js .reveal.in {
   transform: none;
 }
 
-/* Staggered children — observe the parent, children cascade in */
 html.js .stagger > * {
   opacity: 0;
   transform: translateY(22px);
@@ -317,7 +347,6 @@ html.js .stagger.in > *:nth-child(6) { transition-delay: 0.25s; }
 html.js .stagger.in > *:nth-child(7) { transition-delay: 0.3s; }
 html.js .stagger.in > *:nth-child(8) { transition-delay: 0.35s; }
 
-/* Progress bars — width set inline, entrance animated via scaleX */
 html.js .grow-bar {
   transform: scaleX(0);
   transform-origin: left center;
@@ -351,7 +380,6 @@ html.js .reveal.in .grow-bar {
   }
 }
 
-/* Long CTA labels must wrap on small phones instead of overflowing */
 @media (max-width: 480px) {
   .btn {
     white-space: normal;

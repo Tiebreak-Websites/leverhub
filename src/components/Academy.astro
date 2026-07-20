@@ -1,6 +1,7 @@
 ---
-// Academy — photo locked to a 4:3 box (object-fit: cover, can't stretch) with
-// the pull-quote as an overlay card; numbered topic list beside it.
+// Academy — cinematic media banner: the learner photo at its natural 4:3
+// aspect fills a wide frame with a dark gradient band carrying the pull-quote
+// in white. The five topics run beneath as ghost-numbered columns.
 const topics = [
   "How money works and what erodes it",
   "How the economy affects your daily life",
@@ -20,36 +21,30 @@ const topics = [
       </p>
     </div>
 
-    <div class="content">
-      <figure class="media reveal">
-        <img
-          src="/images/people/learner.jpg"
-          alt="A learner reviewing their finance dashboard at a desk in the evening"
-          width="1200"
-          height="900"
-          loading="lazy"
-        />
-        <figcaption class="pull">
-          This is not passive content. It is a guided journey from understanding to action.
-        </figcaption>
-      </figure>
+    <figure class="media reveal">
+      <img
+        src="/images/people/learner.jpg"
+        alt="A learner reviewing their finance dashboard at a desk in the evening"
+        width="1200"
+        height="900"
+        loading="lazy"
+      />
+      <figcaption class="band">
+        <span class="band-caps" aria-hidden="true">The LeverHub Academy</span>
+        This is not passive content. It is a guided journey from understanding to action.
+      </figcaption>
+    </figure>
 
-      <ol class="topics stagger">
-        {
-          topics.map((topic, i) => (
-            <li>
-              <span class="num" aria-hidden="true">0{i + 1}</span>
-              <span class="topic">{topic}</span>
-              <span class="tick" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 12.5l5 5L20 6.5" />
-                </svg>
-              </span>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
+    <ol class="topics stagger">
+      {
+        topics.map((topic, i) => (
+          <li>
+            <span class="ghost" aria-hidden="true">0{i + 1}</span>
+            <span class="topic">{topic}</span>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
@@ -59,93 +54,99 @@ const topics = [
     border-block: 1px solid var(--line);
   }
 
-  .content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-  }
-
   .media {
     position: relative;
-    margin: 0;
-  }
-
-  .media img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+    margin: 0 auto;
+    max-width: 980px;
     border-radius: var(--radius);
+    overflow: hidden;
     box-shadow: var(--shadow-lift);
   }
 
-  /* Pull-quote overlaid on the photo */
-  .pull {
+  /* Natural 4:3 source shown in a 21:9 window on wide screens would crop —
+     so the frame follows the image: width 100%, height auto. Nothing cut. */
+  .media img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Gradient band with the pull-quote — designed text-on-image */
+  .band {
     position: absolute;
-    left: 1.25rem;
-    right: 1.25rem;
-    bottom: 1.25rem;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-left: 3px solid var(--teal);
-    border-radius: var(--radius-sm);
-    padding: 1rem 1.25rem;
+    inset-inline: 0;
+    bottom: 0;
+    padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 3vw, 2rem);
+    background: linear-gradient(180deg, rgba(10, 20, 40, 0) 0%, rgba(10, 20, 40, 0.72) 55%, rgba(10, 20, 40, 0.88) 100%);
+    display: grid;
+    gap: 0.5rem;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(0.98rem, 1.4vw, 1.1rem);
-    line-height: 1.45;
-    color: var(--navy);
+    font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--white);
+  }
+
+  .band-caps {
+    font-family: var(--font-sub);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
   }
 
   .topics {
     list-style: none;
-    margin: 0;
+    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
     padding: 0;
     display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(1.25rem, 2.5vw, 2rem);
   }
 
   .topics li {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.3rem 0.25rem;
-    border-bottom: 1px solid var(--line);
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 2.6rem;
+    border-top: 2px solid var(--line);
+    transition: border-color 0.25s ease;
   }
 
-  .topics li:first-child {
-    border-top: 1px solid var(--line);
+  .topics li:hover {
+    border-top-color: var(--teal);
   }
 
-  .num {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .ghost {
+    position: absolute;
+    top: 0.45rem;
+    left: 0;
+    font-family: var(--font-display);
     font-weight: 700;
-    color: var(--teal-ink);
-    flex: none;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: rgba(12, 26, 48, 0.1);
+    user-select: none;
   }
 
   .topic {
     font-family: var(--font-sub);
     font-weight: 500;
-    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-size: 0.95rem;
+    line-height: 1.5;
     color: var(--ink);
-    flex: 1;
   }
 
-  .tick {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--teal-wash);
-    color: var(--teal-deep);
+  @media (max-width: 960px) {
+    .topics {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  @media (max-width: 860px) {
-    .content {
+  @media (max-width: 520px) {
+    .topics {
       grid-template-columns: 1fr;
     }
   }

@@ -191,8 +191,7 @@ const journal = [
 
 <style>
   .practice {
-    /* Deep Navy at the top so teal accents pass AA (teal on Lever Navy is 3.92:1) */
-    background: linear-gradient(196deg, var(--navy-deep) 0%, var(--navy) 100%);
+    background: var(--ink-black);
     color: var(--white);
     overflow: hidden;
   }
@@ -481,11 +480,9 @@ const journal = [
     color: var(--white-58);
   }
 
+  /* Full section width, no divider */
   .disclosure {
     margin-top: 2.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line-inverse);
-    max-width: 760px;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,6 @@
 ---
-// Introduction video — dark "theater" continuation of the hero. A chart line
-// draws itself across the section as you scroll (the signature interaction),
-// and a soft teal glow sits behind the player.
+// Introduction video — centered dark theater: title, lede and player all
+// centered on the near-black stage with a soft teal glow.
 // Final video pending: drop it at public/media/leverhub-intro.mp4 and replace
 // the .player markup with:
 //   <video controls preload="metadata" poster="/images/video-poster.jpg">
@@ -45,27 +44,22 @@
   .video-section {
     position: relative;
     overflow: hidden;
-    background: var(--navy-deep);
+    background: var(--ink-black);
     padding-top: clamp(4.5rem, 8vw, 7rem);
     padding-bottom: clamp(5rem, 9vw, 8rem);
-  }
-
-  h2 em {
-    font-style: normal;
-    color: var(--teal);
   }
 
   .stage {
     position: relative;
     max-width: 940px;
+    margin-inline: auto;
   }
 
-  /* Soft teal glow behind the player */
   .stage::before {
     content: "";
     position: absolute;
     inset: -14% -18%;
-    background: radial-gradient(55% 55% at 50% 48%, rgba(47, 174, 155, 0.2) 0%, rgba(47, 174, 155, 0) 70%);
+    background: radial-gradient(55% 55% at 50% 48%, rgba(52, 211, 186, 0.18) 0%, rgba(52, 211, 186, 0) 70%);
     pointer-events: none;
   }
 
@@ -74,8 +68,8 @@
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(4, 12, 28, 0.4), 0 48px 96px -36px rgba(4, 12, 28, 0.9);
-    background: var(--navy-deep);
+    box-shadow: 0 2px 4px rgba(2, 8, 20, 0.4), 0 48px 96px -36px rgba(2, 8, 20, 0.9);
+    background: var(--ink-black);
   }
 
   .poster {
@@ -94,7 +88,7 @@
   .shade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(14, 39, 80, 0.35) 0%, rgba(14, 39, 80, 0.05) 45%, rgba(14, 39, 80, 0.72) 100%);
+    background: linear-gradient(180deg, rgba(10, 20, 40, 0.35) 0%, rgba(10, 20, 40, 0.05) 45%, rgba(10, 20, 40, 0.72) 100%);
   }
 
   .caption {
@@ -106,12 +100,12 @@
     font-size: clamp(1.25rem, 2.6vw, 1.9rem);
     line-height: 1.25;
     color: var(--white);
-    text-shadow: 0 2px 18px rgba(6, 16, 34, 0.55);
+    text-shadow: 0 2px 18px rgba(2, 8, 20, 0.55);
   }
 
   .caption em {
     font-style: normal;
-    color: var(--teal);
+    color: var(--teal-bright);
   }
 
   .play {
@@ -125,29 +119,29 @@
     height: 84px;
     border: 0;
     border-radius: 50%;
-    background: var(--teal);
-    color: var(--white);
+    background: var(--teal-bright);
+    color: var(--ink-black);
     cursor: pointer;
-    box-shadow: 0 0 0 0 rgba(47, 174, 155, 0.4);
+    box-shadow: 0 0 0 0 rgba(52, 211, 186, 0.4);
     transition: transform 0.25s var(--ease-out), background-color 0.2s ease;
     animation: pulse 2.6s ease-out infinite;
   }
 
   @keyframes pulse {
     0% {
-      box-shadow: 0 0 0 0 rgba(47, 174, 155, 0.45);
+      box-shadow: 0 0 0 0 rgba(52, 211, 186, 0.45);
     }
     70% {
-      box-shadow: 0 0 0 24px rgba(47, 174, 155, 0);
+      box-shadow: 0 0 0 24px rgba(52, 211, 186, 0);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(47, 174, 155, 0);
+      box-shadow: 0 0 0 0 rgba(52, 211, 186, 0);
     }
   }
 
   .play:hover {
     transform: translate(-50%, -50%) scale(1.08);
-    background: var(--teal-deep);
+    background: var(--teal);
   }
 
   .play svg {
@@ -163,7 +157,7 @@
     gap: 0.9rem;
     padding: 0.85rem 1.25rem;
     color: var(--white-85);
-    background: linear-gradient(180deg, transparent, rgba(6, 16, 34, 0.65));
+    background: linear-gradient(180deg, transparent, rgba(2, 8, 20, 0.65));
   }
 
   .track {
@@ -179,13 +173,13 @@
     width: 12%;
     height: 100%;
     border-radius: 999px;
-    background: var(--teal);
+    background: var(--teal-bright);
   }
 
   .time {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
   }
 
   .soon {
@@ -193,14 +187,14 @@
     left: 50%;
     bottom: 3.9rem;
     transform: translateX(-50%) translateY(8px);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
+    font-family: var(--font-sub);
+    font-size: 0.72rem;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--white);
-    background: rgba(14, 39, 80, 0.85);
-    border: 1px solid rgba(47, 174, 155, 0.5);
+    background: rgba(10, 20, 40, 0.85);
+    border: 1px solid rgba(52, 211, 186, 0.5);
     border-radius: 999px;
     padding: 0.45rem 1rem;
     opacity: 0;
@@ -225,7 +219,6 @@
 </style>
 
 <script>
-  // Placeholder behavior until the final video is delivered.
   const player = document.querySelector("[data-player]");
   let timer: ReturnType<typeof setTimeout> | undefined;
   document.querySelectorAll("[data-video-cta]").forEach((el) =>

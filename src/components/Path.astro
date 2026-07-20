@@ -1,5 +1,7 @@
 ---
-// The LeverHub Path — horizontal five steps; connectors draw in as you scroll.
+// The LeverHub Path — four steps on a drawn journey line. Centered,
+// diagrammatic: ghost numerals, icon nodes, a line that draws through them.
+// (Steps 2 + 3 of the original copy merged into "Money & markets".)
 const steps = [
   {
     title: "Where you are",
@@ -7,13 +9,8 @@ const steps = [
     icon: `<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 19.5c1-3.2 3.4-4.8 6.5-4.8s5.5 1.6 6.5 4.8"/>`,
   },
   {
-    title: "Your money situation",
-    body: "Inflation. Interest rates. Central banks. How the economy affects your everyday life — explained without jargon.",
-    icon: `<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.1 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.1-3.6-8.5S9.6 5.8 12 3.5Z"/>`,
-  },
-  {
-    title: "How markets work",
-    body: "News, data, sentiment, price movement. You start reading the world around you differently.",
+    title: "Money & markets",
+    body: "Inflation. Interest rates. Central banks. How the economy affects your everyday life — and how markets react to news, data, sentiment and price movement. Explained without jargon.",
     icon: `<path d="M7 8v8M7 6v2M7 16v2M12 5v6M12 3v2M12 11v2M17 10v8M17 8v2M17 18v2"/><rect x="5.5" y="9" width="3" height="5" rx="0.8"/><rect x="10.5" y="6" width="3" height="4" rx="0.8"/><rect x="15.5" y="11" width="3" height="5" rx="0.8"/>`,
   },
   {
@@ -29,10 +26,10 @@ const steps = [
 ];
 ---
 
-<section class="section path" id="path">
+<section class="section path grid-paper" id="path">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Five steps. <em>One direction.</em> Your pace.</h2>
+      <h2>Four steps. <em>One direction.</em> Your pace.</h2>
       <p class="lede">The Path is personal before it is technical &mdash; and it ends with life, not with a trade.</p>
     </div>
 
@@ -40,10 +37,10 @@ const steps = [
       {
         steps.map((step, i) => (
           <li class="step">
+            <span class="ghost" aria-hidden="true">0{i + 1}</span>
             <span class="node" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={step.icon} />
             </span>
-            <span class="num">Step 0{i + 1}</span>
             <h3>{step.title}</h3>
             <p>{step.body}</p>
           </li>
@@ -60,7 +57,7 @@ const steps = [
 
 <style>
   .path {
-    background: var(--white);
+    background-color: var(--white);
     border-block: 1px solid var(--line);
   }
 
@@ -69,26 +66,42 @@ const steps = [
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
   }
 
   .step {
-    display: grid;
-    gap: 0.55rem;
-    justify-items: start;
-    text-align: left;
     position: relative;
+    display: grid;
+    gap: 0.6rem;
+    justify-items: center;
+    text-align: center;
+    padding-top: 3.2rem;
   }
 
-  /* Connector draws left-to-right as the row reveals */
+  /* Oversized ghost numeral behind each step */
+  .ghost {
+    position: absolute;
+    top: -1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(4.5rem, 8vw, 7rem);
+    line-height: 1;
+    color: rgba(12, 26, 48, 0.06);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Journey line drawing through the nodes */
   .step:not(:last-child)::after {
     content: "";
     position: absolute;
-    top: 33px;
-    left: 82px;
-    width: calc(100% + 1.5rem - 98px);
-    border-top: 2px dotted rgba(47, 174, 155, 0.55);
+    top: calc(3.2rem + 33px);
+    left: calc(50% + 46px);
+    width: calc(100% + clamp(1.5rem, 3vw, 2.5rem) - 92px);
+    border-top: 2px dashed rgba(47, 174, 155, 0.55);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.55s var(--ease-out);
@@ -100,11 +113,11 @@ const steps = [
   }
 
   html.js .steps.in .step:nth-child(1)::after { transition-delay: 0.25s; }
-  html.js .steps.in .step:nth-child(2)::after { transition-delay: 0.45s; }
-  html.js .steps.in .step:nth-child(3)::after { transition-delay: 0.65s; }
-  html.js .steps.in .step:nth-child(4)::after { transition-delay: 0.85s; }
+  html.js .steps.in .step:nth-child(2)::after { transition-delay: 0.5s; }
+  html.js .steps.in .step:nth-child(3)::after { transition-delay: 0.75s; }
 
   .node {
+    position: relative;
     display: grid;
     place-items: center;
     width: 66px;
@@ -128,27 +141,20 @@ const steps = [
     height: 28px;
   }
 
-  .num {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--teal-ink);
-  }
-
   h3 {
-    font-size: 1.12rem;
+    font-size: 1.15rem;
   }
 
   .step p {
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.65;
     color: var(--ink-75);
+    max-width: 30ch;
   }
 
   .disclosure {
     margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    text-align: center;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -162,20 +168,16 @@ const steps = [
     }
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 900px) {
     .steps {
       grid-template-columns: repeat(2, 1fr);
-      gap: 2rem 1.5rem;
-      max-width: 620px;
+      gap: 2.5rem 1.5rem;
+      max-width: 640px;
       margin-inline: auto;
     }
 
     .step::after {
       display: none;
-    }
-
-    .step:last-child {
-      grid-column: 1 / -1;
     }
   }
 

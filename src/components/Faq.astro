@@ -1,5 +1,6 @@
 ---
-// FAQ — open two-column Q&A grid: every answer visible, zero interaction cost.
+// FAQ — compact hairline accordion with oversized ghost numerals; the active
+// row's numeral fills with teal. Single-open behavior.
 const faqs = [
   {
     q: "What is LeverHub?",
@@ -29,19 +30,34 @@ const faqs = [
 ---
 
 <section class="section faq" id="faq">
-  <div class="container">
+  <div class="container inner">
     <div class="section-head reveal">
       <h2>FAQ</h2>
     </div>
 
-    <div class="grid stagger">
+    <div class="list reveal" data-accordion>
       {
         faqs.map((item, i) => (
-          <article class="card qa">
-            <span class="num" aria-hidden="true">0{i + 1}</span>
-            <h3>{item.q}</h3>
-            <p>{item.a}</p>
-          </article>
+          <details class="item" name="faq">
+            <summary>
+              <span class="ghost" aria-hidden="true">0{i + 1}</span>
+              <span class="q">{item.q}</span>
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    d="M12 5v14M5 12h14"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
         ))
       }
     </div>
@@ -60,52 +76,136 @@ const faqs = [
     border-block: 1px solid var(--line);
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+  .inner {
+    max-width: 860px;
   }
 
-  .qa {
+  .list {
+    border-top: 1px solid var(--line);
+  }
+
+  .item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
     position: relative;
-    background: var(--paper);
-    box-shadow: none;
-    padding: clamp(1.75rem, 3vw, 2.25rem);
-    display: grid;
-    gap: 0.7rem;
-    align-content: start;
-    transition: background-color 0.25s ease, box-shadow 0.3s var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.35rem 0.25rem;
+    cursor: pointer;
+    list-style: none;
+    overflow: hidden;
   }
 
-  .qa:hover {
-    background: var(--white);
-    box-shadow: var(--shadow-card);
+  summary::-webkit-details-marker {
+    display: none;
   }
 
-  .num {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  /* Oversized ghost numeral */
+  .ghost {
+    flex: none;
+    width: 3.2rem;
+    font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--teal-ink);
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: rgba(12, 26, 48, 0.1);
+    transition: color 0.3s ease;
+    user-select: none;
   }
 
-  .qa h3 {
-    font-size: 1.15rem;
+  .item[open] .ghost,
+  summary:hover .ghost {
+    color: var(--teal);
   }
 
-  .qa p {
+  .q {
+    flex: 1;
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: clamp(1.02rem, 1.6vw, 1.15rem);
+    color: var(--ink-black);
+    transition: color 0.2s ease;
+  }
+
+  summary:hover .q {
+    color: var(--teal-deep);
+  }
+
+  .icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--teal-wash);
+    color: var(--teal-deep);
+    transition: transform 0.3s var(--ease-out), background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .item[open] .icon {
+    transform: rotate(45deg);
+    background: var(--teal-bright);
+    color: var(--ink-black);
+  }
+
+  .answer {
+    padding: 0 0.25rem 1.5rem calc(0.25rem + 3.2rem + 1.25rem);
+  }
+
+  .answer p {
     color: var(--ink-75);
+    max-width: 58ch;
     line-height: 1.7;
+  }
+
+  html.js .item[open] .answer {
+    animation: answer-in 0.35s var(--ease-out);
+  }
+
+  @keyframes answer-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .disclosure {
     margin-top: 1.75rem;
   }
 
-  @media (max-width: 820px) {
-    .grid {
-      grid-template-columns: 1fr;
+  @media (prefers-reduced-motion: reduce) {
+    html.js .item[open] .answer {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .ghost {
+      width: 2.2rem;
+      font-size: 1.8rem;
+    }
+
+    .answer {
+      padding-left: 0.25rem;
     }
   }
 </style>
+
+<script>
+  // Single-open accordion (fallback for browsers without <details name>).
+  const items = [...document.querySelectorAll<HTMLDetailsElement>("[data-accordion] details")];
+  items.forEach((item) =>
+    item.addEventListener("toggle", () => {
+      if (item.open) items.forEach((other) => other !== item && (other.open = false));
+    }),
+  );
+</script>

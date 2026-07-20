@@ -1,6 +1,6 @@
 ---
-// Hero — pure cinematic treatment. No side rail: the text column owns the left,
-// the silhouette in the artwork owns the right. One primary CTA.
+// Hero — the site's one opening dark moment. Pure white two-row headline
+// over the cinematic artwork; deepened near-black veil.
 ---
 
 <section class="hero on-navy" id="top">
@@ -10,7 +10,7 @@
   <div class="container inner">
     <div class="intro">
       <h1>
-        <span class="line"><span class="line-inner">It starts with <em>you</em>,</span></span>
+        <span class="line"><span class="line-inner">It starts with you,</span></span>
         <span class="line"><span class="line-inner">not the charts.</span></span>
       </h1>
 
@@ -37,7 +37,7 @@
     align-items: center;
     min-height: min(92vh, 880px);
     overflow: hidden;
-    background: var(--navy-deep);
+    background: var(--ink-black);
     color: var(--white);
     padding-top: clamp(7rem, 11vw, 9rem);
     padding-bottom: clamp(5rem, 8vw, 7rem);
@@ -62,13 +62,12 @@
     }
   }
 
-  /* Text side dark, image side open — the silhouette stays visible */
   .veil {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(90deg, rgba(14, 39, 80, 0.92) 0%, rgba(14, 39, 80, 0.66) 38%, rgba(14, 39, 80, 0.12) 68%, rgba(14, 39, 80, 0.3) 100%),
-      linear-gradient(180deg, rgba(14, 39, 80, 0.5) 0%, rgba(14, 39, 80, 0) 30%, rgba(14, 39, 80, 0.55) 100%);
+      linear-gradient(90deg, rgba(10, 20, 40, 0.92) 0%, rgba(10, 20, 40, 0.64) 38%, rgba(10, 20, 40, 0.1) 68%, rgba(10, 20, 40, 0.3) 100%),
+      linear-gradient(180deg, rgba(10, 20, 40, 0.5) 0%, rgba(10, 20, 40, 0) 30%, rgba(10, 20, 40, 0.6) 100%);
   }
 
   .inner {
@@ -81,23 +80,16 @@
     justify-items: start;
   }
 
-  /* Exactly two rows, never wrapping — fluid size keeps the longest line
-     inside the container at every viewport width */
+  /* Exactly two rows, never wrapping — pure white */
   h1 {
-    font-size: clamp(1.5rem, 8vw, 5.25rem);
+    font-size: clamp(1.9rem, 7.6vw, 5.5rem);
     white-space: nowrap;
+    color: var(--white);
   }
 
-  .descriptor,
-  .tagline {
-    max-width: 640px;
-  }
-
-  /* Staggered line-mask headline entrance */
   .line {
     display: block;
     overflow: hidden;
-    /* room for descenders inside the mask without changing line rhythm */
     padding-bottom: 0.14em;
     margin-bottom: -0.14em;
   }
@@ -138,7 +130,6 @@
     margin-top: 0.5rem;
   }
 
-  /* Load-in rise for hero content (fires when the section gets .in) */
   .rise {
     opacity: 0;
     transform: translateY(24px);
@@ -176,9 +167,6 @@
 </style>
 
 <script>
-  // The hero is its own reveal root: mark it .in on load so the line-mask
-  // and rise transitions play immediately. The timeout is a safety net for
-  // environments where requestAnimationFrame is throttled.
   const hero = document.getElementById("top");
   const show = () => hero?.classList.add("in");
   requestAnimationFrame(show);
