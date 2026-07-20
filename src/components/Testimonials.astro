@@ -23,8 +23,10 @@ const quotes = [
 
 <section class="section voices grid-paper">
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head voices-head reveal">
+      <span class="qghost" aria-hidden="true">&ldquo;</span>
       <h2>What members say</h2>
+      <p class="lede">A few honest reflections from people who started where you are.</p>
     </div>
 
     <div class="grid stagger">
@@ -54,6 +56,32 @@ const quotes = [
 </section>
 
 <style>
+  /* Giant ghost quotation mark behind the head — matches the FAQ head's
+     ghost question mark treatment */
+  .voices-head {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+
+  .qghost {
+    position: absolute;
+    top: -3.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(9rem, 18vw, 13rem);
+    line-height: 1;
+    color: rgba(47, 174, 155, 0.09);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .voices-head h2,
+  .voices-head .lede {
+    position: relative;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
