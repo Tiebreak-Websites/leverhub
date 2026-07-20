@@ -155,14 +155,6 @@ video {
   padding-block: clamp(3.5rem, 6vw, 5rem);
 }
 
-/* Graph-grid whisper — quiet trading DNA on light sections */
-.grid-paper {
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
 /* Tracked-caps label */
 .caps {
   font-family: var(--font-sub);
