@@ -1,0 +1,1587 @@
+---
+// Hub Tour — the two Personal Hub screens the client supplied as mockups,
+// recreated in HTML/CSS (Practice.astro precedent) so they stay crisp and
+// animate with the site's motion system. Each screen sits beside copy in an
+// alternating split; sample data only, no live figures.
+
+// Stroke icons injected with set:html (24×24, stroke-based, Practice style).
+const ic = {
+  trend: `<path d="M4 16.5 9 11l3.5 3L20 6.5"/><path d="M14.5 6.5H20V12"/>`,
+  wallet: `<rect x="3.5" y="6.5" width="17" height="13" rx="2.5"/><path d="M3.5 10.5h17"/><circle cx="16.5" cy="14.8" r="1.1"/>`,
+  pie: `<path d="M12 3.5A8.5 8.5 0 1 1 3.5 12H12V3.5Z"/><path d="M15.5 3.9A8.6 8.6 0 0 1 20.1 8.5H15.5V3.9Z"/>`,
+  bank: `<path d="M4 9.5 12 4l8 5.5"/><path d="M5.5 12v5.5M9.8 12v5.5M14.2 12v5.5M18.5 12v5.5"/><path d="M4 20h16"/>`,
+  clock: `<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5V12l4 2.5"/>`,
+  receipt: `<path d="M6.5 3.5h11v17l-2.2-1.5-2.3 1.5-2.3-1.5-2.2 1.5v-17Z"/><path d="M9.5 8.5h5M9.5 12h5"/>`,
+  bolt: `<path d="M12.5 3 5 13.5h5.5L10.5 21 18 10.5h-5.5L12.5 3Z"/>`,
+  banknote: `<rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="12" cy="12" r="2.2"/>`,
+  home: `<path d="M4.5 10.5 12 4l7.5 6.5"/><path d="M6.5 9.5V20h11V9.5"/>`,
+  play: `<path d="M8.5 5.5v13l10-6.5-10-6.5Z"/>`,
+  cart: `<circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/><path d="M3.5 4.5H6l2.2 10.5h9.3L20 8H7"/>`,
+  plus: `<path d="M12 5.5v13M5.5 12h13"/>`,
+  minus: `<path d="M5.5 12h13"/>`,
+  target: `<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>`,
+  car: `<path d="M4.5 16.5V13l1.6-4c.3-.8.9-1.2 1.8-1.2h8.2c.9 0 1.5.4 1.8 1.2l1.6 4v3.5"/><path d="M4.5 13h15"/><circle cx="8" cy="16.5" r="1.5"/><circle cx="16" cy="16.5" r="1.5"/>`,
+  cap: `<path d="M3 9.5 12 5l9 4.5-9 4.5L3 9.5Z"/><path d="M7 11.8v3.7c0 1.2 2.2 2.3 5 2.3s5-1.1 5-2.3v-3.7"/>`,
+  plane: `<path d="M20.5 3.5 3.5 10.5l5.5 2 .8 5.7 3-3.7 4.7 2.3 3-13.3Z"/><path d="M20.5 3.5 9 12.5"/>`,
+  piggy: `<path d="M5.5 12.3c0-2.9 2.6-4.8 6.3-4.8 3.6 0 6.2 1.9 6.2 4.6 0 .9-.3 1.7-.8 2.4l.9 2.7h-2.3l-.7-1.1c-1 .4-2.1.5-3.3.5-.6 0-1.2 0-1.8-.1L9.3 19H7l.4-2.7c-1.2-.9-1.9-2.1-1.9-4Z"/><path d="M4.2 11.2c-.7.2-1.2.8-1.2 1.6"/><path d="M14.6 11h.01"/>`,
+  person: `<circle cx="12" cy="7.5" r="3"/><path d="M5.5 20c.9-3.4 3.4-5.2 6.5-5.2s5.6 1.8 6.5 5.2"/>`,
+  camera: `<rect x="3.5" y="7" width="17" height="13" rx="2.5"/><path d="M9 7l1.2-2.5h3.6L15 7"/><circle cx="12" cy="13.3" r="3.2"/>`,
+  calendar: `<rect x="4" y="5.5" width="16" height="15" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>`,
+  chevron: `<path d="m7 10 5 5 5-5"/>`,
+  close: `<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>`,
+  check: `<path d="m5 12.5 4.5 4.5L19 7.5"/>`,
+};
+
+// --- Screen 1: Life & Finance Snapshot --------------------------------------
+
+const donut = [
+  { label: "Income", pct: 32, amount: "€5,420", color: "#34d3ba" },
+  { label: "Expenses", pct: 25, amount: "€4,190", color: "#4f8ef7" },
+  { label: "Savings", pct: 21, amount: "€14,500", color: "#8b5cf6" },
+  { label: "Investments", pct: 15, amount: "€32,700", color: "#f2a33c" },
+  { label: "Debt", pct: 7, amount: "€8,440", color: "#ef5350" },
+];
+const DONUT_C = 2 * Math.PI * 34;
+let acc = 0;
+const donutSegs = donut.map((d) => {
+  const len = (DONUT_C * d.pct) / 100;
+  const seg = { ...d, len: (len - 2).toFixed(2), off: (-acc).toFixed(2) };
+  acc += len;
+  return seg;
+});
+
+const assets = [
+  { label: "Car", value: "€21,000", icon: ic.car },
+  { label: "Savings", value: "€14,500", icon: ic.piggy },
+  { label: "Investments", value: "€32,700", icon: ic.trend },
+];
+
+const expenses = [
+  { label: "Housing", amount: "€1,300", pct: 31 },
+  { label: "Food", amount: "€760", pct: 18 },
+  { label: "Transport", amount: "€500", pct: 12 },
+  { label: "Entertainment", amount: "€420", pct: 10 },
+  { label: "Utilities", amount: "€380", pct: 9 },
+];
+const maxExpense = expenses[0].pct;
+
+const txns = [
+  { label: "Salary", date: "Today", amount: "+€5,420", tone: "teal", up: true, icon: ic.banknote },
+  { label: "Rent", date: "May 29", amount: "−€1,200", tone: "red", icon: ic.home },
+  { label: "Netflix", date: "May 28", amount: "−€15.99", tone: "rose", icon: ic.play },
+  { label: "Supermarket", date: "May 27", amount: "−€86.45", tone: "green", icon: ic.cart },
+];
+
+const actions = [
+  { label: "Add Income", tone: "teal", icon: ic.plus },
+  { label: "Add Expense", tone: "red", icon: ic.minus },
+  { label: "Add Asset", tone: "blue", icon: ic.home },
+  { label: "Create Goal", tone: "purple", icon: ic.target },
+];
+
+// --- Screen 2: Personal Goals ------------------------------------------------
+
+const goals = [
+  { title: "New Car", img: "/images/hub/goal-car.jpg", saved: "€20,250", target: "€45,000", pct: 45, icon: ic.car },
+  { title: "My Daughter's University", img: "/images/hub/goal-university.jpg", saved: "€8,640", target: "€24,000", pct: 36, icon: ic.cap },
+  { title: "Renovate Terrace", img: "/images/hub/goal-terrace.jpg", saved: "€4,200", target: "€12,000", pct: 35, icon: ic.home },
+  { title: "Trip to Thailand", img: "/images/hub/goal-thailand.jpg", saved: "€3,250", target: "€10,000", pct: 32, icon: ic.plane },
+  { title: "Emergency Fund", img: "/images/hub/goal-fund.jpg", saved: "€6,000", target: "€15,000", pct: 40, icon: ic.piggy },
+  { title: "Retire at 60", img: "/images/hub/goal-retire.jpg", saved: "€32,000", target: "€80,000", pct: 40, icon: ic.person },
+];
+const GOAL_C = (2 * Math.PI * 12).toFixed(1); // ring circumference, r=12
+
+const fields = [
+  { label: "Goal Title", placeholder: "e.g. Buy a house" },
+  { label: "Target Amount", placeholder: "€  0" },
+  { label: "Current Amount (Optional)", placeholder: "€  0" },
+  { label: "Target Date (Optional)", placeholder: "Select date", icon: ic.calendar },
+  { label: "Category", placeholder: "Select category", icon: ic.chevron },
+];
+---
+
+<section class="section tour" id="hub-tour">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="caps">Inside the hub</p>
+      <h2 class="one-row">A look inside your Hub</h2>
+      <p class="lede">
+        The two screens members use most, shown with sample data &mdash; this is what
+        your money looks like once it has a home.
+      </p>
+    </div>
+
+    <!-- Row 1 — Life & Finance Snapshot -->
+    <div class="row reveal">
+      <div class="copy">
+        <p class="caps">Life &amp; Finance Snapshot</p>
+        <h3>Your whole financial life on one screen</h3>
+        <p class="body">
+          Income, spending, assets and debts come together in a single view, topped by
+          your LeverHub Balance Score. No spreadsheets, no guessing &mdash; you see your
+          net worth, your free cash and where every euro goes.
+        </p>
+        <ul class="checks">
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Net worth and monthly free cash, always in view
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Assets and debts side by side, with net equity worked out for you
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Spending grouped into categories you can actually act on
+          </li>
+        </ul>
+      </div>
+
+      <div class="shot">
+        <div
+          class="app"
+          role="img"
+          aria-label="Illustration of the LeverHub Life and Finance Snapshot screen: Balance Score of 72, net worth chart, monthly free cash, assets, expense categories, recent transactions and quick actions"
+        >
+          <div class="app-nav" aria-hidden="true">
+            <span class="brand">
+              <svg class="mark" viewBox="0 0 127 156" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ffffff" d="M101.109 0H50.5532V68.789L75.8309 51.8152V25.3138H101.109V156C115.069 156 126.386 144.666 126.386 130.686V25.3138C126.386 11.3338 115.069 0 101.109 0Z"></path>
+                <path fill="#2fae9b" d="M50.5554 130.686H25.2777V0C11.3176 0 0 11.3338 0 25.3138V130.686C0 144.666 11.3176 156 25.2777 156H75.8331V82.291L50.5554 99.2648V130.686Z"></path>
+              </svg>
+              LeverHub
+            </span>
+            <span class="links">
+              <span class="active">Financial Snapshot</span>
+              <span>Goals</span>
+              <span>Academy</span>
+            </span>
+            <img class="avatar" src="/images/people/marco.jpg" alt="" loading="lazy" />
+            <span class="pill">+ Add Asset</span>
+          </div>
+
+          <div class="app-head" aria-hidden="true">
+            <div class="head-copy">
+              <p class="app-title">Life &amp; Finance Snapshot</p>
+              <p class="app-sub">Your command center for wealth, cash flow and goals.</p>
+            </div>
+            <div class="head-score">
+              <span class="gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="8"></circle>
+                  <circle class="ring" cx="50" cy="50" r="42" fill="none" stroke="#34d3ba" stroke-width="8" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)"></circle>
+                </svg>
+                <span class="gauge-txt"><span class="gauge-num" data-count="72">0</span><small>/100</small></span>
+              </span>
+              <span class="score-copy">
+                <strong>LeverHub<br />Balance Score</strong>
+                <small>Your financial health at a glance.</small>
+              </span>
+            </div>
+          </div>
+
+          <div class="trio" aria-hidden="true">
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.trend} /></span>Net Worth</p>
+              <p class="big">€48,250</p>
+              <p class="delta">&#9650; +12.5% vs last 30 days</p>
+              <div class="chart">
+                <div class="y-axis"><span>€60K</span><span>€40K</span><span>€20K</span><span>€0</span></div>
+                <svg viewBox="0 0 240 76" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="hubfade" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(52,211,186,0.35)"></stop>
+                      <stop offset="100%" stop-color="rgba(52,211,186,0)"></stop>
+                    </linearGradient>
+                  </defs>
+                  <polyline points="0,64 18,59 34,61 50,53 64,56 80,47 96,50 112,42 126,45 142,35 156,38 172,28 188,31 204,22 222,18 240,12 240,76 0,76" fill="url(#hubfade)" stroke="none"></polyline>
+                  <polyline class="spark" points="0,64 18,59 34,61 50,53 64,56 80,47 96,50 112,42 126,45 142,35 156,38 172,28 188,31 204,22 222,18 240,12" fill="none" stroke="#34d3ba" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" pathLength="100"></polyline>
+                </svg>
+              </div>
+              <div class="x-axis"><span>May 1</span><span>May 15</span><span>May 29</span><span>Jun 12</span><span>Jun 26</span><span>Today</span></div>
+            </div>
+
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.wallet} /></span>Monthly Free Cash</p>
+              <div class="cash-row">
+                <span class="cash-head"><span>Income</span><span class="val">€5,420</span></span>
+                <span class="bar-track"><span class="bar-fill teal grow-bar" style="width: 86%"></span></span>
+              </div>
+              <div class="cash-row">
+                <span class="cash-head"><span>Expenses</span><span class="val">€4,190</span></span>
+                <span class="bar-track"><span class="bar-fill blue grow-bar" style="width: 66%"></span></span>
+              </div>
+              <div class="free">
+                <span class="free-label">Free Cash</span>
+                <span class="free-num">€1,230</span>
+              </div>
+            </div>
+
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.pie} /></span>Financial Health Overview</p>
+              <div class="health">
+                <span class="donut">
+                  <svg viewBox="0 0 80 80">
+                    {donutSegs.map((s) => (
+                      <circle cx="40" cy="40" r="34" fill="none" stroke={s.color} stroke-width="9" stroke-dasharray={`${s.len} ${DONUT_C.toFixed(2)}`} stroke-dashoffset={s.off} transform="rotate(-90 40 40)"></circle>
+                    ))}
+                  </svg>
+                  <span class="donut-center"><small>Total</small><strong>€48,250</strong></span>
+                </span>
+                <ul class="legend">
+                  {donut.map((d) => (
+                    <li>
+                      <span class="dot" style={`background:${d.color}`}></span>
+                      <span class="l-name">{d.label}</span>
+                      <span class="l-pct">{d.pct}%</span>
+                      <span class="l-amt">{d.amount}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel assets" aria-hidden="true">
+            <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.bank} /></span>Assets (Patrimonio)</p>
+            <div class="asset-strip">
+              <div class="asset house">
+                <img src="/images/hub/asset-house.jpg" alt="" loading="lazy" />
+                <div class="house-facts">
+                  <span class="a-name"><span class="a-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.home} /></span>House</span>
+                  <span class="a-value">€320,000</span>
+                  <span class="a-line">Mortgage <em>€165,000</em></span>
+                  <span class="a-line equity">Net Equity <em>€155,000</em></span>
+                </div>
+              </div>
+              {assets.map((a) => (
+                <div class="asset">
+                  <span class="a-ico big-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={a.icon} /></span>
+                  <span class="a-name">{a.label}</span>
+                  <span class="a-value">{a.value}</span>
+                </div>
+              ))}
+              <div class="asset add">
+                <span class="add-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.plus} /></span>
+                <span class="a-name">Add Asset</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="trio bottom" aria-hidden="true">
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.clock} /></span>Top Expense Categories</p>
+              <ul class="cats">
+                {expenses.map((e) => (
+                  <li>
+                    <span class="c-name">{e.label}</span>
+                    <span class="bar-track"><span class="bar-fill teal grow-bar" style={`width:${Math.round((e.pct / maxExpense) * 100)}%`}></span></span>
+                    <span class="c-amt">{e.amount}</span>
+                    <span class="c-pct">{e.pct}%</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="view-all">View all expenses &rarr;</span>
+            </div>
+
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.receipt} /></span>Recent Transactions</p>
+              <ul class="txns">
+                {txns.map((t) => (
+                  <li>
+                    <span class={`t-ico ${t.tone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={t.icon} /></span>
+                    <span class="t-name">{t.label}</span>
+                    <span class="t-date">{t.date}</span>
+                    <span class={`t-amt ${t.up ? "up" : "down"}`}>{t.amount}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="view-all">View all transactions &rarr;</span>
+            </div>
+
+            <div class="panel">
+              <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.bolt} /></span>Quick Actions</p>
+              <div class="actions">
+                {actions.map((a) => (
+                  <span class="action">
+                    <span class={`act-ico ${a.tone}`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={a.icon} /></span>
+                    <span class="act-label">{a.label}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="fine">Illustrative interface &mdash; sample data, not live figures.</p>
+      </div>
+    </div>
+
+    <!-- Row 2 — Personal Goals -->
+    <div class="row flip reveal">
+      <div class="copy">
+        <p class="caps">Personal Goals</p>
+        <h3>Goals with numbers, dates and pictures</h3>
+        <p class="body">
+          A new car, a daughter's degree, retiring at 60 &mdash; every goal gets a target
+          amount, a deadline and its own picture. Progress fills in as you save, and your
+          coach reviews it with you.
+        </p>
+        <ul class="checks">
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Set a target and watch the progress ring close
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Link each goal to your learning path
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ic.check} /></span>
+            Add a photo &mdash; goals you can see are goals you keep
+          </li>
+        </ul>
+      </div>
+
+      <div class="shot">
+        <div
+          class="app"
+          role="img"
+          aria-label="Illustration of the LeverHub Goals screen: six savings goals with photos and progress rings, and a panel for adding a new goal"
+        >
+          <div class="app-nav" aria-hidden="true">
+            <span class="brand">
+              <svg class="mark" viewBox="0 0 127 156" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ffffff" d="M101.109 0H50.5532V68.789L75.8309 51.8152V25.3138H101.109V156C115.069 156 126.386 144.666 126.386 130.686V25.3138C126.386 11.3338 115.069 0 101.109 0Z"></path>
+                <path fill="#2fae9b" d="M50.5554 130.686H25.2777V0C11.3176 0 0 11.3338 0 25.3138V130.686C0 144.666 11.3176 156 25.2777 156H75.8331V82.291L50.5554 99.2648V130.686Z"></path>
+              </svg>
+              LeverHub
+            </span>
+            <span class="links">
+              <span>Financial Snapshot</span>
+              <span class="active">Goals</span>
+              <span>Academy</span>
+            </span>
+            <img class="avatar" src="/images/people/yuki.jpg" alt="" loading="lazy" />
+            <span class="pill">+ Add Goal</span>
+          </div>
+
+          <div class="app-head" aria-hidden="true">
+            <div class="head-copy">
+              <p class="app-title">My Goals</p>
+              <p class="app-sub">Your dreams. Your plan. Your future.</p>
+            </div>
+            <div class="goal-stats">
+              <span class="stat">
+                <span class="p-icon teal round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.target} /></span>
+                <span class="stat-txt"><small>Total Goals</small><strong>6</strong></span>
+              </span>
+              <span class="stat">
+                <span class="stat-txt"><small>Total Target</small><strong>€186,000</strong></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="goals-layout" aria-hidden="true">
+            <div class="goal-grid">
+              {goals.map((g) => (
+                <div class="goal">
+                  <span class="g-media">
+                    <img src={g.img} alt="" loading="lazy" />
+                    <span class="g-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={g.icon} /></span>
+                  </span>
+                  <span class="g-body">
+                    <span class="g-title">{g.title}</span>
+                    <span class="g-row">
+                      <span class="g-nums"><strong>{g.saved}</strong> of {g.target}</span>
+                      <span class="g-ring">
+                        <svg viewBox="0 0 30 30">
+                          <circle cx="15" cy="15" r="12" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2.6"></circle>
+                          <circle cx="15" cy="15" r="12" fill="none" stroke="#34d3ba" stroke-width="2.6" stroke-linecap="round" stroke-dasharray={GOAL_C} stroke-dashoffset={(GOAL_C * (1 - g.pct / 100)).toFixed(1)} transform="rotate(-90 15 15)"></circle>
+                        </svg>
+                        <span class="g-pct">{g.pct}%</span>
+                      </span>
+                    </span>
+                    <span class="bar-track"><span class="bar-fill teal grow-bar" style={`width:${g.pct}%`}></span></span>
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div class="goal-form">
+              <span class="f-head">Add New Goal <span class="f-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.close} /></span></span>
+              <span class="f-photo">
+                <span class="f-photo-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={ic.camera} /></span>
+                Add image
+              </span>
+              {fields.map((f) => (
+                <span class="field">
+                  <small>{f.label}</small>
+                  <span class="input">
+                    {f.placeholder}
+                    {f.icon && <svg class="f-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={f.icon} />}
+                  </span>
+                </span>
+              ))}
+              <span class="f-btn">Create Goal</span>
+            </div>
+          </div>
+
+          <p class="goals-foot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.target} />
+            Show completed goals (0)
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.chevron} />
+          </p>
+        </div>
+        <p class="fine">Illustrative interface &mdash; sample data, not live figures.</p>
+      </div>
+    </div>
+
+    <div class="closing reveal">
+      <p class="note">You do not need to fill everything in on day one. The important thing is to start.</p>
+      <a href="#access" class="btn btn-teal">Open My Personal Hub</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Glow pseudo-elements bleed past the container — clip at the section edge */
+  .tour {
+    overflow: hidden;
+  }
+
+  /* ---------- split rows ---------- */
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.28fr);
+    gap: clamp(2rem, 4.5vw, 4rem);
+    align-items: center;
+  }
+
+  .row + .row {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .row.flip {
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.82fr);
+  }
+
+  .row.flip .copy {
+    order: 2;
+  }
+
+  .copy {
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+    align-content: center;
+  }
+
+  .copy h3 {
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    letter-spacing: -0.02em;
+  }
+
+  .copy .body {
+    color: var(--ink-75);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .checks {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-family: var(--font-sub);
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--ink-75);
+    line-height: 1.5;
+  }
+
+  .tick {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    margin-top: 0.05rem;
+    border-radius: 50%;
+    background: var(--teal-wash);
+    color: var(--teal-deep);
+  }
+
+  .tick svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* ---------- app frame ---------- */
+
+  .shot {
+    position: relative;
+    display: grid;
+    gap: 0.9rem;
+    justify-items: center;
+    min-width: 0;
+  }
+
+  .shot::before {
+    content: "";
+    position: absolute;
+    inset: -8% -10%;
+    background: radial-gradient(55% 55% at 50% 45%, rgba(47, 174, 155, 0.14) 0%, rgba(47, 174, 155, 0) 70%);
+    pointer-events: none;
+  }
+
+  .shot .fine {
+    position: relative;
+  }
+
+  .app {
+    position: relative;
+    width: 100%;
+    background: #081527;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(12, 26, 48, 0.12), 0 42px 84px -32px rgba(12, 26, 48, 0.55);
+    display: grid;
+    gap: 0.65rem;
+    font-family: var(--font-sub);
+  }
+
+  .app-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .mark {
+    height: 15px;
+    width: auto;
+  }
+
+  .links {
+    display: flex;
+    gap: 0.9rem;
+    margin-inline: auto;
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--white-58);
+  }
+
+  .links .active {
+    color: #34d3ba;
+    position: relative;
+  }
+
+  .links .active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.72rem;
+    height: 2px;
+    background: #34d3ba;
+    border-radius: 2px;
+  }
+
+  .avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .pill {
+    font-size: 0.56rem;
+    font-weight: 600;
+    color: var(--ink-black);
+    background: #34d3ba;
+    border-radius: 7px;
+    padding: 0.3rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  /* app header row */
+
+  .app-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.15rem 0.15rem 0.1rem;
+  }
+
+  .app-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .app-sub {
+    font-size: 0.58rem;
+    color: var(--white-58);
+    margin-top: 0.15rem;
+  }
+
+  .head-score {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .gauge {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    flex: none;
+  }
+
+  .ring {
+    transition: stroke-dashoffset 1.5s var(--ease-out) 0.4s;
+  }
+
+  html.js .row.in .ring,
+  html:not(.js) .ring {
+    stroke-dashoffset: 74; /* 264 × (1 − 0.72) */
+  }
+
+  .gauge-txt {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    color: var(--white);
+  }
+
+  .gauge-num {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .gauge-txt small {
+    font-size: 0.42rem;
+    color: var(--white-58);
+  }
+
+  .score-copy {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .score-copy strong {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+  }
+
+  .score-copy small {
+    font-size: 0.52rem;
+    color: var(--white-58);
+    max-width: 12ch;
+    line-height: 1.4;
+  }
+
+  /* panels */
+
+  .trio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .panel {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.65rem 0.7rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .p-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.56rem;
+    font-weight: 600;
+    color: var(--white-85);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .p-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+  }
+
+  .p-icon.teal {
+    background: rgba(52, 211, 186, 0.16);
+    color: #34d3ba;
+  }
+
+  .p-icon.round {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+
+  .p-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .p-icon.round svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .big {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .delta {
+    font-size: 0.52rem;
+    font-weight: 600;
+    color: #34d3ba;
+  }
+
+  .chart {
+    display: flex;
+    gap: 0.35rem;
+    align-items: stretch;
+  }
+
+  .y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.42rem;
+    color: var(--white-58);
+    text-align: right;
+    padding-block: 0.05rem;
+  }
+
+  .chart svg {
+    flex: 1;
+    min-width: 0;
+    height: 58px;
+  }
+
+  .spark {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transition: stroke-dashoffset 1.6s var(--ease-out) 0.5s;
+  }
+
+  html.js .row.in .spark,
+  html:not(.js) .spark {
+    stroke-dashoffset: 0;
+  }
+
+  .x-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.42rem;
+    color: var(--white-58);
+    padding-left: 1.4rem;
+  }
+
+  /* free cash */
+
+  .cash-row {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .cash-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.58rem;
+    color: var(--white-85);
+  }
+
+  .cash-head .val {
+    font-weight: 700;
+    color: var(--white);
+    font-size: 0.62rem;
+  }
+
+  .bar-track {
+    display: block;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .bar-fill.teal {
+    background: linear-gradient(90deg, var(--teal-deep), #34d3ba);
+  }
+
+  .bar-fill.blue {
+    background: linear-gradient(90deg, #2f66d0, #4f8ef7);
+  }
+
+  .free {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 0.45rem;
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .free-label {
+    font-size: 0.5rem;
+    color: var(--white-58);
+  }
+
+  .free-num {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #34d3ba;
+    line-height: 1;
+  }
+
+  /* donut + legend */
+
+  .health {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .donut {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    flex: none;
+  }
+
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    text-align: center;
+  }
+
+  .donut-center small {
+    font-size: 0.4rem;
+    color: var(--white-58);
+  }
+
+  .donut-center strong {
+    font-size: 0.52rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.28rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.28rem;
+    font-size: 0.48rem;
+    color: var(--white-85);
+  }
+
+  .dot {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .l-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .l-pct {
+    margin-left: auto;
+    color: var(--white-58);
+  }
+
+  .l-amt {
+    font-weight: 600;
+    color: var(--white);
+    min-width: 3.4em;
+    text-align: right;
+  }
+
+  /* assets strip */
+
+  .asset-strip {
+    display: grid;
+    grid-template-columns: 1.75fr 1fr 1fr 1fr 0.9fr;
+    gap: 0.55rem;
+  }
+
+  .asset {
+    display: grid;
+    gap: 0.25rem;
+    align-content: center;
+    justify-items: start;
+    padding: 0.45rem 0.55rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    min-width: 0;
+  }
+
+  .asset.house {
+    grid-template-columns: auto 1fr;
+    gap: 0.55rem;
+    align-items: center;
+  }
+
+  .asset.house img {
+    width: 74px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .house-facts {
+    display: grid;
+    gap: 0.12rem;
+    min-width: 0;
+  }
+
+  .a-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--white-85);
+    white-space: nowrap;
+  }
+
+  .a-ico {
+    display: grid;
+    place-items: center;
+    color: #34d3ba;
+  }
+
+  .a-ico svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .a-ico.big-ico {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(52, 211, 186, 0.14);
+  }
+
+  .a-ico.big-ico svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .a-value {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .a-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.47rem;
+    color: var(--white-58);
+    white-space: nowrap;
+  }
+
+  .a-line em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--white-85);
+  }
+
+  .a-line.equity,
+  .a-line.equity em {
+    color: #34d3ba;
+  }
+
+  .asset.add {
+    justify-items: center;
+    align-content: center;
+    gap: 0.3rem;
+    background: transparent;
+    border: 1px dashed rgba(52, 211, 186, 0.45);
+  }
+
+  .add-ring {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(52, 211, 186, 0.6);
+    color: #34d3ba;
+  }
+
+  .add-ring svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .asset.add .a-name {
+    color: #34d3ba;
+  }
+
+  /* bottom trio */
+
+  .cats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.42rem;
+  }
+
+  .cats li {
+    display: grid;
+    grid-template-columns: 7.4em minmax(0, 1fr) auto 2.2em;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.5rem;
+    color: var(--white-85);
+  }
+
+  .c-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .c-amt {
+    font-weight: 600;
+    color: var(--white);
+    text-align: right;
+  }
+
+  .c-pct {
+    color: var(--white-58);
+    text-align: right;
+  }
+
+  .view-all {
+    font-size: 0.52rem;
+    font-weight: 600;
+    color: #34d3ba;
+  }
+
+  .txns {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.34rem;
+  }
+
+  .txns li {
+    display: flex;
+    align-items: center;
+    gap: 0.42rem;
+    font-size: 0.52rem;
+    padding: 0.26rem 0.3rem;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .t-ico {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+  }
+
+  .t-ico svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .t-ico.teal { background: rgba(52, 211, 186, 0.16); color: #34d3ba; }
+  .t-ico.red { background: rgba(239, 83, 80, 0.16); color: #ef5350; }
+  .t-ico.rose { background: rgba(229, 9, 20, 0.18); color: #f0555c; }
+  .t-ico.green { background: rgba(102, 187, 106, 0.16); color: #66bb6a; }
+
+  .t-name {
+    font-weight: 600;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .t-date {
+    margin-left: auto;
+    color: var(--white-58);
+    font-size: 0.46rem;
+    white-space: nowrap;
+  }
+
+  .t-amt {
+    font-weight: 700;
+    white-space: nowrap;
+    min-width: 3.6em;
+    text-align: right;
+  }
+
+  .t-amt.up { color: #34d3ba; }
+  .t-amt.down { color: #ef5350; }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem 0.4rem;
+    padding-block: 0.2rem;
+  }
+
+  .action {
+    display: grid;
+    justify-items: center;
+    gap: 0.28rem;
+  }
+
+  .act-ico {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+  }
+
+  .act-ico svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .act-ico.teal { background: #2fae9b; color: #06121f; }
+  .act-ico.red { background: #ef5350; color: #ffffff; }
+  .act-ico.blue { background: #4f8ef7; color: #ffffff; }
+  .act-ico.purple { background: #8b5cf6; color: #ffffff; }
+
+  .act-label {
+    font-size: 0.46rem;
+    color: var(--white-85);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* ---------- goals screen ---------- */
+
+  .goal-stats {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .stat-txt {
+    display: grid;
+    line-height: 1.25;
+  }
+
+  .stat-txt small {
+    font-size: 0.46rem;
+    color: var(--white-58);
+  }
+
+  .stat-txt strong {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .goals-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 158px;
+    gap: 0.55rem;
+    align-items: start;
+  }
+
+  .goal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .goal {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    display: grid;
+  }
+
+  .g-media {
+    position: relative;
+    display: block;
+  }
+
+  .g-media img {
+    width: 100%;
+    height: 58px;
+    object-fit: cover;
+  }
+
+  .g-badge {
+    position: absolute;
+    left: 0.35rem;
+    bottom: -0.5rem;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--teal-deep);
+    color: var(--white);
+    border: 2px solid #081527;
+  }
+
+  .g-badge svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .g-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.3rem;
+    padding: 0.65rem 0.5rem 0.55rem;
+  }
+
+  .g-title {
+    font-size: 0.56rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.25;
+    min-height: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .g-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .g-nums {
+    font-size: 0.48rem;
+    color: var(--white-58);
+  }
+
+  .g-nums strong {
+    font-size: 0.54rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .g-ring {
+    position: relative;
+    flex: none;
+    width: 26px;
+    height: 26px;
+  }
+
+  .g-pct {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 0.4rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  /* add-goal panel */
+
+  .goal-form {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.6rem 0.6rem 0.65rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.42rem;
+  }
+
+  .f-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .f-close {
+    display: grid;
+    place-items: center;
+    color: var(--white-58);
+  }
+
+  .f-close svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .f-photo {
+    justify-self: center;
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+    font-size: 0.46rem;
+    color: var(--white-58);
+    margin-block: 0.1rem;
+  }
+
+  .f-photo-ring {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    color: var(--white-58);
+  }
+
+  .f-photo-ring svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.18rem;
+  }
+
+  .field small {
+    font-size: 0.46rem;
+    font-weight: 600;
+    color: var(--white-85);
+  }
+
+  .input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3rem;
+    font-size: 0.5rem;
+    color: var(--white-58);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.3rem 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .f-ico {
+    flex: none;
+    width: 9px;
+    height: 9px;
+  }
+
+  .f-btn {
+    margin-top: 0.15rem;
+    display: grid;
+    place-items: center;
+    font-size: 0.56rem;
+    font-weight: 700;
+    color: var(--ink-black);
+    background: #34d3ba;
+    border-radius: 7px;
+    padding: 0.42rem;
+  }
+
+  .goals-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-size: 0.52rem;
+    color: var(--white-58);
+    padding-top: 0.1rem;
+  }
+
+  .goals-foot svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* closing */
+
+  .closing {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: center;
+    text-align: center;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .note {
+    font-family: var(--font-sub);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink-75);
+  }
+
+  .shot > .fine {
+    text-align: center;
+  }
+
+  /* ---------- motion & responsive ---------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring {
+      transition: none;
+      stroke-dashoffset: 74;
+    }
+
+    .spark {
+      transition: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .row,
+    .row.flip {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .row.flip .copy {
+      order: 0;
+    }
+
+    .shot {
+      justify-self: center;
+      width: min(100%, 660px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .trio {
+      grid-template-columns: 1fr;
+    }
+
+    .app-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.7rem;
+    }
+
+    .asset-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .asset.house {
+      grid-column: 1 / -1;
+    }
+
+    .goals-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .goal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .actions {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .links {
+      display: none;
+    }
+
+    .avatar {
+      margin-left: auto;
+    }
+  }
+</style>

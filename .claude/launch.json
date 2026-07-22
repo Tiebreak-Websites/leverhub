@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "leverhub-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "C:\\Users\\chris\\.claude\\tools\\node-v22\\node.exe",
+      "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "dev"],
       "port": 4321
     }
   ]

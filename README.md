@@ -24,8 +24,8 @@ src/
 ├── layouts/Layout.astro     # head, fonts (Tilt Warp / Poppins / Inter / Space Mono), reveal script
 ├── pages/index.astro        # homepage assembly
 └── components/              # one section per component, in page order:
-    Header, Hero, VideoIntro, Differences, Path, PersonalHub,
-    Academy, Practice, Access, Testimonials, Faq, CtaBand, Footer
+    Header, Hero, TrustStrip, VideoIntro, Differences, Path, PersonalHub,
+    HubTour, Coaches, Academy, Practice, Access, Testimonials, Faq, Footer
     + Logo.astro             # logo lockup (mark + wordmark)
 ```
 
@@ -41,6 +41,10 @@ src/
 The official logo lockup is integrated in `src/components/Logo.astro` (navy and
 reversed white variants) with raw files at `public/images/leverhub-logo.svg` and
 `public/images/leverhub-logo-white.svg`.
+
+`HubTour.astro` recreates the two Personal Hub screens (Financial Snapshot and
+Goals) as HTML/CSS mockups from the client-supplied designs; its goal/asset
+photos live in `public/images/hub/` (AI-generated placeholders, 640px JPEGs).
 
 ## Staging deployment
 
