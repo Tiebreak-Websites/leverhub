@@ -2,7 +2,8 @@
 // Hub Tour — the two Personal Hub screens the client supplied as mockups,
 // recreated in HTML/CSS (Practice.astro precedent) so they stay crisp and
 // animate with the site's motion system. Each screen sits beside copy in an
-// alternating split; sample data only, no live figures.
+// alternating split; sample data only, no live figures. Placed right after
+// the intro video as an early product tease (client request).
 
 // Stroke icons injected with set:html (24×24, stroke-based, Practice style).
 const ic = {
@@ -243,7 +244,7 @@ const fields = [
           </div>
 
           <div class="panel assets" aria-hidden="true">
-            <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.bank} /></span>Assets (Patrimonio)</p>
+            <p class="p-label"><span class="p-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={ic.bank} /></span>Assets</p>
             <div class="asset-strip">
               <div class="asset house">
                 <img src="/images/hub/asset-house.jpg" alt="" loading="lazy" />
@@ -436,10 +437,6 @@ const fields = [
       </div>
     </div>
 
-    <div class="closing reveal">
-      <p class="note">You do not need to fill everything in on day one. The important thing is to start.</p>
-      <a href="#access" class="btn btn-teal">Open My Personal Hub</a>
-    </div>
   </div>
 </section>
 
@@ -1489,23 +1486,6 @@ const fields = [
   .goals-foot svg {
     width: 10px;
     height: 10px;
-  }
-
-  /* closing */
-
-  .closing {
-    display: grid;
-    gap: 1.25rem;
-    justify-items: center;
-    text-align: center;
-    margin-top: clamp(3rem, 6vw, 4.5rem);
-  }
-
-  .note {
-    font-family: var(--font-sub);
-    font-weight: 500;
-    font-size: 1.05rem;
-    color: var(--ink-75);
   }
 
   .shot > .fine {

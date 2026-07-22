@@ -24,8 +24,8 @@ src/
 ├── layouts/Layout.astro     # head, fonts (Tilt Warp / Poppins / Inter / Space Mono), reveal script
 ├── pages/index.astro        # homepage assembly
 └── components/              # one section per component, in page order:
-    Header, Hero, TrustStrip, VideoIntro, Differences, Path, PersonalHub,
-    HubTour, Coaches, Academy, Practice, Access, Testimonials, Faq, Footer
+    Header, Hero, TrustStrip, VideoIntro, HubTour, Differences, Path,
+    PersonalHub, Coaches, Academy, Practice, Access, Testimonials, Faq, Footer
     + Logo.astro             # logo lockup (mark + wordmark)
 ```
 
