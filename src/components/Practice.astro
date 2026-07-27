@@ -1,29 +1,31 @@
 ---
-// From learning to practice — navy band with an illustrative dashboard mockup
-// (pure HTML/CSS, learning-centric, no profit claims). Gauge, bars and journal
-// rows animate in when the mock scrolls into view.
+// Bring everything together — navy band with an illustrative personal-dashboard
+// mockup (pure HTML/CSS, no live figures, no profit claims). The dashboard pulls
+// the member's whole financial world into one place: net worth, allocation,
+// portfolio, learning progress, watchlist and recent activity.
 const features = [
   {
-    label: "Connect your broker",
-    icon: `<rect x="4" y="9" width="16" height="11" rx="2"/><path d="M4 13h16M9 9V7a3 3 0 0 1 6 0v2"/>`,
+    label: "Track your assets",
+    icon: `<path d="M4 9.5 12 4l8 5.5"/><path d="M5.5 12v5.5M9.8 12v5.5M14.2 12v5.5M18.5 12v5.5"/><path d="M4 20h16"/>`,
   },
   {
-    label: "Track your activity",
-    icon: `<circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 20 20M8.2 11.6l1.8 1.8 3.4-3.4"/>`,
-  },
-  {
-    label: "Journal every trade",
-    icon: `<path d="M5 4.5h11.5A2.5 2.5 0 0 1 19 7v12.5H7A2 2 0 0 1 5 17.5v-13Z"/><path d="M5 16.5h14M9 8.5h6M9 11.5h4"/>`,
-  },
-  {
-    label: "Learn & improve",
+    label: "Organise your learning",
     icon: `<path d="M3.5 9 12 5l8.5 4L12 13 3.5 9Z"/><path d="M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11M20.5 9v5"/>`,
+  },
+  {
+    label: "Monitor your progress",
+    icon: `<path d="M4 16.5 9.5 11l3 3L20 6.5"/><path d="M15 6.5h5V11.5"/>`,
+  },
+  {
+    label: "Build better financial habits",
+    icon: `<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>`,
   },
 ];
 
-const goals = [
-  { label: "Emergency fund", value: 75 },
-  { label: "New car", value: 45 },
+const alloc = [
+  { label: "Investments", pct: 45, color: "#34d3ba" },
+  { label: "Savings", pct: 30, color: "#4f8ef7" },
+  { label: "Cash", pct: 25, color: "rgba(255,255,255,0.35)" },
 ];
 
 const lessons = [
@@ -31,24 +33,29 @@ const lessons = [
   { label: "Market intelligence", value: 60 },
 ];
 
-const journal = [
-  { pair: "EUR/USD", note: "Entry logged · lesson linked" },
-  { pair: "Gold", note: "Reviewed with coach" },
-  { pair: "US30", note: "Journal note added" },
+const watchlist = [
+  { symbol: "EUR/USD", note: "Watching" },
+  { symbol: "Gold", note: "Watching" },
+  { symbol: "US30", note: "Watching" },
+];
+
+const activity = [
+  { label: "Completed · Inflation basics", when: "Today" },
+  { label: "Goal updated · New car", when: "Yesterday" },
+  { label: "Snapshot refreshed", when: "May 27" },
 ];
 ---
 
 <section class="section practice on-navy" id="practice">
   <div class="container inner">
     <div class="copy reveal">
-      <h2>From learning to practice</h2>
-      <p class="lede">At some point, you have to be in the market to understand it.</p>
+      <h2>Bring everything together</h2>
       <p class="body">
-        When you are ready, you choose a broker using our reviews, open an account with
-        them and connect it to LeverHub. Your dashboard then shows your learning path,
-        your trading journal and your market activity together.
+        Your learning journey doesn't end with the courses. LeverHub gives you a personal
+        dashboard where you can organise your financial world, follow your progress and
+        keep everything in one place.
       </p>
-      <p class="power">One login. Everything in one place.</p>
+      <p class="power">One platform. One complete picture.</p>
 
       <ul class="features">
         {
@@ -63,11 +70,11 @@ const journal = [
         }
       </ul>
 
-      <a href="#access" class="btn btn-teal">Explore Connected Access</a>
+      <a href="#hub" class="btn btn-teal">Explore the Dashboard</a>
     </div>
 
     <div class="mock-wrap reveal">
-      <div class="mock" role="img" aria-label="Illustration of the LeverHub dashboard: balance score, goals, learning progress and trading journal in one place">
+      <div class="mock" role="img" aria-label="Illustration of the LeverHub dashboard: net worth, asset allocation, portfolio, learning progress, watchlist and recent activity in one place">
         <div class="mock-top">
           <svg class="mock-logo" viewBox="0 0 127 156" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path fill="#ffffff" d="M101.109 0H50.5532V68.789L75.8309 51.8152V25.3138H101.109V156C115.069 156 126.386 144.666 126.386 130.686V25.3138C126.386 11.3338 115.069 0 101.109 0Z"></path>
@@ -78,31 +85,32 @@ const journal = [
         </div>
 
         <div class="mock-grid">
-          <div class="tile score">
-            <span class="tile-label">Balance Score</span>
-            <div class="gauge">
-              <svg viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="9"></circle>
-                <circle
-                  class="ring"
-                  cx="50"
-                  cy="50"
-                  r="42"
-                  fill="none"
-                  stroke="#2fae9b"
-                  stroke-width="9"
-                  stroke-linecap="round"
-                  stroke-dasharray="264"
-                  stroke-dashoffset="264"
-                  transform="rotate(-90 50 50)"></circle>
-              </svg>
-              <span class="gauge-num" data-count="72">0</span>
-            </div>
-            <span class="tile-sub">Growing steadily</span>
+          <div class="tile networth">
+            <span class="tile-label">Net Worth</span>
+            <span class="nw-num">&euro;48,250</span>
+            <span class="tile-sub">Across your accounts</span>
+          </div>
+
+          <div class="tile">
+            <span class="tile-label">Assets Allocation</span>
+            <span class="alloc-bar" aria-hidden="true">
+              {alloc.map((a) => <span class="alloc-seg grow-bar" style={`width:${a.pct}%;background:${a.color}`} />)}
+            </span>
+            <ul class="alloc-key">
+              {
+                alloc.map((a) => (
+                  <li>
+                    <span class="dot" style={`background:${a.color}`} />
+                    {a.label}
+                    <span class="alloc-pct">{a.pct}%</span>
+                  </li>
+                ))
+              }
+            </ul>
           </div>
 
           <div class="tile chart">
-            <span class="tile-label">Learning path</span>
+            <span class="tile-label">Portfolio Overview</span>
             <svg viewBox="0 0 220 70" preserveAspectRatio="none" aria-hidden="true">
               <polyline
                 class="spark"
@@ -124,28 +132,11 @@ const journal = [
                 </linearGradient>
               </defs>
             </svg>
-            <span class="tile-sub">Understanding &rarr; action</span>
+            <span class="tile-sub">Illustrative &mdash; not live data</span>
           </div>
 
           <div class="tile">
-            <span class="tile-label">Goal progress</span>
-            {
-              goals.map((goal) => (
-                <div class="bar-row">
-                  <span class="bar-head">
-                    <span>{goal.label}</span>
-                    <span class="pct">{goal.value}%</span>
-                  </span>
-                  <span class="bar-track">
-                    <span class="bar-fill grow-bar" style={`width:${goal.value}%`} />
-                  </span>
-                </div>
-              ))
-            }
-          </div>
-
-          <div class="tile">
-            <span class="tile-label">Learning progress</span>
+            <span class="tile-label">Learning Progress</span>
             {
               lessons.map((lesson) => (
                 <div class="bar-row">
@@ -161,14 +152,28 @@ const journal = [
             }
           </div>
 
-          <div class="tile wide">
-            <span class="tile-label">Trading journal</span>
-            <ul class="journal">
+          <div class="tile">
+            <span class="tile-label">Market Watchlist</span>
+            <ul class="mini-list">
               {
-                journal.map((entry) => (
+                watchlist.map((row) => (
                   <li>
-                    <span class="pair">{entry.pair}</span>
-                    <span class="note">{entry.note}</span>
+                    <span class="pair">{row.symbol}</span>
+                    <span class="note">{row.note}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="tile">
+            <span class="tile-label">Recent Activity</span>
+            <ul class="mini-list">
+              {
+                activity.map((row) => (
+                  <li>
+                    <span class="act">{row.label}</span>
+                    <span class="note">{row.when}</span>
                   </li>
                 ))
               }
@@ -178,13 +183,6 @@ const journal = [
       </div>
       <p class="fine">Illustrative interface &mdash; not live market data.</p>
     </div>
-  </div>
-
-  <div class="container">
-    <p class="fine disclosure">
-      LeverHub is the academy and dashboard &mdash; never the broker. You open your account
-      directly with a third-party broker. Trading involves risk, including the loss of capital.
-    </p>
   </div>
 </section>
 
@@ -229,7 +227,7 @@ const journal = [
     grid-template-columns: repeat(2, 1fr);
     gap: 0.9rem 1.5rem;
     width: 100%;
-    max-width: 460px;
+    max-width: 480px;
   }
 
   .features li {
@@ -342,10 +340,6 @@ const journal = [
     align-content: start;
   }
 
-  .tile.wide {
-    grid-column: 1 / -1;
-  }
-
   .tile-label {
     font-family: var(--font-mono);
     font-size: 0.58rem;
@@ -362,24 +356,63 @@ const journal = [
     letter-spacing: 0.08em;
   }
 
-  .score {
-    justify-items: center;
-    text-align: center;
+  /* Net worth headline number */
+  .networth {
+    align-content: center;
   }
 
-  .gauge {
-    position: relative;
-    width: 86px;
-    height: 86px;
+  .nw-num {
+    font-family: var(--font-sub);
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--white);
   }
 
-  .ring {
-    transition: stroke-dashoffset 1.5s var(--ease-out) 0.4s;
+  /* Allocation stacked bar + legend */
+  .alloc-bar {
+    display: flex;
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  html.js .mock-wrap.in .ring,
-  html:not(.js) .ring {
-    stroke-dashoffset: 74; /* 264 × (1 − 0.72) */
+  .alloc-seg {
+    display: block;
+    height: 100%;
+  }
+
+  .alloc-key {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .alloc-key li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sub);
+    font-size: 0.72rem;
+    color: var(--white-85);
+  }
+
+  .alloc-key .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .alloc-pct {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--white-58);
   }
 
   /* Sparkline draws in */
@@ -392,17 +425,6 @@ const journal = [
   html.js .mock-wrap.in .spark,
   html:not(.js) .spark {
     stroke-dashoffset: 0;
-  }
-
-  .gauge-num {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-family: var(--font-sub);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--white);
   }
 
   .chart svg {
@@ -444,20 +466,20 @@ const journal = [
     background: linear-gradient(90deg, var(--teal-deep), var(--teal));
   }
 
-  .journal {
+  .mini-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.45rem;
+    gap: 0.4rem;
   }
 
-  .journal li {
+  .mini-list li {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 1rem;
-    padding: 0.45rem 0.6rem;
+    gap: 0.75rem;
+    padding: 0.4rem 0.55rem;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
   }
@@ -470,26 +492,23 @@ const journal = [
     letter-spacing: 0.06em;
   }
 
+  .act {
+    font-family: var(--font-sub);
+    font-size: 0.68rem;
+    color: var(--white-85);
+  }
+
   .note {
-    font-size: 0.7rem;
+    font-size: 0.66rem;
     color: var(--white-58);
+    white-space: nowrap;
   }
 
   .mock-wrap .fine {
     color: var(--white-58);
   }
 
-  /* Full section width, no divider */
-  .disclosure {
-    margin-top: 2.75rem;
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .ring {
-      transition: none;
-      stroke-dashoffset: 74;
-    }
-
     .spark {
       transition: none;
       stroke-dashoffset: 0;

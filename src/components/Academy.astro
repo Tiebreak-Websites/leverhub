@@ -14,7 +14,7 @@ const topics = [
   <div class="container">
     <div class="section-head reveal">
       <h2 class="one-row">Learn how the markets actually work</h2>
-      <p class="lede">The Academy is organised into five course areas, taken in order.</p>
+      <p class="lede">Everything you need to understand finance, markets and the decisions behind them.</p>
     </div>
 
     <div class="content">
@@ -56,6 +56,19 @@ const topics = [
   .academy {
     background: var(--white);
     border-block: 1px solid var(--line);
+  }
+
+  /* Subtitle held to a single row (relaxes to normal wrapping on small screens) */
+  .section-head .lede {
+    white-space: nowrap;
+    max-width: none;
+    font-size: clamp(0.95rem, 1.85vw, 1.3rem);
+  }
+
+  @media (max-width: 860px) {
+    .section-head .lede {
+      white-space: normal;
+    }
   }
 
   .content {
