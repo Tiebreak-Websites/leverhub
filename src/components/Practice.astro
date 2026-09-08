@@ -1,8 +1,9 @@
 ---
 // Bring everything together — navy band with an illustrative personal-dashboard
-// mockup (pure HTML/CSS, no live figures, no profit claims). The dashboard pulls
-// the member's whole financial world into one place: net worth, allocation,
-// portfolio, learning progress, watchlist and recent activity.
+// mockup (pure HTML/CSS, no live figures, no market graphics, no profit claims).
+// Per the client review the screen shows the member's learning world only:
+// course progress, the four-step path, the current lesson, course areas,
+// upcoming sessions and recent activity.
 const features = [
   {
     label: "Track your assets",
@@ -22,27 +23,29 @@ const features = [
   },
 ];
 
-const alloc = [
-  { label: "Investments", pct: 45, color: "#34d3ba" },
-  { label: "Savings", pct: 30, color: "#4f8ef7" },
-  { label: "Cash", pct: 25, color: "rgba(255,255,255,0.35)" },
+const pathSteps = [
+  { label: "Where you are", status: "Completed", state: "done" },
+  { label: "Understand the world", status: "In progress", state: "current" },
+  { label: "Take action", status: "Up next", state: "next" },
+  { label: "Work-life balance", status: "Up next", state: "next" },
 ];
 
-const lessons = [
-  { label: "Economics basics", value: 80 },
-  { label: "Market intelligence", value: 60 },
+const areas = [
+  { label: "Inflation & value", value: 100 },
+  { label: "Economy & daily life", value: 80 },
+  { label: "Global events & markets", value: 45 },
 ];
 
-const watchlist = [
-  { symbol: "EUR/USD", note: "Watching" },
-  { symbol: "Gold", note: "Watching" },
-  { symbol: "US30", note: "Watching" },
+const upcoming = [
+  { label: "Progress Coach session", when: "Thu · 17:00" },
+  { label: "Quiz · Economic cycles", when: "Fri" },
+  { label: "Live Q&A · Budgeting", when: "Mon" },
 ];
 
 const activity = [
   { label: "Completed · Inflation basics", when: "Today" },
-  { label: "Goal updated · New car", when: "Yesterday" },
-  { label: "Snapshot refreshed", when: "May 27" },
+  { label: "Quiz passed · Economy basics", when: "Yesterday" },
+  { label: "Notes added · Lesson 3", when: "May 27" },
 ];
 ---
 
@@ -74,7 +77,7 @@ const activity = [
     </div>
 
     <div class="mock-wrap reveal">
-      <div class="mock" role="img" aria-label="Illustration of the LeverHub dashboard: net worth, asset allocation, portfolio, learning progress, watchlist and recent activity in one place">
+      <div class="mock" role="img" aria-label="Illustration of the LeverHub dashboard: course progress, your learning path, the current lesson, course areas, upcoming sessions and recent activity in one place">
         <div class="mock-top">
           <svg class="mock-logo" viewBox="0 0 127 156" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path fill="#ffffff" d="M101.109 0H50.5532V68.789L75.8309 51.8152V25.3138H101.109V156C115.069 156 126.386 144.666 126.386 130.686V25.3138C126.386 11.3338 115.069 0 101.109 0Z"></path>
@@ -85,67 +88,56 @@ const activity = [
         </div>
 
         <div class="mock-grid">
-          <div class="tile networth">
-            <span class="tile-label">Net Worth</span>
-            <span class="nw-num">&euro;48,250</span>
-            <span class="tile-sub">Across your accounts</span>
+          <div class="tile headline">
+            <span class="tile-label">Course Progress</span>
+            <span class="big-num">64<span class="unit">%</span></span>
+            <span class="tile-sub">16 of 25 lessons completed</span>
           </div>
 
           <div class="tile">
-            <span class="tile-label">Assets Allocation</span>
-            <span class="alloc-bar" aria-hidden="true">
-              {alloc.map((a) => <span class="alloc-seg grow-bar" style={`width:${a.pct}%;background:${a.color}`} />)}
+            <span class="tile-label">Your Path</span>
+            <span class="path-bar" aria-hidden="true">
+              {pathSteps.map((step) => <span class={`path-seg ${step.state} grow-bar`} />)}
             </span>
-            <ul class="alloc-key">
+            <ul class="path-key">
               {
-                alloc.map((a) => (
-                  <li>
-                    <span class="dot" style={`background:${a.color}`} />
-                    {a.label}
-                    <span class="alloc-pct">{a.pct}%</span>
+                pathSteps.map((step) => (
+                  <li class={step.state}>
+                    <span class="dot" />
+                    {step.label}
+                    <span class="path-status">{step.status}</span>
                   </li>
                 ))
               }
             </ul>
           </div>
 
-          <div class="tile chart">
-            <span class="tile-label">Portfolio Overview</span>
-            <svg viewBox="0 0 220 70" preserveAspectRatio="none" aria-hidden="true">
-              <polyline
-                class="spark"
-                points="0,58 28,52 55,55 85,40 115,44 145,28 180,32 220,14"
-                fill="none"
-                stroke="#2fae9b"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                pathLength="100"></polyline>
-              <polyline
-                points="0,58 28,52 55,55 85,40 115,44 145,28 180,32 220,14 220,70 0,70"
-                fill="url(#mockfade)"
-                stroke="none"></polyline>
-              <defs>
-                <linearGradient id="mockfade" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="rgba(47,174,155,0.35)"></stop>
-                  <stop offset="100%" stop-color="rgba(47,174,155,0)"></stop>
-                </linearGradient>
-              </defs>
-            </svg>
-            <span class="tile-sub">Illustrative &mdash; not live data</span>
+          <div class="tile">
+            <span class="tile-label">Current Lesson</span>
+            <span class="player" aria-hidden="true">
+              <span class="play">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M8 5.5v13l10-6.5Z" /></svg>
+              </span>
+              <span class="player-time">08:42 / 18:10</span>
+            </span>
+            <span class="lesson-title">How inflation changes the value of your savings</span>
+            <span class="bar-track">
+              <span class="bar-fill grow-bar" style="width:48%" />
+            </span>
+            <span class="tile-sub">Lesson 4 of 12 &middot; Understand the world</span>
           </div>
 
           <div class="tile">
-            <span class="tile-label">Learning Progress</span>
+            <span class="tile-label">Course Areas</span>
             {
-              lessons.map((lesson) => (
+              areas.map((area) => (
                 <div class="bar-row">
                   <span class="bar-head">
-                    <span>{lesson.label}</span>
-                    <span class="pct">{lesson.value}%</span>
+                    <span>{area.label}</span>
+                    <span class="pct">{area.value}%</span>
                   </span>
                   <span class="bar-track">
-                    <span class="bar-fill grow-bar" style={`width:${lesson.value}%`} />
+                    <span class="bar-fill grow-bar" style={`width:${area.value}%`} />
                   </span>
                 </div>
               ))
@@ -153,13 +145,13 @@ const activity = [
           </div>
 
           <div class="tile">
-            <span class="tile-label">Market Watchlist</span>
+            <span class="tile-label">Upcoming</span>
             <ul class="mini-list">
               {
-                watchlist.map((row) => (
+                upcoming.map((row) => (
                   <li>
-                    <span class="pair">{row.symbol}</span>
-                    <span class="note">{row.note}</span>
+                    <span class="act">{row.label}</span>
+                    <span class="note">{row.when}</span>
                   </li>
                 ))
               }
@@ -181,7 +173,7 @@ const activity = [
           </div>
         </div>
       </div>
-      <p class="fine">Illustrative interface &mdash; not live market data.</p>
+      <p class="fine">Illustrative interface &mdash; not live data.</p>
     </div>
   </div>
 </section>
@@ -356,12 +348,12 @@ const activity = [
     letter-spacing: 0.08em;
   }
 
-  /* Net worth headline number */
-  .networth {
+  /* Course progress headline number */
+  .headline {
     align-content: center;
   }
 
-  .nw-num {
+  .big-num {
     font-family: var(--font-sub);
     font-size: 1.85rem;
     font-weight: 700;
@@ -369,22 +361,38 @@ const activity = [
     color: var(--white);
   }
 
-  /* Allocation stacked bar + legend */
-  .alloc-bar {
+  .big-num .unit {
+    font-size: 0.6em;
+    font-weight: 600;
+    color: var(--teal);
+    margin-left: 0.08em;
+  }
+
+  /* Four-step path — segmented bar + key */
+  .path-bar {
     display: flex;
+    gap: 3px;
     width: 100%;
     height: 10px;
-    border-radius: 999px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
   }
 
-  .alloc-seg {
+  .path-seg {
     display: block;
+    flex: 1;
     height: 100%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
   }
 
-  .alloc-key {
+  .path-seg.done {
+    background: var(--teal-deep);
+  }
+
+  .path-seg.current {
+    background: var(--teal-bright);
+  }
+
+  .path-key {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -392,7 +400,7 @@ const activity = [
     gap: 0.3rem;
   }
 
-  .alloc-key li {
+  .path-key li {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -401,35 +409,77 @@ const activity = [
     color: var(--white-85);
   }
 
-  .alloc-key .dot {
+  .path-key .next {
+    color: var(--white-58);
+  }
+
+  .path-key .dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex: none;
+    background: rgba(255, 255, 255, 0.2);
   }
 
-  .alloc-pct {
+  .path-key .done .dot {
+    background: var(--teal-deep);
+  }
+
+  .path-key .current .dot {
+    background: var(--teal-bright);
+    box-shadow: 0 0 0 3px rgba(52, 211, 186, 0.2);
+  }
+
+  .path-status {
     margin-left: auto;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.62rem;
+    color: var(--white-58);
+    white-space: nowrap;
+  }
+
+  .path-key .current .path-status {
+    color: var(--teal);
+  }
+
+  /* Current lesson — mini video player */
+  .player {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 64px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #10294a 0%, #0f3a4f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .play {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding-left: 2px;
+    border-radius: 50%;
+    background: var(--teal-bright);
+    color: var(--ink-black);
+  }
+
+  .player-time {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
     color: var(--white-58);
   }
 
-  /* Sparkline draws in */
-  .spark {
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    transition: stroke-dashoffset 1.6s var(--ease-out) 0.5s;
-  }
-
-  html.js .mock-wrap.in .spark,
-  html:not(.js) .spark {
-    stroke-dashoffset: 0;
-  }
-
-  .chart svg {
-    width: 100%;
-    height: 64px;
+  .lesson-title {
+    font-family: var(--font-sub);
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--white-85);
   }
 
   .bar-row {
@@ -484,14 +534,6 @@ const activity = [
     border-radius: 8px;
   }
 
-  .pair {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 0.06em;
-  }
-
   .act {
     font-family: var(--font-sub);
     font-size: 0.68rem;
@@ -509,11 +551,6 @@ const activity = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .spark {
-      transition: none;
-      stroke-dashoffset: 0;
-    }
-
     .mock,
     .mock:hover {
       transition: none;

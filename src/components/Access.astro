@@ -109,7 +109,8 @@ const tiers = [
         </svg>
       </span>
       <strong>One platform. Everything included.</strong> No hidden fees. Cancel or change
-      your plan anytime.
+      your plan anytime.*
+    <a class="terms" href="/terms">*Terms and Conditions apply</a>
     </p>
   </div>
 </section>
@@ -370,6 +371,17 @@ const tiers = [
   .assurance strong {
     color: var(--ink-black);
     font-weight: 600;
+  }
+
+  .assurance .terms {
+    color: var(--teal-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .assurance .terms:hover {
+    color: var(--ink-black);
   }
 
   .shield {

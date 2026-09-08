@@ -1,0 +1,74 @@
+---
+// Terms and Conditions — destination for the T&Cs links requested in the client
+// review (pricing assurance strip + footer risk disclaimer). Placeholder body:
+// replace it with the final legal text once it is supplied.
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="Terms and Conditions — LeverHub"
+  description="The terms and conditions that apply to LeverHub plans and to the use of the LeverHub platform."
+>
+  <Header />
+  <main id="main">
+    <section class="page-head on-navy">
+      <div class="container">
+        <p class="caps">Legal</p>
+        <h1>Terms and Conditions</h1>
+        <p class="lede">
+          The terms that apply to LeverHub plans and to the use of the LeverHub platform.
+        </p>
+      </div>
+    </section>
+
+    <section class="section tight">
+      <div class="container terms-body">
+        <p>
+          Our full Terms and Conditions are being finalised and will be published on this
+          page.
+        </p>
+        <a href="/#access" class="btn btn-navy">Back to plans</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .page-head {
+    background: var(--ink-black);
+    color: var(--white);
+    padding-top: clamp(7.5rem, 14vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .page-head .container {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+
+  .page-head h1 {
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+  }
+
+  .page-head .lede {
+    max-width: 52ch;
+  }
+
+  .terms-body {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+    max-width: 760px;
+    min-height: 32vh;
+  }
+
+  .terms-body p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink-75);
+  }
+</style>

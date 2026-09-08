@@ -2,18 +2,18 @@
 import Logo from "./Logo.astro";
 
 const nav = [
-  { href: "#different", label: "Why LeverHub" },
-  { href: "#path", label: "The Path" },
-  { href: "#hub", label: "Personal Hub" },
-  { href: "#academy", label: "Academy" },
-  { href: "#access", label: "Access" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#different", label: "Why LeverHub" },
+  { href: "/#path", label: "The Path" },
+  { href: "/#hub", label: "Personal Hub" },
+  { href: "/#academy", label: "Academy" },
+  { href: "/#access", label: "Access" },
+  { href: "/#faq", label: "FAQ" },
 ];
 ---
 
 <header class="site-header" id="site-header">
   <div class="container bar">
-    <a href="#top" class="brand" aria-label="LeverHub — home">
+    <a href="/#top" class="brand" aria-label="LeverHub — home">
       <Logo variant="reversed" />
     </a>
 
@@ -21,7 +21,7 @@ const nav = [
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
 
-    <a href="#hub" class="btn btn-teal cta">Enter LeverHub</a>
+    <a href="/#hub" class="btn btn-teal cta">Enter LeverHub</a>
 
     <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -30,7 +30,7 @@ const nav = [
 
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
     {nav.map((item) => <a href={item.href}>{item.label}</a>)}
-    <a href="#hub" class="btn btn-teal">Start My LeverHub Journey</a>
+    <a href="/#hub" class="btn btn-teal">Start My LeverHub Journey</a>
   </nav>
 </header>
 
